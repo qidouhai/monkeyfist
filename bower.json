@@ -1,0 +1,22 @@
+{
+  "name": "monkeyfist2",
+  "description": "",
+  "main": "",
+  "authors": [
+    "avi92 <axelvirnich@googlemail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "monkeyfist.de",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "font-awesome": "^4.6.3",
+    "google-fonts": "*"
+  }
+}
