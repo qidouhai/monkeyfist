@@ -84,11 +84,51 @@
 
                 <div style="width: 60%; margin: auto;">
 
-                    <h1 style="font-size: 4em;" class="text-center">Join us <i class="fa fa-smile-o fa-lg"></i></h1>
+                    <h1 style="font-size: 4em;" class="text-center">Join us - it's free <i class="fa fa-smile-o fa-lg"></i></h1>
 
-                    <p style="font-size: x-large; font-color: #BDBDBD; padding: 5%;" class="text-center">
-                        Monkeyfist is a small community of internet enthusiasts. We try to differentiate from the big social mass networks by taking care of the personal needs of our users. Our community is small yet powerful. We love what we do and if you do not believe, <a href="#">register below</a> and find out. And this is a banana, as bananas are not just delicious, but also very healthy.
-                    </p>
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="email" class="col-sm-3 control-label">Email</label>
+                            <div class="col-sm-7">
+                                <input type="email" class="form-control" id="email" placeholder="Email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="col-sm-3 control-label">Password</label>
+                            <div class="col-sm-7">
+                                <input type="password" class="form-control" placeholder="Password" name="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password-repeat" class="col-sm-3 control-label">Repeat Password</label>
+                            <div class="col-sm-7">
+                                <input type="password" class="form-control" placeholder="Repeat Password" name="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="prename" class="col-sm-3 control-label">Prename</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" id="prename" placeholder="Don">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastname" class="col-sm-3 control-label">Lastname</label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" id="lastname" placeholder="Quijote">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="birthday" class="col-sm-3 control-label">Birthday</label>
+                            <div class="col-sm-7">
+                                <input type="date" class="form-control" id="birthday" placeholder="1992-02-15">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-7">
+                                <button type="submit" style="width: 100%;" class="btn btn-default">Register</button>
+                            </div>
+                        </div>
+                    </form>
 
                 </div>
 
