@@ -2,3 +2,84 @@ body {
 	padding-top: 75px;
 	font-family: "Times New Roman", Times, serif;
 }
+
+#internal_navbar a:link, #internal_navbar a:visited, #internal_navbar li{
+	color: white;
+	font-weight: bold;
+	font-size: large;
+}
+
+#internal_navbar li:hover {
+	background-color: #750000;
+}
+
+.feed {
+	width: 80%;
+	margin: 15px auto;
+}
+
+.feed-header a:link, .feed-header a:visited{
+	font-weight: bold;
+	color: #800000;
+	text-decoration: none;
+	font-size: large;
+}
+
+.feed-header a:hover {
+	text-decoration: underline;
+}
+
+.feed-content {
+	font-size: large;
+	padding-bottom: 10px;
+}
+
+.feed-content iframe {
+	width: 90%;
+	min-height: 450px;
+	display: block;
+	margin: auto;
+	max-width: 800px;
+	padding: 10px 0px;
+}
+
+.feed-links ul, .feed-footer ul {
+	list-style: none;
+	padding: 0px;
+}
+
+.feed-links ul li, .feed-footer ul li {
+	display: inline-block;
+}
+
+.feed-links hr {
+	margin: 8px 0px;
+}
+
+.feed-footer a:link, .feed-footer a:visited {
+	color: black;
+	text-decoration: none;
+}
+
+.feed-footer-comment {
+	padding-bottom: 5px;
+}
+
+.comment-image {
+	vertical-align: top;
+	padding-right: 0px;
+}
+
+.comment-non-image {
+	padding-left: 0px;
+	left: -20px;
+}
+
+.comment-user a:hover {
+	text-decoration: underline;
+}
+
+.comment-user {
+	font-weight: bold;
+	color: #800000;
+}

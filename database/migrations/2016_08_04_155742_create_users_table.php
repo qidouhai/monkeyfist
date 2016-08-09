@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->integer('status')->nullable();
             $table->timestamp('last_activity')->nullable();
             $table->rememberToken();
+            $table->date('birthday');
             $table->string('picture');
         });
     }

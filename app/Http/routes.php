@@ -11,4 +11,16 @@
 |
 */
 
-Route::get('/', 'HomeController@index');
+Route::get('/', function () {
+    return view('auth.login');
+});
+
+Route::auth();
+
+Route::get('/home', 'HomeController@index');
+
+Route::get('/dashboard', function() {
+	$user = Auth::user();
+	$feeds = DB::table('feed')->get();
+	return view('dashboard', ['user' => $user, 'feeds' => $feeds]);
+})->middleware('auth');
