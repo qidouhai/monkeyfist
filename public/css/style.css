@@ -68,11 +68,13 @@ body {
 .comment-image {
 	vertical-align: top;
 	padding-right: 0px;
+	display: table-cell;
 }
 
 .comment-non-image {
 	padding-left: 0px;
 	left: -20px;
+	display: inline-block;
 }
 
 .comment-user a:hover {
@@ -81,5 +83,20 @@ body {
 
 .comment-user {
 	font-weight: bold;
+	color: #800000;
+}
+
+.comment-input-textfield {
+	left: -20px;
+}
+
+#feedloader {
+	width: 80%;
+	margin: 0px auto 15px auto;
+	text-align: center;
+}
+
+#feedloader a:link, #feedloader a:visited {
+	font-size: x-large;
 	color: #800000;
 }

@@ -12,8 +12,9 @@
 */
 
 Route::get('/', function () {
-    return view('auth.login');
-});
+    $user = Auth::user();
+	return view('layouts.internal', ['user' => $user]);
+})->middleware('auth');
 
 Route::auth();
 
@@ -21,6 +22,10 @@ Route::get('/home', 'HomeController@index');
 
 Route::get('/dashboard', function() {
 	$user = Auth::user();
-	$feeds = DB::table('feed')->get();
-	return view('dashboard', ['user' => $user, 'feeds' => $feeds]);
+	return view('layouts.internal', ['user' => $user]);
 })->middleware('auth');
+
+// API requests
+Route::get('/feeds', 'FeedController@index')->middleware('auth');
+Route::get('/feeds/skip/{skip}/take/{take}', 'FeedController@get')->middleware('auth');
+Route::post('/feed/{id}/comment', 'FeedController@storeComment')->middleware('auth');

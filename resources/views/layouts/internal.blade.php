@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <base href="/">
+
     <title>Monkeyfist</title>
 
     <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
@@ -13,7 +15,7 @@
     <link rel="stylesheet" href="/css/style.css">
 
 </head>
-<body id="app-layout">
+<body id="app-layout" ng-app="internal">
     <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: #800000">
         <div class="container">
             <div class="navbar-header">
@@ -37,18 +39,30 @@
                     </div>
                 </form>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">{{ $user->prename }}</a></li>
-                    <li><a href="#">Dashboard</a></li>
-                    <li><a href="#"><i class="fa fa-envelope"></i> Messages</a></li>
-                    <li><a href="/logout">Logout</a></li>
+                    <li><a href="#" title="Profile">{{ $user->prename }}</a></li>
+                    <li><a href="/dashboard" title="Dashboard">Dashboard</a></li>
+                    <li><a href="#" title="Friend Requests"><i class="fa fa-user-plus"></i></a></li>
+                    <li><a href="#" title="Messages"><i class="fa fa-envelope-o"></i></a></li>
+                    <li><a href="/logout" title="Sign Out"><i class="fa fa-sign-out"></i></a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
+    <div class="container-fluid" ng-view>
+
+    </div>
+
     @yield('content')
 
     <script type="text/javascript" src="/lib/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/lib/moment/moment.js"></script>
+    <script type="text/javascript" src="/lib/angular/angular.js"></script>
+    <script type="text/javascript" src="/lib/angular-route/angular-route.js"></script>
+
+    <!-- Angular Controller -->
+    <script type="text/javascript" src="/app/app.js"></script>
+    <script type="text/javascript" src="/app/controller/DashboardController.js"></script>
 </body>
 </html>
