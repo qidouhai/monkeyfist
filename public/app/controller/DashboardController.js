@@ -39,7 +39,7 @@ app.controller("DashboardController", function($scope, $http, $location) {
 				for(let i = 0; i < response.length; i++) {
 					$scope.feeds.push(response[i]);
 				}
-				if($response.length < $scope.feedCounter)
+				if(response.length < $scope.feedCounter)
 					$scope.noMoreFeeds = true;
 			});
 		}

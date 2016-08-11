@@ -9,8 +9,12 @@ body {
 	font-size: large;
 }
 
-#internal_navbar li:hover {
+.navbar_links li:hover {
 	background-color: #750000;
+}
+
+.select2 input {
+	color: black;
 }
 
 .feed {
