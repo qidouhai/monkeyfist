@@ -42,7 +42,7 @@
                 </form>
                 <div class="navbar_links">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#" title="Profile">{{ $user->prename }}</a></li>
+                        <li><a href="/profile/{{ $user->id }}" title="Profile">{{ $user->prename }}</a></li>
                         <li><a href="/dashboard" title="Dashboard">Dashboard</a></li>
                         <li><a href="#" title="Friend Requests"><i class="fa fa-user-plus"></i></a></li>
                         <li><a href="#" title="Messages"><i class="fa fa-envelope-o"></i></a></li>
@@ -53,11 +53,12 @@
         </div>
     </nav>
 
+    <div class="container-fluid">
+        @yield('content')
+    </div>
     <div class="container-fluid" ng-view>
 
     </div>
-
-    @yield('content')
 
     <script type="text/javascript" src="/lib/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="/lib/bootstrap/dist/js/bootstrap.js"></script>
@@ -72,5 +73,7 @@
     <!-- Angular Controller -->
     <script type="text/javascript" src="/app/app.js"></script>
     <script type="text/javascript" src="/app/controller/DashboardController.js"></script>
+    <script type="text/javascript" src="/app/controller/FeedController.js"></script>
+    <script type="text/javascript" src="/app/controller/ProfileController.js"></script>
 </body>
 </html>

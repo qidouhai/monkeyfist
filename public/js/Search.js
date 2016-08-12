@@ -1,7 +1,8 @@
 $(document).ready(function() {
-	$(".search-bar").select2();
+	// $(".search-bar").select2();
 
 	$('.search-bar').select2({
+		placeholder: "Search...",
 		ajax: {
 			url: function(params) {
 				return '/search/' + params.term;
@@ -29,16 +30,30 @@ $(document).ready(function() {
 
 
 	$('.search-bar').on("select2:select", function (e) {
-		console.log(e);
-		window.location = '/feed/' + e.params.data.id;
+		// console.log(e);
+		if(e.params.data.username)
+			window.location = '/profile/' + e.params.data.id;
+		else 
+			window.location = '/feed/' + e.params.data.id;
 	});
 });
 
 function formatRepo(repo) {
-	let markup = '<div><a href="/login">' + repo.id + '</a></div>';
+	if(repo.loading) return repo.text;
+
+	let markup = '';
+	if(repo.text) { // map to optgroup tag
+		markup = '<div>' + repo.text + '</div>';
+	} else { // map to option tag
+		if(repo.username) {
+			markup = '<div><div style="display: inline-block;"><img src="/img/default-profile.png" height="32" /></div><div style="display: inline-block; margin-left: 15px;"><a style="font-size: large;" href="/profile/' + repo.id + '">' + repo.username + '</a></div></div>';
+		} else {
+			markup = '<div><a href="#">' + repo.user.username + '<br>' + repo.created + '</a></div>';
+		}
+	}
 	return markup;
 }
 
 function formatRepoSelection(repo) {
-	return repo.user.username || repo.id;
+	return repo.id;
 }

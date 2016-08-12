@@ -25,6 +25,12 @@ class FeedController extends Controller
     	return $feeds;
     }
 
+    protected function getById($id) {
+        $feed = Feed::with('user', 'comments.user')->where('id', $id)->get();
+
+        return $feed;
+    }
+
     public function store(Request $request) {
 
     }

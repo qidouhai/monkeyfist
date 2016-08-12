@@ -10,9 +10,13 @@ app.config(function($routeProvider, $locationProvider) {
 		templateUrl: "/app/templates/dashboard.php",
 		controller: "DashboardController"
 	})
-	.when("/test", {
-		templateUrl: "/app/templates/dashboard.php",
-		controller: "DashboardController"
+	.when("/feed/:id", {
+		templateUrl: "/app/templates/feed.php",
+		controller: "FeedController"
+	})
+	.when("/profile/:id", {
+		templateUrl: "/app/templates/profile.php",
+		controller: "ProfileController"
 	});
 
 	$locationProvider.html5Mode(true);
