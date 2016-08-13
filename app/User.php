@@ -39,6 +39,10 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Friend');
     }
 
+    public function feeds() {
+        return $this->hasMany('App\Feed');
+    }
+
     public function getFriendStatus($id) {
 
         if(Auth::user()->id == $id) {

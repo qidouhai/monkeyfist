@@ -20,19 +20,28 @@ class FeedController extends Controller
 
     protected function get($skip, $take) {
     	$user = Auth::user();
-        $feeds = Feed::with('user', 'comments.user')->where('user_id', $user->id)->skip($skip)->take($take)->get();
+        $feeds = Feed::with('user', 'comments.user')->where('user_id', $user->id)->orderBy('id', 'desc')->skip($skip)->take($take)->get();
 
     	return $feeds;
     }
 
     protected function getById($id) {
-        $feed = Feed::with('user', 'comments.user')->where('id', $id)->get();
+        $feed = Feed::with('user', 'comments.user')->where('id', $id)->orderBy('id', 'desc')->get();
 
         return $feed;
     }
 
     public function store(Request $request) {
+        $feed = new Feed;
 
+        $feed->created = $request->created;
+        $feed->user_id = Auth::user()->id;
+        $feed->content = $request->content;
+
+        if($feed->save()) {
+            $feed->user = $feed->user;
+            return $feed;
+        }
     }
 
     public function storeComment(Request $request, $id) {

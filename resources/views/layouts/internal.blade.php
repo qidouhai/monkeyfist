@@ -64,6 +64,7 @@
     <script type="text/javascript" src="/lib/bootstrap/dist/js/bootstrap.js"></script>
     <script type="text/javascript" src="/lib/moment/moment.js"></script>
     <script type="text/javascript" src="/lib/select2/dist/js/select2.full.js"></script>
+    <script type="text/javascript" src="/lib/bootbox.js/bootbox.js"></script>
     <script type="text/javascript" src="/lib/angular/angular.js"></script>
     <script type="text/javascript" src="/lib/angular-route/angular-route.js"></script>
 

@@ -10,6 +10,8 @@ class Feed extends Model
 
     protected $table = 'feed';
 
+    public $timestamps = false;
+
 
  	public function comments() {
  		return $this->hasMany('App\FeedComment');
