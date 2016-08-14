@@ -8,6 +8,7 @@ use Auth;
 use App\Http\Requests;
 use App\FeedComment;
 use App\Feed;
+use Log;
 
 class FeedController extends Controller
 {
@@ -40,6 +41,7 @@ class FeedController extends Controller
 
         if($feed->save()) {
             $feed->user = $feed->user;
+            $feed->comments = $feed->comments;
             return $feed;
         }
     }
@@ -56,5 +58,11 @@ class FeedController extends Controller
             $comment->user = $comment->user;
             return $comment;
         }
+    }
+
+    public function delete($id) {
+        $status = Feed::where([['id', $id],['user_id', Auth::user()->id]])->delete();
+        Log::info($status);
+        return $status;
     }
 }

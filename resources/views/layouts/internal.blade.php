@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/lib/select2/dist/css/select2.css">
+    <link rel="stylesheet" type="text/css" href="/lib/dropzone/dist/dropzone.css">
     <link href='http://fonts.googleapis.com/css?family=Bungee+Inline|Kalam' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="/css/style.css">
 
@@ -65,11 +66,13 @@
     <script type="text/javascript" src="/lib/moment/moment.js"></script>
     <script type="text/javascript" src="/lib/select2/dist/js/select2.full.js"></script>
     <script type="text/javascript" src="/lib/bootbox.js/bootbox.js"></script>
+    <script type="text/javascript" src="/lib/dropzone/dist/dropzone.js"></script>
     <script type="text/javascript" src="/lib/angular/angular.js"></script>
     <script type="text/javascript" src="/lib/angular-route/angular-route.js"></script>
 
     <!-- Custom Scripts -->
     <script type="text/javascript" src="/js/Search.js"></script>
+    <script type="text/javascript" src="/js/InsertImageToPost.js"></script>
 
     <!-- Angular Controller -->
     <script type="text/javascript" src="/app/app.js"></script>

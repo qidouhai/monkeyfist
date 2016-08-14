@@ -21,6 +21,7 @@
     "angular-route": "^1.5.8",
     "moment": "momentjs#^2.14.1",
     "select2": "^4.0.3",
-    "bootbox.js": "^4.4.0"
+    "bootbox.js": "^4.4.0",
+    "dropzone": "^4.3.0"
   }
 }

@@ -1,3 +1,74 @@
+<!-- Create Post Panel -->
+<div class="panel panel-default" style="width: 80%; margin: 15px auto;" ng-if="displayPostInput">
+    <div class="panel-heading">
+        <h3 style="margin: 0px auto;">Create new Post</h3>
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+            <textarea class="form-control" id="post_content" rows="5" placeholder="Write a post..."></textarea>
+        </div>
+    </div>
+    <div class="panel-footer">
+        <div class="row">
+            <div class="col-md-4" >
+                <div class="btn-toolbar" role="toolbar">
+                    <div class="btn-group" role="group">
+                        <button type="button" ng-click="addLinkToPost()" title="Insert Link" class="btn btn-default"><i class="fa fa-link" aria-hidden="true"></i></button>
+                        <button type="button" ng-click="addYoutubeToPost()" title="Insert Youtube Video" class="btn btn-default"><i class="fa fa-youtube" aria-hidden="true"></i></button>
+                        <button type="button" data-toggle="modal" data-target="#insertImageModal" onclick="insertImageFactory.reset()" title="Insert Image" class="btn btn-default"><i class="fa fa-picture-o" aria-hidden="true"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8 text-right">
+                <button type="button" title="Publish Post" ng-click="publishPost()" class="btn btn-success">Publish</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Image To Post Modal -->
+<div class="modal fade" id="insertImageModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Add Image</h4>
+            </div>
+            <div class="modal-body" id="insertImageModal_selection">
+                <div class="list-group">
+                    <a href="#" class="list-group-item" onclick="insertImageFactory.select('imageURL')">
+                        <h4 class="list-group-item-heading">Insert from URL</h4>
+                        <p class="list-group-item-text">Insert an Image from the web by using the Image URL.</p>
+                    </a>
+                    <a href="#" class="list-group-item" onclick="insertImageFactory.select('uploadImage')">
+                        <h4 class="list-group-item-heading">Upload Image</h4>
+                        <p class="list-group-item-text">Upload an image from your device to Monkeyfist.</p>
+                    </a>
+                    <a href="#" class="list-group-item" onclick="insertImageFactory.select('uploadVideo')">
+                        <h4 class="list-group-item-heading">Upload Video</h4>
+                        <p class="list-group-item-text">Upload a video from your device to Monkeyfist.</p>
+                    </a>
+                </div>
+            </div>
+            <!-- Insert from URL body -->
+            <div class="modal-body" id="insertImageModal_imageURL">
+                <div class="form-group">
+                    <label for="inputImageURL">Image URL</label>
+                    <input type="url" class="form-control" id="inputImageURL" placeholder="URL">
+                </div>
+            </div>
+            <!-- Upload Image body -->
+            <div class="modal-body" id="insertImageModal_uploadImage">
+                <div class="dropzone" id="insertImageModal_dropzone"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" onclick="insertImageFactory.next()" id="insertImageModal_submit" class="btn btn-primary">Add to Post</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div ng-repeat="feed in feeds">
 
 	<div class="panel panel-default feed">
@@ -13,7 +84,7 @@
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
-                            <li><a href="#">Remove Feed</a></li>
+                            <li><a href="#"  ng-click="removeFeed(feed.id)">Remove</a></li>
                         </ul>
                     </div>
                 </td>

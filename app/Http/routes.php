@@ -36,13 +36,26 @@ Route::get('/dashboard', function() {
 Route::get('/feeds', 'FeedController@index')->middleware('auth');
 Route::get('/feeds/{id}', 'FeedController@getById')->middleware('auth');
 Route::get('/feeds/skip/{skip}/take/{take}', 'FeedController@get')->middleware('auth');
+
 Route::get('/user/{id}/feeds', 'ProfileController@getFeeds')->middleware('auth');
 Route::get('/user/{id}/feeds/skip/{skip}/take/{take}', 'ProfileController@takeFeeds')->middleware('auth');
-Route::post('/feed', 'FeedController@store')->middleware('auth');
-Route::post('/feed/{id}/comment', 'FeedController@storeComment')->middleware('auth');
+
 Route::get('/search/{query}', 'SearchController@search')->middleware('auth');
 
 Route::get('/friend/{id}', 'ProfileController@profile')->middleware('auth');
+
+
+
+Route::post('/feed', 'FeedController@store')->middleware('auth');
+Route::post('/feed/{id}/comment', 'FeedController@storeComment')->middleware('auth');
+
+Route::post('/feed/images', 'ImageController@upload')->middleware('auth');
+
+
+
+Route::delete('/feed/{id}', 'FeedController@delete')->middleware('auth');
+
+
 
 
 Route::any('{path?}', function() {
