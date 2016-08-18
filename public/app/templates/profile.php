@@ -21,7 +21,7 @@
 				<tr>
 					<td colspan="3" class="text-right">
 						<div class="btn-group" ng-if="info.self">
-							<button type="button" class="btn btn-default">My Friends&nbsp;<i class="fa fa-users" aria-hidden="true"></i></button>
+							<button type="button" data-toggle="modal" data-target="#friendsList" class="btn btn-default">My Friends&nbsp;<i class="fa fa-users" aria-hidden="true"></i></button>
 							<button type="button" class="btn btn-default">Messages&nbsp;<i class="fa fa-envelope" aria-hidden="true"></i></button>
 							<button type="button" class="btn btn-default">Settings&nbsp;<i class="fa fa-cog" aria-hidden="true"></i></button>
 						</div>
@@ -48,6 +48,32 @@
 					</td>
 				</tr>
 			</table>	
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="friendsList" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Your Friends</h4>
+			</div>
+			<div class="modal-body">
+				<table class="table" style="vertical-align: middle;">
+					<tr>
+						<th colspan="2">Name</th>
+						<th>Since</th>
+						<th>Options</th>
+					</tr>
+					<tr>
+						<td><a href="/profile/6"><img class="img-responsive" src="/img/default-profile.png" width="45" /></a></td>
+						<td style="vertical-align: middle;" class="text-left"><a href="/profile/6">Axel Virnich</a></td>
+						<td style="vertical-align: middle;"><span>20.07.2016</span></td>
+						<td style="vertical-align: middle;" class="text-right"><button class="btn btn-danger">Unfriend</button></td>
+					</tr>
+				</table>
+			</div>
 		</div>
 	</div>
 </div>
