@@ -156,3 +156,7 @@
     </div>
 
 </div>
+
+<div class="well" id="feedloader">
+    <a href="" ng-click="getFeeds()">I want more!</a>
+</div>

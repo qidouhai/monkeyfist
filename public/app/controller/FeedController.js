@@ -39,6 +39,7 @@ app.controller("FeedController", function($scope, $http, $routeParams, $location
 		if(!$scope.noMoreFeeds) {
 			$http.get($scope.feedURL).success(function(response) {
 				$scope.feedCounter += $scope.feedSteps;
+				$scope.setFeedURL();
 				for(let i = 0; i < response.length; i++) {
 					$scope.feeds.push(response[i]);
 				}
@@ -113,26 +114,22 @@ app.controller("FeedController", function($scope, $http, $routeParams, $location
 		$('#post_content').val('')
 	};
 
-	$scope.getFeed = function() {
-		if(!$scope.noMoreFeeds) {
-			$http.get('/feeds/' + $routeParams.id).success(function(response) {
-				$scope.feeds = response;
-			});
+	$scope.setFeedURL = function () {
+		if($location.url().includes('feed')) {
+			$scope.feedURL = '/feeds/' + $routeParams.id;
+			$scope.displayPostInput = false;
+			$('#feedloader').hide();
+		} else if($location.url().includes('profile')) {
+			$scope.feedURL = '/user/' + $routeParams.id + '/feeds/skip/' + $scope.feedCounter + '/take/' + $scope.feedSteps;
+			$scope.displayPostInput = true;
+		} else {
+			$scope.feedURL = '/feeds/skip/' + $scope.feedCounter + '/take/' + $scope.feedSteps;
+			$scope.displayPostInput = true;
 		}
 	};
 
-	if($location.url().includes('feed')) {
-		$scope.getFeed();
-		$scope.displayPostInput = false;
-	} else if($location.url().includes('profile')) {
-		$scope.feedURL = '/user/' + $routeParams.id + '/feeds/skip/' + $scope.feedCounter + '/take/' + $scope.feedSteps;
-		$scope.getFeeds();
-		$scope.displayPostInput = true;
-	} else {
-		$scope.feedURL = '/feeds/skip/' + $scope.feedCounter + '/take/' + $scope.feedSteps;
-		$scope.getFeeds();
-		$scope.displayPostInput = true;
-	}
+	$scope.setFeedURL();
+	$scope.getFeeds();
 
 	// let insertImageFactory = null;
 	setTimeout(function() {

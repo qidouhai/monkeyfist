@@ -36,4 +36,27 @@ class ProfileController extends Controller
 
     	return $feeds;
     }
+
+    protected function addFriendRequest($id) {
+        // TODO: if other sent a request already -> make friends, 
+
+        $query = DB::table('friend_request')->insertGetId(['user_id' => Auth::user()->id, 'friend_id' => $id]);
+        return $query;
+    }
+
+    protected function removeFriendRequest($id) {
+
+    }
+
+    protected function addFriend($id) {
+
+        DB::transaction(function($id) use ($id) {
+            $user_id = Auth::user()->id;
+            DB::table('friends')->insert([['user_id' => $user_id, 'friend_id' => $id], ['user_id' => $id, 'friend_id' => $user_id]]);
+
+            DB::table('friend_request')->where([['user_id', $user_id], ['friend_id', $id]])->orWhere([['user_id', $id], ['friend_id', $user_id]])->delete();
+        });
+
+        // return ["data" => [$id, Auth::user()->id]];
+    }
 }

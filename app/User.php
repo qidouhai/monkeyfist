@@ -32,7 +32,7 @@ class User extends Authenticatable
     }
 
     public function friendRequests() {
-        return $this->belongsToMany('App\FriendRequest');
+        return $this->hasMany('App\FriendRequest');
     }
 
     public function friends() {
