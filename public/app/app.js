@@ -1,4 +1,4 @@
-var app = angular.module("internal", ["ngRoute"]);
+var app = angular.module("internal", ['ngRoute', 'ngSanitize', 'ui.select']);
 
 app.config(function($routeProvider, $locationProvider) {
 	$routeProvider

@@ -15,8 +15,8 @@ class SearchController extends Controller
     	$feeds = Feed::with('user', 'comments.user')->where('content', 'like', '%' . $query . '%')->get();
     	$users = User::where('username', 'like', '%' . $query . '%')->get();
 
-    	$useritems = ["text" => "Users", "children" => $users];
-    	$feeditems = ["text" => "Feeds", "children" => $feeds];
+    	$useritems = ["type" => "user", "children" => $users];
+    	$feeditems = ["type" => "feed", "children" => $feeds];
 
     	$result = [$useritems, $feeditems];
 

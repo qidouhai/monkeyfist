@@ -8,6 +8,7 @@ app.controller("ProfileController", function($scope, $http, $routeParams) {
 	};
 
 	$scope.templates = {
+		navbar : '/app/templates/includes/navbar.php',
 		feeds : '/app/templates/feed.php'
 	};
 

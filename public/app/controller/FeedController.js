@@ -13,6 +13,10 @@ app.controller("FeedController", function($scope, $http, $routeParams, $location
 	// Feed url
 	$scope.feedURL = '/feeds/skip/' + $scope.feedCounter + '/take/' + $scope.feedSteps;
 
+	$scope.templates = {
+		navbar : '/app/templates/includes/navbar.php'
+	};
+
 	$scope.submitComment = function(feedId) {
 		let comment_text = $('#comment-text-' + feedId).val().trim();
 
@@ -125,6 +129,7 @@ app.controller("FeedController", function($scope, $http, $routeParams, $location
 			$scope.feedURL = '/feeds/skip/' + $scope.feedCounter + '/take/' + $scope.feedSteps;
 			$scope.displayPostInput = true;
 		}
+		console.log($scope.feedURL);
 	};
 
 	$scope.setFeedURL();
@@ -134,5 +139,5 @@ app.controller("FeedController", function($scope, $http, $routeParams, $location
 	setTimeout(function() {
 		insertImageFactory = new InsertImageFactory();
         insertImageFactory.init();
-	}, 1000);
+	}, 10000);
 });

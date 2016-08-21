@@ -9,6 +9,10 @@ body {
 	font-size: large;
 }
 
+/*.navbar_links {
+	display: inline-block;
+}*/
+
 .navbar_links li:hover {
 	background-color: #750000;
 }
@@ -111,4 +115,17 @@ body {
 
 #friends_list a{
 	font-size: large;
+}
+
+/* Search Bar */
+.ui-select-container {
+	margin-top: 10px;
+}
+
+.dropdown-header {
+	font-size: large;
+}
+
+.ui-select-choices-row {
+	background-color: white;
 }

@@ -9,8 +9,22 @@
 
     <title>Monkeyfist</title>
 
+    <!--
+        IE8 support, see AngularJS Internet Explorer Compatibility http://docs.angularjs.org/guide/ie
+        For Firefox 3.6, you will also need to include jQuery and ECMAScript 5 shim
+    -->
+    <!--[if lt IE 9]>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/2.2.0/es5-shim.js"></script>
+        <script>
+        document.createElement('ui-select');
+        document.createElement('ui-select-match');
+        document.createElement('ui-select-choices');
+        </script>
+    <![endif]-->
     <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/lib/angular-ui-select/dist/select.css">
     <link rel="stylesheet" href="/lib/select2/dist/css/select2.css">
     <link rel="stylesheet" type="text/css" href="/lib/dropzone/dist/dropzone.css">
     <link href='http://fonts.googleapis.com/css?family=Bungee+Inline|Kalam' rel='stylesheet' type='text/css'>
@@ -18,64 +32,28 @@
 
 </head>
 <body id="app-layout" ng-app="internal">
-    <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: #800000">
-        <div class="container">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="/" style="padding-top: 7px;">
-                    <img alt="Brand" src="{{URL::asset('/img/monkeyfist_thumbnail.png')}}" class="img-rounded" height="37" style="margin-top: 1px;">
-                </a>
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
-            <div id="internal_navbar" class="collapse navbar-collapse">
-                <form class="navbar-form navbar-left">
-                    <div class="input-group">
-                        <select class="search-bar form-control" multiple="multiple" style="width: 300px;">
-                        </select>
-                        <!-- <span class="input-group-btn">
-                            <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
-                        </span> -->
-                    </div>
-                </form>
-                <div class="navbar_links">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="/profile/{{ $user->id }}" title="Profile">{{ $user->prename }}</a></li>
-                        <li><a href="/dashboard" title="Dashboard">Dashboard</a></li>
-                        <li><a href="#" title="Friend Requests"><i class="fa fa-user-plus"></i></a></li>
-                        <li><a href="#" title="Messages"><i class="fa fa-envelope-o"></i></a></li>
-                        <li><a href="/logout" title="Sign Out"><i class="fa fa-sign-out"></i></a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </nav>
 
-    <div class="container-fluid">
-        @yield('content')
-    </div>
-    <div class="container-fluid" ng-view>
+    <div ng-view>
 
     </div>
 
+    <!-- Frameworks and Libraries -->
     <script type="text/javascript" src="/lib/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="/lib/bootstrap/dist/js/bootstrap.js"></script>
     <script type="text/javascript" src="/lib/moment/moment.js"></script>
-    <script type="text/javascript" src="/lib/select2/dist/js/select2.full.js"></script>
     <script type="text/javascript" src="/lib/bootbox.js/bootbox.js"></script>
     <script type="text/javascript" src="/lib/dropzone/dist/dropzone.js"></script>
     <script type="text/javascript" src="/lib/angular/angular.js"></script>
     <script type="text/javascript" src="/lib/angular-route/angular-route.js"></script>
+    <script type="text/javascript" src="/lib/angular-sanitize/angular-sanitize.js"></script>
+    <script type="text/javascript" src="/lib/angular-ui-select/dist/select.js"></script>
 
     <!-- Custom Scripts -->
-    <script type="text/javascript" src="/js/Search.js"></script>
     <script type="text/javascript" src="/js/InsertImageToPost.js"></script>
 
     <!-- Angular Controller -->
     <script type="text/javascript" src="/app/app.js"></script>
+    <script type="text/javascript" src="/app/controller/NavbarController.js"></script>
     <script type="text/javascript" src="/app/controller/DashboardController.js"></script>
     <script type="text/javascript" src="/app/controller/FeedController.js"></script>
     <script type="text/javascript" src="/app/controller/ProfileController.js"></script>
