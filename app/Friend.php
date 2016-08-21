@@ -9,7 +9,7 @@ class Friend extends Model
     
     protected $table = 'friends';
 
-    public function users() {
-    	$this->belongsToMany('App\User');
+    public function user() {
+    	return $this->belongsTo('App\User');
     } 
 }

@@ -157,6 +157,6 @@
 
 </div>
 
-<div class="well" id="feedloader">
+<div class="well" id="feedloader" ng-if="!noMoreFeeds">
     <a href="" ng-click="getFeeds()">I want more!</a>
 </div>

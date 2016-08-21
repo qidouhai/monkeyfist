@@ -59,4 +59,10 @@ class ProfileController extends Controller
 
         // return ["data" => [$id, Auth::user()->id]];
     }
+
+    // returns friends and open friend requests of current user
+    protected function getFriends() {
+        $requests = User::with('friends.user','friendRequests.user')->where('id', Auth::user()->id)->get();
+        return ["requests" => $requests[0]['friendRequests'], "friends" => $requests[0]['friends']];
+    }
 }

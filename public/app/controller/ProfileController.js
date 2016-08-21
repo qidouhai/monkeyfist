@@ -2,6 +2,11 @@ var app = angular.module("internal");
 
 app.controller("ProfileController", function($scope, $http, $routeParams) {
 
+	$scope.social = {
+		requests : null,
+		friends : null
+	};
+
 	$scope.templates = {
 		feeds : '/app/templates/feed.php'
 	};
@@ -10,6 +15,17 @@ app.controller("ProfileController", function($scope, $http, $routeParams) {
 		$scope.info = response;
 		console.log(response);
 	});
+
+	$scope.getFriends = function() {
+		$http.get('/user/friends').then(
+			function(response) {
+				console.log(response);
+				$scope.social.requests = response.data.requests;
+				$scope.social.friends = response.data.friends;
+			}, function(response) {
+				console.log(response);
+			});
+	};
 
 	$scope.sendFriendRequest = function() {
 		let id = $routeParams.id;
@@ -44,5 +60,8 @@ app.controller("ProfileController", function($scope, $http, $routeParams) {
 	function handleError(response) {
 		console.log(response);
 	};
+
+
+	$scope.getFriends();
 
 });

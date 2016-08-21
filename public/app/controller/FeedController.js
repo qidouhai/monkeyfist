@@ -13,7 +13,6 @@ app.controller("FeedController", function($scope, $http, $routeParams, $location
 	// Feed url
 	$scope.feedURL = '/feeds/skip/' + $scope.feedCounter + '/take/' + $scope.feedSteps;
 
-
 	$scope.submitComment = function(feedId) {
 		let comment_text = $('#comment-text-' + feedId).val().trim();
 
@@ -121,7 +120,7 @@ app.controller("FeedController", function($scope, $http, $routeParams, $location
 			$('#feedloader').hide();
 		} else if($location.url().includes('profile')) {
 			$scope.feedURL = '/user/' + $routeParams.id + '/feeds/skip/' + $scope.feedCounter + '/take/' + $scope.feedSteps;
-			$scope.displayPostInput = true;
+			$scope.displayPostInput = ($scope.user.id == $routeParams.id);
 		} else {
 			$scope.feedURL = '/feeds/skip/' + $scope.feedCounter + '/take/' + $scope.feedSteps;
 			$scope.displayPostInput = true;

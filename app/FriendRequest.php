@@ -9,7 +9,7 @@ class FriendRequest extends Model
     
     protected $table = 'friend_request';
 
-    public function users() {
-    	$this->belongsTo('App\User');
+    public function user() {
+    	return $this->belongsTo('App\User');
     } 
 }

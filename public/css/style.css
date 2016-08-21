@@ -104,3 +104,11 @@ body {
 	font-size: x-large;
 	color: #800000;
 }
+
+.profile_buttons {
+	vertical-align: bottom;
+}
+
+#friends_list a{
+	font-size: large;
+}
