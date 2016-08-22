@@ -44,12 +44,20 @@ class ProfileController extends Controller
         return $query;
     }
 
-    protected function removeFriendRequest($id) {
+    protected function answerFriendRequest(Request $request) {
+        if($request->answer)
+            $this->addFriend($request->id);
+        else
+            $this->removeFriendRequest($request->id);
+    }
 
+    protected function removeFriendRequest($id) {
+        $user_id = Auth::user()->id;
+        $query = DB::table('friend_request')->where([['user_id', $user_id], ['friend_id', $id]])->orWhere([['friend_id', $user_id],['user_id', $id]])->delete();
+        return ['status' => 'success', 'user_id' => $id];
     }
 
     protected function addFriend($id) {
-
         DB::transaction(function($id) use ($id) {
             $user_id = Auth::user()->id;
             DB::table('friends')->insert([['user_id' => $user_id, 'friend_id' => $id], ['user_id' => $id, 'friend_id' => $user_id]]);
@@ -57,7 +65,13 @@ class ProfileController extends Controller
             DB::table('friend_request')->where([['user_id', $user_id], ['friend_id', $id]])->orWhere([['user_id', $id], ['friend_id', $user_id]])->delete();
         });
 
-        // return ["data" => [$id, Auth::user()->id]];
+        return ["friend_id" => $id, "user_id" => Auth::user()->id];
+    }
+
+    protected function removeFriend(Request $request) {
+        $user_id = Auth::user()->id;
+        $query = DB::table('friends')->where([['user_id', $user_id], ['friend_id', $request->id]])->orWhere([['user_id', $request->id], ['friend_id', $user_id]])->delete();
+        return ["friend_id" => $request->id, "id" => $user_id];
     }
 
     // returns friends and open friend requests of current user

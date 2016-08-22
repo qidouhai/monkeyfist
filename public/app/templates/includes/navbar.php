@@ -76,8 +76,8 @@
                         <td style="vertical-align: middle;" class="text-left"><a href="/profile/{{ request.user.id }}">{{ request.user.username }}</a></td>
                         <td style="vertical-align: middle;"><span>{{ request.created }}</span></td>
                         <td style="vertical-align: middle;" class="text-right">
-                            <button class="btn btn-primary">Accept</button>
-                            <button class="btn btn-warning">Deny</button>
+                            <button class="btn btn-primary" ng-click="answerFriendRequest(request.user.id, true)">Accept</button>
+                            <button class="btn btn-warning" ng-click="answerFriendRequest(request.user.id, false)">Deny</button>
                         </td>
                     </tr>
                     <tr ng-repeat="friend in social.friends">
@@ -85,7 +85,7 @@
                         <td style="vertical-align: middle;" class="text-left"><a href="/profile/{{ friend.user.id }}">{{ friend.user.username }}</a></td>
                         <td style="vertical-align: middle;"><span>{{ friend.created }}</span></td>
                         <td style="vertical-align: middle;" class="text-right">
-                            <button class="btn btn-warning">Unfriend</button>
+                            <button class="btn btn-warning" ng-click="unfriend(friend.user.id)">Unfriend</button>
                         </td>
                     </tr>
                 </table>

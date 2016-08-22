@@ -54,7 +54,8 @@ Route::post('/feed/{id}/comment', 'FeedController@storeComment')->middleware('au
 Route::post('/feed/images', 'ImageController@upload')->middleware('auth');
 
 Route::post('/user/friends/request/{id}', 'ProfileController@addFriendRequest')->middleware('auth');
-Route::post('/user/friends/{id}', 'ProfileController@addFriend')->middleware('auth');
+Route::post('/user/friends', 'ProfileController@answerFriendRequest')->middleware('auth');
+Route::post('/user/friends/remove', 'ProfileController@removeFriend')->middleware('auth');
 
 
 

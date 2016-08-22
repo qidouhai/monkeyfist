@@ -26,6 +26,8 @@ app.controller("ProfileController", function($scope, $http, $routeParams) {
 		if(answer) {
 			$http.post('/user/friends/' + id).then(
 				function(response) {
+					// as this is only for the profile page, 
+					// there is no need for a deny option
 					acceptFriendRequest(response);
 				}, function(response) {
 					handleError(response);
