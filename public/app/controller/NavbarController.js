@@ -32,5 +32,23 @@ app.controller("NavbarController", function($scope, $http, $routeParams) {
     	if(item.type == 'feed') {
     		return 'Feeds';
     	}
-    }
+    };
+
+
+    $scope.social = {
+		requests : null,
+		friends : null
+	};
+
+	$scope.getFriends = function() {
+		$http.get('/user/friends').then(
+			function(response) {
+				$scope.social.requests = response.data.requests;
+				$scope.social.friends = response.data.friends;
+			}, function(response) {
+				console.log(response);
+			});
+	};
+
+	$scope.getFriends();
 });

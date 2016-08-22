@@ -17,7 +17,7 @@
             <div class="col-md-11">
                 <div id="internal_navbar" class="collapse navbar-collapse">
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="form-group" style="margin-bottom: 0px;">
                                 <ui-select ng-model="selectedItem" theme="bootstrap">
                                     <ui-select-match placeholder="Search for persons or feeds...">
@@ -37,12 +37,12 @@
                                 </ui-select>
                             </div>
                         </div>
-                        <div class="col-md-9">
+                        <div class="col-md-8">
                             <div class="navbar_links text-right">
                                 <ul class="nav navbar-nav navbar-right">
                                     <li><a href="/profile/{{ user.id }}" title="Profile">{{ user.username }}</a></li>
                                     <li><a href="/dashboard" title="Dashboard">Dashboard</a></li>
-                                    <li><a href="/" title="Your Friends"><i class="fa fa-users"></i></a></li>
+                                    <li><a href="#" data-toggle="modal" data-target="#friends_list" title="Your Friends"><i class="fa fa-users"></i></a></li>
                                     <!-- <li><a href="#" title="Friend Requests"><i class="fa fa-user-plus"></i></a></li> -->
                                     <li><a href="#" title="Messages"><i class="fa fa-envelope-o"></i></a></li>
                                     <li><a href="/logout" title="Sign Out"><i class="fa fa-sign-out"></i></a></li>
@@ -55,3 +55,41 @@
         </div>
     </div>
 </nav>
+
+<!-- Friends List -->
+<div class="modal fade" id="friends_list" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Your Friends</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table" style="vertical-align: middle;">
+                    <tr>
+                        <th colspan="2">Name</th>
+                        <th>Since</th>
+                        <th>Options</th>
+                    </tr>
+                    <tr ng-repeat="request in social.requests">
+                        <td><a href="/profile/{{ request.user.id }}"><img class="img-responsive" src="/img/default-profile.png" width="45" /></a></td>
+                        <td style="vertical-align: middle;" class="text-left"><a href="/profile/{{ request.user.id }}">{{ request.user.username }}</a></td>
+                        <td style="vertical-align: middle;"><span>{{ request.created }}</span></td>
+                        <td style="vertical-align: middle;" class="text-right">
+                            <button class="btn btn-primary">Accept</button>
+                            <button class="btn btn-warning">Deny</button>
+                        </td>
+                    </tr>
+                    <tr ng-repeat="friend in social.friends">
+                        <td><a href="/profile/{{ friend.user.id }}"><img class="img-responsive" src="/img/default-profile.png" width="45"></a></td>
+                        <td style="vertical-align: middle;" class="text-left"><a href="/profile/{{ friend.user.id }}">{{ friend.user.username }}</a></td>
+                        <td style="vertical-align: middle;"><span>{{ friend.created }}</span></td>
+                        <td style="vertical-align: middle;" class="text-right">
+                            <button class="btn btn-warning">Unfriend</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

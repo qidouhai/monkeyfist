@@ -2,31 +2,11 @@ var app = angular.module("internal");
 
 app.controller("ProfileController", function($scope, $http, $routeParams) {
 
-	$scope.social = {
-		requests : null,
-		friends : null
-	};
-
-	$scope.templates = {
-		navbar : '/app/templates/includes/navbar.php',
-		feeds : '/app/templates/feed.php'
-	};
+	$(".modal-backdrop").hide();
 
 	$http.get('/friend/' + $routeParams.id).success(function(response) {
 		$scope.info = response;
-		console.log(response);
 	});
-
-	$scope.getFriends = function() {
-		$http.get('/user/friends').then(
-			function(response) {
-				console.log(response);
-				$scope.social.requests = response.data.requests;
-				$scope.social.friends = response.data.friends;
-			}, function(response) {
-				console.log(response);
-			});
-	};
 
 	$scope.sendFriendRequest = function() {
 		let id = $routeParams.id;
@@ -61,8 +41,4 @@ app.controller("ProfileController", function($scope, $http, $routeParams) {
 	function handleError(response) {
 		console.log(response);
 	};
-
-
-	$scope.getFriends();
-
 });

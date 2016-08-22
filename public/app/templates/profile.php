@@ -1,5 +1,5 @@
 
-<div ng-include="templates.navbar" ng-controller="NavbarController"></div>
+<div ng-include="'/app/templates/includes/navbar.php'" ng-controller="NavbarController"></div>
 
 <div class="container-fluid">
 
@@ -60,43 +60,6 @@
 	    </div>
 	</div>
 
-	<div class="modal fade" id="friends_list" tabindex="-1" role="dialog">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title">Your Friends</h4>
-				</div>
-				<div class="modal-body">
-					<table class="table" style="vertical-align: middle;">
-						<tr>
-							<th colspan="2">Name</th>
-							<th>Since</th>
-							<th>Options</th>
-						</tr>
-						<tr ng-repeat="request in social.requests">
-							<td><a href="/profile/{{ request.user.id }}"><img class="img-responsive" src="/img/default-profile.png" width="45" /></a></td>
-							<td style="vertical-align: middle;" class="text-left"><a href="/profile/{{ request.user.id }}">{{ request.user.username }}</a></td>
-							<td style="vertical-align: middle;"><span>{{ request.created }}</span></td>
-							<td style="vertical-align: middle;" class="text-right">
-								<button class="btn btn-primary">Accept</button>
-								<button class="btn btn-warning">Deny</button>
-							</td>
-						</tr>
-						<tr ng-repeat="friend in social.friends">
-							<td><a href="/profile/{{ friend.user.id }}"><img class="img-responsive" src="/img/default-profile.png" width="45"></a></td>
-							<td style="vertical-align: middle;" class="text-left"><a href="/profile/{{ friend.user.id }}">{{ friend.user.username }}</a></td>
-							<td style="vertical-align: middle;"><span>{{ friend.created }}</span></td>
-							<td style="vertical-align: middle;" class="text-right">
-								<button class="btn btn-warning">Unfriend</button>
-							</td>
-						</tr>
-					</table>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div ng-include="templates.feeds" ng-controller="FeedController"></div>
+	<div ng-include="'/app/templates/feed.php'" ng-controller="FeedController"></div>
 
 </div>

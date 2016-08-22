@@ -17,6 +17,31 @@ app.controller("FeedController", function($scope, $http, $routeParams, $location
 		navbar : '/app/templates/includes/navbar.php'
 	};
 
+	$scope.displayNavbar = false;
+
+	insertImageFactory = new InsertImageFactory();
+
+	$scope.dropzoneConfig = {
+		'options': {
+			'url': '/feed/images',
+			'method': 'post',
+			'maxFileSize': 3,
+			'uploadMultiple': false,
+			'maxFiles': 1,
+			'acceptedFiles': 'image/*',
+			'init': function() {
+				insertImageFactory.dropzone = this;
+			}
+		},
+		'eventHandlers': {
+			'success': function(file,response) {
+				let imageLink = '<img src="' + response.filename + '" class="img-responsive">';
+				insertImageFactory.dropzone.removeFile(file);
+				insertImageFactory.insert(imageLink);
+			}
+		}
+	};
+
 	$scope.submitComment = function(feedId) {
 		let comment_text = $('#comment-text-' + feedId).val().trim();
 
@@ -121,6 +146,7 @@ app.controller("FeedController", function($scope, $http, $routeParams, $location
 		if($location.url().includes('feed')) {
 			$scope.feedURL = '/feeds/' + $routeParams.id;
 			$scope.displayPostInput = false;
+			$scope.displayNavbar = true;
 			$('#feedloader').hide();
 		} else if($location.url().includes('profile')) {
 			$scope.feedURL = '/user/' + $routeParams.id + '/feeds/skip/' + $scope.feedCounter + '/take/' + $scope.feedSteps;
@@ -129,15 +155,8 @@ app.controller("FeedController", function($scope, $http, $routeParams, $location
 			$scope.feedURL = '/feeds/skip/' + $scope.feedCounter + '/take/' + $scope.feedSteps;
 			$scope.displayPostInput = true;
 		}
-		console.log($scope.feedURL);
 	};
 
 	$scope.setFeedURL();
 	$scope.getFeeds();
-
-	// let insertImageFactory = null;
-	setTimeout(function() {
-		insertImageFactory = new InsertImageFactory();
-        insertImageFactory.init();
-	}, 10000);
 });

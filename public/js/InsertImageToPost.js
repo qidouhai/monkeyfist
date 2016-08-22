@@ -5,16 +5,6 @@ function InsertImageFactory() {
 	this.dropzone = null;
 
 	InsertImageFactory.prototype.init = function() {
-		// init dropzone
-		this.dropzone = new Dropzone("div#insertImageModal_dropzone", { url: "/feed/images", method: "post", maxFileSize: 3, uploadMultiple: false, maxFiles: 1, acceptedFiles: 'image/*'});
-
-		this.dropzone.on('success', function(file, response) {
-			console.log(response);
-			let imageLink = '<img src="' + response.filename + '" class="img-responsive">';
-			insertImageFactory.dropzone.removeFile(file);
-			insertImageFactory.insert(imageLink);
-		});
-
 		// hide modal bodies
 		$('#insertImageModal_imageURL').hide();
 		$('#insertImageModal_uploadImage').hide();
