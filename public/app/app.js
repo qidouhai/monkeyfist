@@ -45,6 +45,20 @@ app.config(function($routeProvider, $locationProvider) {
 		resolve: {
 			login: checkLogin
 		}
+	})
+	.when("/messenger/:id", {
+		templateUrl: "/app/templates/messenger.php",
+		controller: "MessengerController",
+		resolve: {
+			login: checkLogin
+		}
+	})
+	.when("/messenger", {
+		templateUrl: "/app/templates/messenger.php",
+		controller: "MessengerController",
+		resolve: {
+			login: checkLogin
+		}
 	});
 
 	$locationProvider.html5Mode(true);

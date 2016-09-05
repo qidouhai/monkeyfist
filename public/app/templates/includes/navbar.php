@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: #800000">
+<nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: #800000; margin-bottom: 0px;">
     <div class="container">
         <div class="row">
             <div class="col-md-1">
@@ -44,7 +44,7 @@
                                     <li><a href="/dashboard" title="Dashboard">Dashboard</a></li>
                                     <li><a href="#" data-toggle="modal" data-target="#friends_list" title="Your Friends"><i class="fa fa-users"></i></a></li>
                                     <!-- <li><a href="#" title="Friend Requests"><i class="fa fa-user-plus"></i></a></li> -->
-                                    <li><a href="#" title="Messages"><i class="fa fa-envelope-o"></i></a></li>
+                                    <li><a href="/messenger" title="Messages"><i class="fa fa-envelope-o"></i></a></li>
                                     <li><a href="/logout" title="Sign Out"><i class="fa fa-sign-out"></i></a></li>
                                 </ul>
                             </div>

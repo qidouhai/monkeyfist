@@ -57,5 +57,6 @@
     <script type="text/javascript" src="/app/controller/DashboardController.js"></script>
     <script type="text/javascript" src="/app/controller/FeedController.js"></script>
     <script type="text/javascript" src="/app/controller/ProfileController.js"></script>
+    <script type="text/javascript" src="/app/controller/MessengerController.js"></script>
 </body>
 </html>

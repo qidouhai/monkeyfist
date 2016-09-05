@@ -12,6 +12,7 @@ class CreateConversationTable extends Migration
         Schema::create('conversations', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
+            $table->string('title', 100)->nullable();
         });
     }
 
