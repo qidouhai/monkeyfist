@@ -51,8 +51,13 @@
     <!-- Custom Scripts -->
     <script type="text/javascript" src="/js/InsertImageToPost.js"></script>
 
-    <!-- Angular Controller -->
+    <!-- Angular App -->
     <script type="text/javascript" src="/app/app.js"></script>
+
+    <!-- Angular Services -->
+    <script type="text/javascript" src="/app/services/socialService.js"></script>
+
+    <!-- Angular Controller -->
     <script type="text/javascript" src="/app/controller/NavbarController.js"></script>
     <script type="text/javascript" src="/app/controller/DashboardController.js"></script>
     <script type="text/javascript" src="/app/controller/FeedController.js"></script>

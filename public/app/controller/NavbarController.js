@@ -1,6 +1,6 @@
 var app = angular.module("internal");
 
-app.controller("NavbarController", function($scope, $http, $routeParams) {
+app.controller("NavbarController", function($scope, $http, $routeParams, socialService) {
 
 	$scope.items = [];
 
@@ -34,54 +34,33 @@ app.controller("NavbarController", function($scope, $http, $routeParams) {
     	}
     };
 
-    $scope.social = {
-		requests : null,
-		friends : null
-	};
-
+    // request all friends and friend requests
 	$scope.getFriends = function() {
-		$http.get('/user/friends').then(
-			function(response) {
-				$scope.social.requests = response.data.requests;
-				$scope.social.friends = response.data.friends;
-				console.log($scope.social);
-			}, function(response) {
-				console.log(response);
-			});
+		socialService.list().then(function(friends) {
+			$scope.social = friends;
+		});
 	};
-
-	$scope.getFriends();
 
 	$scope.answerFriendRequest = function(id, answer) {
-		let request = {
-			id: id,
-			answer: answer
-		};
-		$http.post('/user/friends', request).then(
-			function(response) {
-				if(answer)
-					acceptFriendRequest(id, response);
-				else 
-					denyFriendRequest(id, response);
-			}, function(response) {
-				handleError(response);
-			});
+		socialService.answerFriendRequest({id: id, answer: answer}).then(function(response) {
+			if(answer)
+				acceptFriendRequest(id, response);
+			else
+				denyFriendRequest(id, response);
+		});
 	};
 
 	$scope.unfriend = function(id) {
-		$http.post('/user/friends/remove', {'id': id}).then(
-			function(response) {
-				if(response.data) {
-					for(let i = 0; i < $scope.social.friends.length; i++) {
-						if($scope.social.friends[i].user_id == response.data.friend_id) {
-							// remove friend from friends list
-							$scope.social.friends.splice(i,1);
-						}
+		socialService.removeFriend({id: id}).then(function(response) {
+			if(response) {
+				for(let i = 0; i < $scope.social.friends.length; i++) {
+					if($scope.social.friends[i].user_id == response.friend_id) {
+						// remove friend from friends list
+						$scope.social.friends.splice(i,1);
 					}
 				}
-			}, function(response) {
-				handleError(response);
-			});
+			}																			
+		});
 	}
 
 	function acceptFriendRequest(id, response) {
@@ -104,7 +83,8 @@ app.controller("NavbarController", function($scope, $http, $routeParams) {
 		}
 	};
 
-	function handleError(response) {
-		console.log(response);
-	};
+
+	// stores the friends and requests
+    $scope.social;
+    $scope.getFriends();
 });
