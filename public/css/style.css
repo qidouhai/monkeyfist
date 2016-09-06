@@ -216,7 +216,6 @@ body {
 
 .sidebar-nav > .sidebar-brand {
     height: 65px;
-    font-size: 18px;
     line-height: 60px;
 }
 
@@ -243,4 +242,18 @@ body {
         padding: 20px;
         position: relative;
     }
+}
+
+.message_container_head a:link, .message_container_head a:visited {
+    text-decoration: none;
+    color: #800000;
+    font-size: 1.2em;
+}
+
+.message_container_head a:hover {
+    text-decoration: underline;
+}
+
+.message_container_head span {
+    color: #999999;
 }

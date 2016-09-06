@@ -21,30 +21,6 @@
 					</div>
 				</a>
 			</li>
-			<li class="sidebar-brand">
-				<a href="#">
-					<div>
-						<div style="display: inline-block;">
-                            <img src="/img/default-profile.png" height="32" />
-                        </div>
-                        <div style="display: inline-block;>
-                            <span style="font-size: large">Michael Ostwald</span>
-                        </div>
-					</div>
-				</a>
-			</li>
-			<li class="sidebar-brand">
-				<a href="#">
-					<div>
-						<div style="display: inline-block;">
-                            <img src="/img/default-profile.png" height="32" />
-                        </div>
-                        <div style="display: inline-block;>
-                            <span style="font-size: large">Michael Henschel</span>
-                        </div>
-					</div>
-				</a>
-			</li>
 		</ul>
 	</div>
 
@@ -53,7 +29,27 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-lg-12">
-					<p>This is where the messages will be displayed!</p>
+                    <div style="width: 70%;">
+
+                        <div class="message_wrapper">
+
+                            <div class="message_container">
+                                <div class="message_container_head">
+                                    <a href="/profile/1">Axel Virnich</a>
+                                    <span>17.09.2016 12:38</span>
+                                </div>
+                                <div class="message_container_body">
+                                    <p>Sample text!</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="message_input" class="form-group">
+                            <textarea class="form-control" rows="3" placeholder="Write a message..."></textarea>
+                        </div>
+
+                    </div>
 				</div>
 			</div>
 		</div>
