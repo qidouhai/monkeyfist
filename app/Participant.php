@@ -8,6 +8,7 @@ class Participant extends Model
 {
     
     protected $table = 'participants';
+    public $timestamps = false;
 
     public function conversation() {
     	return $this->belongsTo('App\Conversation');
@@ -15,5 +16,9 @@ class Participant extends Model
 
     public function messages() {
     	return $this->hasMany('App\Message');
+    }
+
+    public function user() {
+    	return $this->belongsTo('App\User');
     }
 }

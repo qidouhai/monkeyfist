@@ -13,6 +13,7 @@ class CreateConversationTable extends Migration
             $table->increments('id');
             $table->timestamps();
             $table->string('title', 100)->nullable();
+            $table->timestamp('last_message');
         });
     }
 

@@ -47,6 +47,7 @@ Route::get('/search/{query}', 'SearchController@search')->middleware('auth');
 
 Route::get('/friend/{id}', 'ProfileController@profile')->middleware('auth');
 
+Route::get('/conversation', 'MessengerController@getConversations')->middleware('auth');
 
 
 Route::post('/feed', 'FeedController@store')->middleware('auth');
@@ -56,6 +57,9 @@ Route::post('/feed/images', 'ImageController@upload')->middleware('auth');
 Route::post('/user/friends/request/{id}', 'ProfileController@addFriendRequest')->middleware('auth');
 Route::post('/user/friends', 'ProfileController@answerFriendRequest')->middleware('auth');
 Route::post('/user/friends/remove', 'ProfileController@removeFriend')->middleware('auth');
+
+Route::post('/conversation', 'MessengerController@createConversation')->middleware('auth');
+Route::post('/message', 'MessengerController@addMessage')->middleware('auth');
 
 
 

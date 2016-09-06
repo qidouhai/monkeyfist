@@ -56,6 +56,7 @@
 
     <!-- Angular Services -->
     <script type="text/javascript" src="/app/services/socialService.js"></script>
+    <script type="text/javascript" src="/app/services/msgService.js"></script>
 
     <!-- Angular Controller -->
     <script type="text/javascript" src="/app/controller/NavbarController.js"></script>

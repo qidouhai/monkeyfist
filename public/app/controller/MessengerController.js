@@ -1,15 +1,16 @@
 var app = angular.module("internal");
 
-app.controller("MessengerController", function($scope, $http, $location, socialService) {
+app.controller("MessengerController", function($scope, $http, $location, msgService) {
 
-	// request all friends and friend requests
-	$scope.getFriends = function() {
-		socialService.list().then(function(friends) {
-			$scope.social = friends;
+	$scope.conversations;
+
+	$scope.getConversations = function() {
+		msgService.getConversations().then(function(response) {
+			$scope.conversations = response;
+			console.log($scope.conversations);
 		});
 	};
 
-	$scope.social;
-	$scope.getFriends();
+	$scope.getConversations();
 
 });
