@@ -58,17 +58,43 @@ class MessengerController extends Controller
 		}])->whereIn('id', $conversations)->get();
 	}
 
+	// get all messages of a conversation
+	protected function getMessages($id) {
+		// check if conversation exists
+		$conversation = Conversation::find($id);
+		if($conversation == null)
+			return ["exists" => false];
+
+		// check if user is member of the conversation
+		$participant = Participant::where([['user_id', Auth::user()->id],['conversation_id', $id]])->get();
+		if($participant->isEmpty())
+			return ['exists' => true, 'member' => false];
+
+		// get messages of conversation
+		$messages = Message::with(['participant' => function($query) {
+			$query->with(['user' => function($query) {
+				$query->select('id', 'username', 'picture');
+			}]);
+		}])->where('conversation_id', $id)->orderBy('created_at', 'desc')->get();
+		return ["exists" => true, "member" => true, "messages" => $messages];
+	}
+
 	// add a message to a conversation and update its last_message timestamp
 	protected function addMessage(Request $request) {
 		$message = new Message;
 
+		$user = Participant::where([['user_id', Auth::user()->id],['conversation_id', $request->conversation_id]])->first(['id']);
+		if($user == null)
+			return ['saved' => false];
+
 		$message->conversation_id = $request->conversation_id;
-		$message->participant = Auth::user()->id;
+		$message->participant = $user->id;
 		$message->body = $request->body;
 
-		$message->save();
-
-		return ['saved' => true];
+		if($message->save()) {
+			return ['saved' => true];
+		}
+		return ['saved' => false];
 	}
 
 	// update last read of timestamp of a conversation

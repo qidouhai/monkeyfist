@@ -49,6 +49,7 @@ Route::get('/friend/{id}', 'ProfileController@profile')->middleware('auth');
 
 Route::get('/conversation', 'MessengerController@getConversations')->middleware('auth');
 
+Route::get('/conversation/{id}/messages', 'MessengerController@getMessages')->middleware('auth');
 
 Route::post('/feed', 'FeedController@store')->middleware('auth');
 Route::post('/feed/{id}/comment', 'FeedController@storeComment')->middleware('auth');

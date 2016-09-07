@@ -6,7 +6,7 @@ angular.module('internal').service('msgService', function($http) {
 				return response.data;
 			},
 			function error(response) {
-				console.log('Error: ' + response);
+				console.log(response);
 			}
 		);
 	};
@@ -17,7 +17,7 @@ angular.module('internal').service('msgService', function($http) {
 				return response.data;
 			},
 			function error(response) {
-				console.log('Error: ' + response);
+				console.log(response);
 			}
 		);
 	};
@@ -28,9 +28,20 @@ angular.module('internal').service('msgService', function($http) {
 				return response.data;
 			},
 			function error(response) {
-				console.log('Error: ' + response);
+				console.log(response);
 			}
 		);
-	}
+	};
+
+	this.getMessages = function(conversationId) {
+		return $http.get('/conversation/' + conversationId + '/messages').then(
+			function success(response) {
+				return response.data;
+			},
+			function error(response) {
+				console.log(response);
+			}
+		);
+	};
 
 });

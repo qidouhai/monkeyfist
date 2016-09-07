@@ -172,7 +172,6 @@ body {
 #messenger_content {
     width: 100%;
     position: absolute;
-    padding: 15px;
 }
 
 #messenger.toggled #messenger_content {
@@ -239,15 +238,25 @@ body {
     }
 
     #messenger_content {
-        padding: 20px;
         position: relative;
     }
+}
+
+.message_wrapper {
+    padding: 20px 30px;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    overflow-y: auto;
+}
+
+.message_input_wrapper {
+    padding: 20px 30px;
+    border-right: 1px solid black;
 }
 
 .message_container_head a:link, .message_container_head a:visited {
     text-decoration: none;
     color: #800000;
-    font-size: 1.2em;
 }
 
 .message_container_head a:hover {
@@ -256,4 +265,5 @@ body {
 
 .message_container_head span {
     color: #999999;
+    font-size: 0.7em;
 }

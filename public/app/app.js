@@ -46,7 +46,7 @@ app.config(function($routeProvider, $locationProvider) {
 			login: checkLogin
 		}
 	})
-	.when("/messenger/:id", {
+	.when("/messenger/:conversationId", {
 		templateUrl: "/app/templates/messenger.php",
 		controller: "MessengerController",
 		resolve: {

@@ -14,6 +14,6 @@ class Message extends Model
     }
 
     public function participant() {
-    	return $this->belongsTo('App\Participant');
+    	return $this->belongsTo('App\Participant', 'participant');
     }
 }

@@ -26,27 +26,38 @@
 
 	<!-- Main -->
 	<div id="messenger_content">
-		<div class="container-fluid">
+		<div class="container-fluid" style="padding: 0px;">
 			<div class="row">
-				<div class="col-lg-12">
+				<div class="col-lg-12" style="padding: 0px;">
                     <div style="width: 70%;">
 
                         <div class="message_wrapper">
 
-                            <div class="message_container">
+                            <div class="message_container" ng-repeat="message in messages">
                                 <div class="message_container_head">
-                                    <a href="/profile/1">Axel Virnich</a>
-                                    <span>17.09.2016 12:38</span>
+                                    <a href="/profile/{{ message.participant.user.id }}">{{ message.participant.user.username }}</a>
+                                    <span>{{ message.created_at }}</span>
                                 </div>
                                 <div class="message_container_body">
-                                    <p>Sample text!</p>
+                                    <p>{{ message.body }}</p>
                                 </div>
                             </div>
 
                         </div>
 
-                        <div class="message_input" class="form-group">
-                            <textarea class="form-control" rows="3" placeholder="Write a message..."></textarea>
+                        <div class="message_input_wrapper" style="background-color: #f6f7f9;>
+
+                            <div class="form-group message_input" style="background-color: white;">
+                                <form ng-submit="submitMessage()">
+                                    <div class="message_input_row1" style="border-top: 1px solid #ccc; border-right: 1px solid #ccc; border-left: 1px solid #ccc; border-bottom: 1px solid #e6e6e6;">
+                                        <textarea id="message_input_field" style="border: none;" class="form-control" rows="3" placeholder="Write a message..."></textarea>        
+                                    </div>
+                                    <div class="message_input_row2 text-right" style="border-bottom: 1px solid #ccc; border-right: 1px solid #ccc; border-left: 1px solid #ccc;">
+                                        <button class="btn btn-primary" style="border: none;">Send Message</button>   
+                                    </div>                        
+                                </form>
+                            </div>
+
                         </div>
 
                     </div>
