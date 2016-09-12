@@ -72,6 +72,22 @@ angular.module('internal')
 		};
 	}]);
 
+// maps the object of the objects array to the id given and
+// returns the attribute given (may also be a nested attribute)
+angular.module('internal').filter('mapById', function() {
+	return function(id, objects, attribute) {
+		let attrs = attribute.split('.');
+		for(let i = 0; i < objects.length; i++) {
+			if(objects[i].id == id) {
+				let value = objects[i][attrs[0]];
+				for(let x = 1; x < attrs.length; x++)
+					value = value[attrs[x]];
+				return value;
+			}
+		}
+	};
+});
+
 let checkLogin = function($q, $http, $rootScope) {
 	let deferred = $q.defer();
 

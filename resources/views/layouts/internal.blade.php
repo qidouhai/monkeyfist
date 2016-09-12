@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <base href="/">
 
@@ -47,6 +48,16 @@
     <script type="text/javascript" src="/lib/angular-route/angular-route.js"></script>
     <script type="text/javascript" src="/lib/angular-sanitize/angular-sanitize.js"></script>
     <script type="text/javascript" src="/lib/angular-ui-select/dist/select.js"></script>
+    <script type="text/javascript" src="/lib/socket.io-client/socket.io.js"></script>
+
+    <script type="text/javascript">
+        // var socket = io('http://localhost:3333');
+        // socket.on("messenger-channel:App\\Events\\MessageSent", function(message){
+        //     // increase the power everytime we load test route
+        //     console.log(message);
+        //     // $('#power').text(parseInt($('#power').text()) + parseInt(message.data.power));
+        // });
+    </script>
 
     <!-- Custom Scripts -->
     <script type="text/javascript" src="/js/InsertImageToPost.js"></script>
@@ -57,6 +68,7 @@
     <!-- Angular Services -->
     <script type="text/javascript" src="/app/services/socialService.js"></script>
     <script type="text/javascript" src="/app/services/msgService.js"></script>
+    <script type="text/javascript" src="/app/services/socketService.js"></script>
 
     <!-- Angular Controller -->
     <script type="text/javascript" src="/app/controller/NavbarController.js"></script>

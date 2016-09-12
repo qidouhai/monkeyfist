@@ -9,6 +9,7 @@ use App\Http\Requests;
 use App\Conversation;
 use App\Message;
 use App\Participant;
+use App\Events\MessageSent;
 
 class MessengerController extends Controller
 {
@@ -48,7 +49,7 @@ class MessengerController extends Controller
 
 	// get list of a user's conversations (sorted by last message and including the last read attribute for each conversation)
 	// ADD LAST MESSAGE TIMESTAMP TO EACH CONVERSATION
-	protected function getConversations() {
+	protected function listConversations() {
 		$conversations = Participant::where('user_id', Auth::user()->id)->get(['conversation_id']);
 
 		return Conversation::with(['participants' => function($query) {
@@ -58,8 +59,8 @@ class MessengerController extends Controller
 		}])->whereIn('id', $conversations)->get();
 	}
 
-	// get all messages of a conversation
-	protected function getMessages($id) {
+	// returns a full conversations (incl. messages and participants)
+	protected function getConversation($id) {
 		// check if conversation exists
 		$conversation = Conversation::find($id);
 		if($conversation == null)
@@ -70,13 +71,25 @@ class MessengerController extends Controller
 		if($participant->isEmpty())
 			return ['exists' => true, 'member' => false];
 
-		// get messages of conversation
-		$messages = Message::with(['participant' => function($query) {
-			$query->with(['user' => function($query) {
-				$query->select('id', 'username', 'picture');
-			}]);
-		}])->where('conversation_id', $id)->orderBy('created_at', 'desc')->get();
-		return ["exists" => true, "member" => true, "messages" => $messages];
+		// get full conversation
+		$conversation = Conversation::with(
+			[
+				'messages' => function($query) {
+					$query->orderBy('created_at', 'desc');
+				},
+				'participants' => function($query) {
+					$query->with(
+						[
+							'user' => function($query) {
+								$query->select('id', 'username', 'picture');
+							}
+						]
+					);
+				}
+			]
+		)->find($id);
+
+		return ["exists" => true, "member" => true, "data" => $conversation];
 	}
 
 	// add a message to a conversation and update its last_message timestamp
@@ -92,7 +105,8 @@ class MessengerController extends Controller
 		$message->body = $request->body;
 
 		if($message->save()) {
-			return ['saved' => true];
+			event(new MessageSent($message));
+			return ['saved' => $message];
 		}
 		return ['saved' => false];
 	}

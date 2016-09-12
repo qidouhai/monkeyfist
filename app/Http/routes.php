@@ -47,9 +47,9 @@ Route::get('/search/{query}', 'SearchController@search')->middleware('auth');
 
 Route::get('/friend/{id}', 'ProfileController@profile')->middleware('auth');
 
-Route::get('/conversation', 'MessengerController@getConversations')->middleware('auth');
+Route::get('/conversation', 'MessengerController@listConversations')->middleware('auth');
 
-Route::get('/conversation/{id}/messages', 'MessengerController@getMessages')->middleware('auth');
+Route::get('/conversation/{id}', 'MessengerController@getConversation')->middleware('auth');
 
 Route::post('/feed', 'FeedController@store')->middleware('auth');
 Route::post('/feed/{id}/comment', 'FeedController@storeComment')->middleware('auth');
@@ -73,3 +73,5 @@ Route::any('{path?}', function() {
 	$user = Auth::user();
 	return view('layouts.internal', ["user" => $user]);
 })->where("path", ".+")->middleware("auth");
+
+

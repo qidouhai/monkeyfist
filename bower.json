@@ -24,6 +24,7 @@
     "bootbox.js": "^4.4.0",
     "dropzone": "^4.3.0",
     "angular-ui-select": "^0.19.4",
-    "angular-sanitize": "^1.5.8"
+    "angular-sanitize": "^1.5.8",
+    "socket.io-client": "^1.4.8"
   }
 }

@@ -1,0 +1,3 @@
+How to install Redis on Windows:
+- go to https://github.com/MSOpenTech/redis -> releases -> and follow the instructions
+- Redis then runs as a windows service, if you change the .conf file, you have to restart the Redis service (services.msc(->Windows Services))

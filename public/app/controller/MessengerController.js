@@ -1,10 +1,14 @@
 var app = angular.module("internal");
 
-app.controller("MessengerController", function($scope, $routeParams, msgService) {
+app.controller("MessengerController", function($scope, $routeParams, msgService, socketService) {
 
 	$scope.conversations;
-	$scope.conversationId;
-	$scope.messages;
+
+	$scope.currentConversation = {
+		'id': null,
+		'participants': null,
+		'messages': null
+	};
 
 	$scope.getConversations = function() {
 		msgService.getConversations().then(function(response) {
@@ -15,23 +19,32 @@ app.controller("MessengerController", function($scope, $routeParams, msgService)
 
 	$scope.getMessages = function(conversationId) {
 		msgService.getMessages(conversationId).then(function(response) {
-			if(response.exists && response.member)
-				$scope.messages = response.messages;
-			$scope.conversationId = conversationId;
-			console.log($scope.messages);
+			console.log(response);
+			if(response.exists && response.member) {
+				$scope.currentConversation.id = response.data.id;
+				$scope.currentConversation.participants = response.data.participants;
+				$scope.currentConversation.messages = response.data.messages;
+			};
+			console.log($scope.currentConversation);
 		});
 	};
 
 	$scope.submitMessage = function() {
-		msgService.sendMessage({conversation_id: $scope.conversationId, body: $('#message_input_field').val()}).then(function(response) {
+		msgService.sendMessage({conversation_id: $scope.currentConversation.id, body: $('#message_input_field').val()}).then(function(response) {
 			console.log(response);
 		});
 	};
 
+	socketService.on('messenger-channel', function(data) {
+		if(data.message.conversation_id == $scope.currentConversation.id) {
+			$scope.currentConversation.messages.push(data.message);
+		}
+	});
+
 	$scope.getConversations();
 	// check if a conversation is selected
 	if($routeParams.conversationId)
-		$scope.getMessages($routeParams.conversationId);
+		$scope.getMessages(parseInt($routeParams.conversationId));
 
 
 	// position textarea at page bottom

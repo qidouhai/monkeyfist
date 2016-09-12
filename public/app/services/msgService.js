@@ -34,7 +34,7 @@ angular.module('internal').service('msgService', function($http) {
 	};
 
 	this.getMessages = function(conversationId) {
-		return $http.get('/conversation/' + conversationId + '/messages').then(
+		return $http.get('/conversation/' + conversationId).then(
 			function success(response) {
 				return response.data;
 			},

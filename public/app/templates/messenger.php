@@ -33,9 +33,9 @@
 
                         <div class="message_wrapper">
 
-                            <div class="message_container" ng-repeat="message in messages">
+                            <div class="message_container" ng-repeat="message in currentConversation.messages">
                                 <div class="message_container_head">
-                                    <a href="/profile/{{ message.participant.user.id }}">{{ message.participant.user.username }}</a>
+                                    <a href="/profile/{{ message.participant.user.id }}">{{ message.participant | mapById: currentConversation.participants:'user.username' }}</a>
                                     <span>{{ message.created_at }}</span>
                                 </div>
                                 <div class="message_container_body">
@@ -45,16 +45,16 @@
 
                         </div>
 
-                        <div class="message_input_wrapper" style="background-color: #f6f7f9;>
+                        <div class="message_input_wrapper" style="background-color: #f6f7f9;">
 
                             <div class="form-group message_input" style="background-color: white;">
                                 <form ng-submit="submitMessage()">
                                     <div class="message_input_row1" style="border-top: 1px solid #ccc; border-right: 1px solid #ccc; border-left: 1px solid #ccc; border-bottom: 1px solid #e6e6e6;">
-                                        <textarea id="message_input_field" style="border: none;" class="form-control" rows="3" placeholder="Write a message..."></textarea>        
+                                        <textarea id="message_input_field" style="border: none;" class="form-control" rows="3" placeholder="Write a message..."></textarea>
                                     </div>
                                     <div class="message_input_row2 text-right" style="border-bottom: 1px solid #ccc; border-right: 1px solid #ccc; border-left: 1px solid #ccc;">
-                                        <button class="btn btn-primary" style="border: none;">Send Message</button>   
-                                    </div>                        
+                                        <button class="btn btn-primary" style="border: none;">Send Message</button>
+                                    </div>
                                 </form>
                             </div>
 
