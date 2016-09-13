@@ -75,7 +75,7 @@ class MessengerController extends Controller
 		$conversation = Conversation::with(
 			[
 				'messages' => function($query) {
-					$query->orderBy('created_at', 'desc');
+					$query->orderBy('created_at');
 				},
 				'participants' => function($query) {
 					$query->with(

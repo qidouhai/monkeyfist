@@ -25,6 +25,7 @@
     "dropzone": "^4.3.0",
     "angular-ui-select": "^0.19.4",
     "angular-sanitize": "^1.5.8",
-    "socket.io-client": "^1.4.8"
+    "socket.io-client": "^1.4.8",
+    "angular-scroll-glue": "^2.0.7"
   }
 }

@@ -14,7 +14,7 @@ angular.module('dropzone', []).directive('dropzone', function () {
 	};
 });
 
-var app = angular.module("internal", ['ngRoute', 'ngSanitize', 'ui.select', 'dropzone']);
+var app = angular.module("internal", ['ngRoute', 'ngSanitize', 'ui.select', 'dropzone', 'luegg.directives']);
 
 app.config(function($routeProvider, $locationProvider) {
 	$routeProvider
@@ -85,6 +85,19 @@ angular.module('internal').filter('mapById', function() {
 				return value;
 			}
 		}
+	};
+});
+
+angular.module('internal').filter('enumerateParticipants', function() {
+	return function(participants) {
+		let result = '';
+		for(let i = 0; i < participants.length; i++) {
+			if(i == participants.length-1)
+				result += participants[i].user.username;
+			else
+				result += participants[i].user.username + ', ';
+		}
+		return result;
 	};
 });
 

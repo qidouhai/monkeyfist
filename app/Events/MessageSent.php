@@ -9,7 +9,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
 use DB;
 use Auth;
-use App\Conversation;
+use App\Participant;
 use App\Message;
 
 class MessageSent extends Event implements ShouldBroadcast
@@ -35,8 +35,12 @@ class MessageSent extends Event implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        
         // return new PrivateChannel();
         return ['messenger-channel'];
+    }
+
+    public function broadcastWith() {
+        $participants = Participant::where('conversation_id', $this->message->conversation_id)->get();
+        return ["participants" => $participants, "message" => $this->message];
     }
 }

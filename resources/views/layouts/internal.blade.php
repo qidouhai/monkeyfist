@@ -48,16 +48,8 @@
     <script type="text/javascript" src="/lib/angular-route/angular-route.js"></script>
     <script type="text/javascript" src="/lib/angular-sanitize/angular-sanitize.js"></script>
     <script type="text/javascript" src="/lib/angular-ui-select/dist/select.js"></script>
+    <script type="text/javascript" src="/lib/angular-scroll-glue/src/scrollglue.js"></script>
     <script type="text/javascript" src="/lib/socket.io-client/socket.io.js"></script>
-
-    <script type="text/javascript">
-        // var socket = io('http://localhost:3333');
-        // socket.on("messenger-channel:App\\Events\\MessageSent", function(message){
-        //     // increase the power everytime we load test route
-        //     console.log(message);
-        //     // $('#power').text(parseInt($('#power').text()) + parseInt(message.data.power));
-        // });
-    </script>
 
     <!-- Custom Scripts -->
     <script type="text/javascript" src="/js/InsertImageToPost.js"></script>

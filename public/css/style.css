@@ -191,9 +191,9 @@ body {
 }
 
 .sidebar-nav li {
-    text-indent: 5px;
     line-height: 30px;
     white-space: nowrap;
+    border-top: 1px solid black;
 }
 
 .sidebar-nav li a {
@@ -211,11 +211,6 @@ body {
 .sidebar-nav li a:active,
 .sidebar-nav li a:focus {
     text-decoration: none;
-}
-
-.sidebar-nav > .sidebar-brand {
-    height: 65px;
-    line-height: 60px;
 }
 
 .sidebar-nav > .sidebar-brand a {

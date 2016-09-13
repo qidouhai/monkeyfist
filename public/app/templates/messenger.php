@@ -10,14 +10,20 @@
 	<div id="messenger_sidebar">
 		<ul class="sidebar-nav">
 			<li class="sidebar-brand" ng-repeat="conversation in conversations">
-				<a href="/messenger/{{ conversation.id }}">
+				<a href="#" ng-click="setConversation(conversation.id)">
 					<div>
-						<div style="display: inline-block;" ng-repeat="participant in conversation.participants">
-                            <img src="/img/default-profile.png" height="32" />
+						<div style="width: 75px; display: table-cell; vertical-align: middle;">
+                            <img ng-if="conversation.participants.length == 2" src="/img/default-profile.png" height="50" width="50" style="padding-left: 8px;" />
+                            <i ng-if="conversation.participants.length > 2" class="fa fa-globe fa-3x" aria-hidden="true" style="padding-left: 8px; color: black;"></i>
                         </div>
-                        <div style="display: inline-block;" ng-repeat="participant in conversation.participants">
-                            <span style="font-size: large">{{ participant.user.username }},</span>
-                        </div>
+                        <div style="width: 200px; max-width: 200px; vertical-align: middle; overflow: hidden; text-overflow: ellipsis; display: table-cell;">
+                            <span style="font-weight: bold;">
+                                {{ conversation.participants | enumerateParticipants }}
+                            </span>
+                            <br>
+                            <span>
+                                metas here
+                            </span>
 					</div>
 				</a>
 			</li>
@@ -31,7 +37,7 @@
 				<div class="col-lg-12" style="padding: 0px;">
                     <div style="width: 70%;">
 
-                        <div class="message_wrapper">
+                        <div class="message_wrapper" scroll-glue>
 
                             <div class="message_container" ng-repeat="message in currentConversation.messages">
                                 <div class="message_container_head">
