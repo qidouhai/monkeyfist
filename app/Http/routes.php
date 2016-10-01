@@ -60,6 +60,7 @@ Route::post('/user/friends', 'ProfileController@answerFriendRequest')->middlewar
 Route::post('/user/friends/remove', 'ProfileController@removeFriend')->middleware('auth');
 
 Route::post('/conversation', 'MessengerController@createConversation')->middleware('auth');
+Route::post('/conversation/search', 'MessengerController@searchConversation')->middleware('auth');
 Route::post('/message', 'MessengerController@addMessage')->middleware('auth');
 
 
@@ -73,5 +74,3 @@ Route::any('{path?}', function() {
 	$user = Auth::user();
 	return view('layouts.internal', ["user" => $user]);
 })->where("path", ".+")->middleware("auth");
-
-
