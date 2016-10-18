@@ -4,6 +4,8 @@ app.controller("ProfileController", function($scope, $http, $routeParams, $locat
 
 	$(".modal-backdrop").hide();
 
+	settingsFactory = new SettingsFactory();
+
 	$http.get('/friend/' + $routeParams.id).success(function(response) {
 		$scope.info = response;
 	});

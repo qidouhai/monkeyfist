@@ -53,6 +53,7 @@
 
     <!-- Custom Scripts -->
     <script type="text/javascript" src="/js/InsertImageToPost.js"></script>
+    <script type="text/javascript" src="/js/SettingsFactory.js"></script>
 
     <!-- Angular App -->
     <script type="text/javascript" src="/app/app.js"></script>
