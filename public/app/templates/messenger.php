@@ -18,7 +18,7 @@
                         </div>
                         <div style="width: 200px; max-width: 200px; vertical-align: middle; overflow: hidden; text-overflow: ellipsis; display: table-cell;">
                             <span style="font-weight: bold;">
-                                {{ conversation.participants | enumerateParticipants:user.username }}
+                                {{ conversation.participants | enumerateParticipants:user.id }}
                             </span>
                             <br>
                             <span>

@@ -11,6 +11,17 @@ angular.module('internal').service('msgService', function($http) {
 		);
 	};
 
+	this.searchConversation = function(requestBody) {
+		return $http.post('/conversation/search', requestBody).then(
+			function success(response) {
+				return response.data;
+			},
+			function error(response) {
+				console.log(response);
+			}
+		)
+	}
+
 	this.createConversation = function(requestBody) {
 		return $http.post('/conversation', requestBody).then(
 			function success(response) {

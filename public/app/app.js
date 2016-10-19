@@ -89,10 +89,10 @@ angular.module('internal').filter('mapById', function() {
 });
 
 angular.module('internal').filter('enumerateParticipants', function() {
-	return function(participants, username) {
+	return function(participants,skipId) {
 		let result = '';
 		for(let i = 0; i < participants.length; i++) {
-			if(participants[i].user.username != username) {
+			if(skipId != participants[i].user.id){
 				if(i == participants.length-1)
 					result += participants[i].user.username;
 				else
