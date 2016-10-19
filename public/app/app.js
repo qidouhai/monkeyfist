@@ -89,13 +89,15 @@ angular.module('internal').filter('mapById', function() {
 });
 
 angular.module('internal').filter('enumerateParticipants', function() {
-	return function(participants) {
+	return function(participants, username) {
 		let result = '';
 		for(let i = 0; i < participants.length; i++) {
-			if(i == participants.length-1)
-				result += participants[i].user.username;
-			else
-				result += participants[i].user.username + ', ';
+			if(participants[i].user.username != username) {
+				if(i == participants.length-1)
+					result += participants[i].user.username;
+				else
+					result += participants[i].user.username + ', ';
+			}
 		}
 		return result;
 	};

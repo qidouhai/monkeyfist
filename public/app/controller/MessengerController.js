@@ -27,14 +27,19 @@ app.controller("MessengerController", function($scope, $routeParams, msgService,
 				$scope.currentConversation.id = response.data.id;
 				$scope.currentConversation.participants = response.data.participants;
 				$scope.currentConversation.messages = response.data.messages;
+				console.log($scope.currentConversation);
 			};
 		});
 	};
 
 	$scope.submitMessage = function() {
-		msgService.sendMessage({conversation_id: $scope.currentConversation.id, body: $('#message_input_field').val()}).then(function(response) {
-			console.log(response);
-		});
+		let input = $('#message_input_field').val().trim();
+		if(input != '') {
+			msgService.sendMessage({conversation_id: $scope.currentConversation.id, body: input}).then(function(response) {
+				console.log(response);
+			});
+		}
+		$('#message_input_field').val('')
 	};
 
 	socketService.on('messenger-channel:' + $scope.user.id, function(data) {

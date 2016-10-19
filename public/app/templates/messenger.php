@@ -18,7 +18,7 @@
                         </div>
                         <div style="width: 200px; max-width: 200px; vertical-align: middle; overflow: hidden; text-overflow: ellipsis; display: table-cell;">
                             <span style="font-weight: bold;">
-                                {{ conversation.participants | enumerateParticipants }}
+                                {{ conversation.participants | enumerateParticipants:user.username }}
                             </span>
                             <br>
                             <span>
@@ -41,7 +41,7 @@
 
                             <div class="message_container" ng-repeat="message in currentConversation.messages">
                                 <div class="message_container_head">
-                                    <a href="/profile/{{ message.participant.user.id }}">{{ message.participant | mapById: currentConversation.participants:'user.username' }}</a>
+                                    <a href="/profile/{{ message.participant | mapById: currentConversation.participants:'user_id' }}">{{ message.participant | mapById: currentConversation.participants:'user.username' }}</a>
                                     <span>{{ message.created_at }}</span>
                                 </div>
                                 <div class="message_container_body">
