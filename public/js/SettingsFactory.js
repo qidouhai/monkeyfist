@@ -50,6 +50,11 @@ function SettingsFactory() {
 
   }
 
+  SettingsFactory.prototype.close = function () {
+    this.reset();
+    $('#settingsModal').modal('hide');
+  };
+
   this.init();
 }
 
