@@ -11,7 +11,6 @@ use App\Feed;
 
 class ProfileController extends Controller
 {
-    //
 
     protected function profile($id) {
     	if(Auth::user()->id == $id) {
@@ -38,7 +37,7 @@ class ProfileController extends Controller
     }
 
     protected function addFriendRequest($id) {
-        // TODO: if other sent a request already -> make friends, 
+        // TODO: if other sent a request already -> make friends,
 
         $query = DB::table('friend_request')->insertGetId(['user_id' => Auth::user()->id, 'friend_id' => $id]);
         return $query;

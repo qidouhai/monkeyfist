@@ -63,7 +63,8 @@ Route::post('/conversation', 'MessengerController@createConversation')->middlewa
 Route::post('/conversation/search', 'MessengerController@searchConversation')->middleware('auth');
 Route::post('/message', 'MessengerController@addMessage')->middleware('auth');
 
-
+Route::post('/settings/account/names', 'SettingsController@setNames')->middleware('auth');
+Route::post('/settings/account/email', 'SettingsController@setEmail')->middleware('auth');
 
 Route::delete('/feed/{id}', 'FeedController@delete')->middleware('auth');
 

@@ -93,7 +93,7 @@ Notification settings</h4>
 									<a href="#" class="list-group-item" onclick="settingsFactory.selectSetting('name')">
 										<h4 class="list-group-item-heading"><i class="fa fa-user" aria-hidden="true"></i>
 Change name</h4>
-										<p class="list-group-item-text">Change your family name.</p>
+										<p class="list-group-item-text">Change your name settings.</p>
 									</a>
 									<a href="#" class="list-group-item" onclick="settingsFactory.selectSetting('email')">
 										<h4 class="list-group-item-heading"><i class="fa fa-envelope" aria-hidden="true"></i>
@@ -118,18 +118,18 @@ Return</h4>
 									<div class="form-group">
 										<label for="input_prename" class="col-sm-4 control-label">Prename</label>
 										<div class="col-sm-6">
-											<input type="text" class="form-control" id="input_prename" placeholder="Your Prename">
+											<input type="text" class="form-control" id="input_prename" placeholder="Prename" value="{{ user.prename }}">
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="input_lastname" class="col-sm-4 control-label">Lastname</label>
 										<div class="col-sm-6">
-											<input type="text" class="form-control" id="input_lastname" placeholder="Lastname">
+											<input type="text" class="form-control" id="input_lastname" placeholder="Lastname" value="{{ user.lastname }}">
 										</div>
 									</div>
 									<div class="form-group">
 										<div class="col-sm-offset-4 col-sm-6">
-											<button type="submit" class="btn btn-primary">Submit</button>
+											<button type="submit" class="btn btn-primary" ng-click="submitSettingName()">Submit</button>
 											<button type="button" class="btn btn-default" onclick="settingsFactory.back(2)">Back</button>
 										</div>
 									</div>
@@ -152,7 +152,7 @@ Return</h4>
 									</div>
 									<div class="form-group">
 										<div class="col-sm-offset-4 col-sm-6">
-											<button type="submit" class="btn btn-primary">Submit</button>
+											<button type="submit" class="btn btn-primary" ng-click="submitSettingEmail()">Submit</button>
 											<button type="button" class="btn btn-default" onclick="settingsFactory.back(2)">Back</button>
 										</div>
 									</div>
@@ -175,7 +175,7 @@ Return</h4>
 									</div>
 									<div class="form-group">
 										<div class="col-sm-offset-4 col-sm-6">
-											<button type="submit" class="btn btn-primary">Submit</button>
+											<button type="submit" class="btn btn-primary" ng-click="submitSettingPassword()">Submit</button>
 											<button type="button" class="btn btn-default" onclick="settingsFactory.back(2)">Back</button>
 										</div>
 									</div>

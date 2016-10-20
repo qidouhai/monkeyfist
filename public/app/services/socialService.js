@@ -12,7 +12,7 @@ angular.module("internal").service('socialService', function($http) {
 	};
 
 	this.getFriends = function() {
-		return $http.get('user/friends').then(
+		return $http.get('/user/friends').then(
 			function success(response) {
 				return response.data;
 			},
@@ -23,7 +23,7 @@ angular.module("internal").service('socialService', function($http) {
 	};
 
 	this.getFriendRequests = function() {
-		return $http.get('user/friends').then(
+		return $http.get('/user/friends').then(
 			function success(response) {
 				return response.data;
 			},

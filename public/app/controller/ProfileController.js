@@ -1,6 +1,6 @@
 var app = angular.module("internal");
 
-app.controller("ProfileController", function($scope, $http, $routeParams, $location, msgService) {
+app.controller("ProfileController", function($scope, $route, $http, $routeParams, $location, msgService, settingService) {
 
 	$(".modal-backdrop").hide();
 
@@ -43,12 +43,55 @@ app.controller("ProfileController", function($scope, $http, $routeParams, $locat
 		}
 	};
 
+	$scope.submitSettingName = function() {
+		let prename = $('#input_prename').val().trim();
+		let lastname = $('#input_lastname').val().trim();
+
+		if(prename == '' || lastname == '' || (prename == $scope.user.prename && lastname == $scope.user.lastname)) {
+			console.log('Both fields have to be completed!');
+			//TODO: add proper error handling here (incl. server responses)
+		} else {
+			settingService.setNames({'prename': prename, 'lastname': lastname}).then(function(response) {
+				$('#settingsModal').modal('hide');
+				console.log(response);
+				$route.reload();
+			})
+		}
+	};
+
+	$scope.submitSettingEmail = function() {
+		let email = $('#input_newEmail').val().trim();
+		if(email == '' || email == $scope.user.email) {
+			console.log('Both fields have to be completed!');
+			//TODO: add proper error handling here (incl. server responses)
+		} else {
+			settingService.setEmail({'email':email}).then(function(response) {
+				$('#settingsModal').modal('hide');
+				console.log(response);
+				$route.reload();
+			})
+		}
+	};
+
+	$scope.submitSettingPassword = function() {
+		let pw1 = $('#input_newPassword1').val().trim();
+		let pw2 = $('#input_newPassword2').val().trim();
+
+		if(pw1 != pw2 || pw1 == '' || pw2 == '') {
+			console.log('Both fields have to be completed!');
+			//TODO: add proper error handling here (incl. server responses)
+		} else {
+			settingService.setPassword({'pw1': pw1, 'pw2': pw2}).then(function(response) {
+				$('#settingsModal').modal('hide');
+				console.log(response);
+				$route.reload();
+			})
+		}
+	};
+
 	function acceptFriendRequest(response) {
 		$scope.info.relation.status = 'friend';
 		$scope.info.relation.friends = true;
 	};
 
-	function handleError(response) {
-		console.log(response);
-	};
 });
