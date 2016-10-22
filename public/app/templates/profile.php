@@ -114,6 +114,8 @@ Return</h4>
 							</div>
 
 							<div class="modal-body" id="settingsModal_account_name">
+								<div class="alert alert-danger" ng-if="settings.account.name.error" role="alert">{{ settings.account.name.message }}</div>
+								<div class="alert alert-success" ng-if="settings.account.name.success" role="alert">{{ settings.account.name.message }}</div>
 								<form class="form-horizontal">
 									<div class="form-group">
 										<label for="input_prename" class="col-sm-4 control-label">Prename</label>
@@ -137,6 +139,8 @@ Return</h4>
 							</div>
 
 							<div class="modal-body" id="settingsModal_account_email">
+								<div class="alert alert-danger" ng-if="settings.account.email.error" role="alert">{{ settings.account.email.message }}</div>
+								<div class="alert alert-success" ng-if="settings.account.email.success" role="alert">{{ settings.account.email.message }}</div>
 								<form class="form-horizontal">
 									<div class="form-group">
 										<label for="input_currentEmail" class="col-sm-4 control-label">Current E-Mail</label>
@@ -160,6 +164,8 @@ Return</h4>
 							</div>
 
 							<div class="modal-body" id="settingsModal_account_password">
+								<div class="alert alert-danger" ng-if="settings.account.password.error" role="alert">{{ settings.account.password.message }}</div>
+								<div class="alert alert-success" ng-if="settings.account.password.success" role="alert">{{ settings.account.password.message }}</div>
 								<form class="form-horizontal">
 									<div class="form-group">
 										<label for="input_newPassword1" class="col-sm-4 control-label">New Password</label>
