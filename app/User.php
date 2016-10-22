@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Contracts\Auth\CanResetPassword;
 use DB;
 use Auth;
 
@@ -59,7 +60,7 @@ class User extends Authenticatable
         if($status && $status[0]->id) {
             return ["friends" => true, "status" => "friend", "since" => $status[0]->created];
         }
-        
+
 
         $status = DB::table('friend_request')->where([['user_id', Auth::user()->id], ['friend_id', $id]])->orWhere([['user_id', $id], ['friend_id', Auth::user()->id]])->get();
 

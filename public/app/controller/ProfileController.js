@@ -81,7 +81,7 @@ app.controller("ProfileController", function($scope, $route, $http, $routeParams
 			console.log('Both fields have to be completed!');
 			//TODO: add proper error handling here (incl. server responses)
 		} else {
-			settingService.setPassword({'pw1': pw1, 'pw2': pw2}).then(function(response) {
+			settingService.setPassword({'password': pw1, 'password_confirmation': pw2}).then(function(response) {
 				$('#settingsModal').modal('hide');
 				console.log(response);
 				$route.reload();

@@ -65,6 +65,7 @@ Route::post('/message', 'MessengerController@addMessage')->middleware('auth');
 
 Route::post('/settings/account/names', 'SettingsController@setNames')->middleware('auth');
 Route::post('/settings/account/email', 'SettingsController@setEmail')->middleware('auth');
+Route::post('/settings/account/password', 'SettingsController@setPassword')->middleware('auth');
 
 Route::delete('/feed/{id}', 'FeedController@delete')->middleware('auth');
 
