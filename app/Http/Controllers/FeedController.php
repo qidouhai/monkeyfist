@@ -7,6 +7,7 @@ use DB;
 use Auth;
 use App\Http\Requests;
 use App\FeedComment;
+use App\FeedLike;
 use App\Feed;
 use Log;
 
@@ -58,6 +59,40 @@ class FeedController extends Controller
             $comment->user = $comment->user;
             return $comment;
         }
+    }
+
+    public function addLike($id) {
+      $like = new FeedLike;
+
+      $like->user_id = Auth::user()->id;
+      $like->feed_id = $id;
+      $like->like = 1;
+
+      if($like->save()) {
+        return $like;
+      }
+    }
+
+    public function removeLike($id) {
+      $status = FeedLike::where([['feed_id', $id],['user_id', Auth::user()->id], ['like', 1]])->delete();
+      return $status;
+    }
+
+    public function addDislike($id) {
+      $dislike = new FeedLike;
+
+      $dislike->user_id = Auth::user()->id;
+      $dislike->feed_id = $id;
+      $dislike->like = 0;
+
+      if($dislike->save()) {
+        return $dislike;
+      }
+    }
+
+    public function removeDislike($id) {
+      $status = FeedLike::where([['feed_id', $id],['user_id', Auth::user()->id], ['like', 0]])->delete();
+      return $status;
     }
 
     public function delete($id) {

@@ -1,6 +1,6 @@
 var app = angular.module("internal");
 
-app.controller("FeedController", function($scope, $http, $routeParams, $location) {
+app.controller("FeedController", function($scope, $http, $routeParams, $location, feedService) {
 
 	// Amount of feeds loaded
 	$scope.feedCounter = 0;
@@ -42,6 +42,13 @@ app.controller("FeedController", function($scope, $http, $routeParams, $location
 		}
 	};
 
+	$scope.like = function(feedId) {
+		feedService.like(feedId).then(function(response) {
+			// change appearance
+			// add to like count
+		});
+	};
+
 	$scope.submitComment = function(feedId) {
 		let comment_text = $('#comment-text-' + feedId).val().trim();
 
@@ -51,7 +58,7 @@ app.controller("FeedController", function($scope, $http, $routeParams, $location
 				'content' : comment_text,
 				'created' : moment().format('YYYY-MM-DD HH:mm:ss')
 			};
-			
+
 			$http.post('/feed/' + feedId + '/comment', comment).success(function(response) {
 				for(let i = 0; i < $scope.feeds.length; i++) {
 					if($scope.feeds[i].id == feedId)
@@ -137,7 +144,7 @@ app.controller("FeedController", function($scope, $http, $routeParams, $location
 			}, function errorCallback(response) {
 				console.log(response);
 			});
-			
+
 		}
 		$('#post_content').val('')
 	};

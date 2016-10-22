@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Feed extends Model
 {
-    
+
 
     protected $table = 'feed';
 
@@ -19,5 +19,9 @@ class Feed extends Model
 
  	public function user() {
  		return $this->belongsTo('App\User');
- 	}   
+ 	}
+
+  public function likes() {
+    return $this->hasMany('App\FeedLike');
+  }
 }

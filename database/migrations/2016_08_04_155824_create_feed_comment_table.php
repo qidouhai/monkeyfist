@@ -18,8 +18,8 @@ class CreateFeedCommentTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('feed_id')->unsigned();
             $table->string('content', 5000);
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');;
-            $table->foreign('feed_id')->references('id')->on('feed')->onDelete('cascade');;
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('feed_id')->references('id')->on('feed')->onDelete('cascade');
         });
     }
 
