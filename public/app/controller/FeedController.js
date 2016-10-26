@@ -45,8 +45,22 @@ app.controller("FeedController", function($scope, $http, $routeParams, $location
 	$scope.like = function(feedId) {
 		feedService.like(feedId).then(function(response) {
 			// change appearance
+			
 			// add to like count
+			let feed = $scope.findFeed(feedId);
+			if(feed.likes == null)
+				feed.likes = {count: 1};
+			else
+				feed.likes.count++;
 		});
+	};
+
+	$scope.findFeed = function(feedId) {
+		for(let x = 0; x < $scope.feeds.length; x++) {
+			if($scope.feeds[x].id === feedId) {
+				return $scope.feeds[x];
+			}
+		}
 	};
 
 	$scope.submitComment = function(feedId) {
@@ -78,6 +92,7 @@ app.controller("FeedController", function($scope, $http, $routeParams, $location
 				for(let i = 0; i < response.length; i++) {
 					$scope.feeds.push(response[i]);
 				}
+				console.log($scope.feeds);
 				if(response.length < $scope.feedSteps)
 					$scope.noMoreFeeds = true;
 			});

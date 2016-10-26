@@ -63,6 +63,7 @@
     <script type="text/javascript" src="/app/services/msgService.js"></script>
     <script type="text/javascript" src="/app/services/socketService.js"></script>
     <script type="text/javascript" src="/app/services/settingService.js"></script>
+    <script type="text/javascript" src="/app/services/feedService.js"></script>
 
     <!-- Angular Controller -->
     <script type="text/javascript" src="/app/controller/NavbarController.js"></script>

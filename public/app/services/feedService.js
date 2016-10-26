@@ -1,6 +1,6 @@
 angular.module('internal').service('feedService', function($http) {
 
-  return like = function(feedId) {
+  this.like = function(feedId) {
     return $http.post('/feed/' + feedId + '/like').then(
       function success(response) {
         return response.data;
@@ -11,7 +11,7 @@ angular.module('internal').service('feedService', function($http) {
     );
   };
 
-  return unlike = function(feedId) {
+  this.unlike = function(feedId) {
     return $http.post('/feed/' + feedId + '/unlike').then(
       function success(response) {
         return response.data;
@@ -22,7 +22,7 @@ angular.module('internal').service('feedService', function($http) {
     );
   };
 
-  return dislike = function(feedId) {
+  this.dislike = function(feedId) {
     return $http.post('/feed/' + feedId + '/dislike').then(
       function success(response) {
         return response.data;
@@ -33,7 +33,7 @@ angular.module('internal').service('feedService', function($http) {
     );
   };
 
-  return undislike = function(feedId) {
+  this.undislike = function(feedId) {
     return $http.post('/feed/' + feedId + '/undislike').then(
       function success(response) {
         return response.data;
