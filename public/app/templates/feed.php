@@ -104,7 +104,7 @@
              <div class="feed-links">
                 <hr>
                 <ul>
-                    <li><a href="#">Thumbs Up <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a></li>
+                    <li><a href="#" ng-click="like(feed.id)">Thumbs Up <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a></li>
                     <li><span>&nbsp;-&nbsp;</span></li>
                     <li><a href="#">Thumbs Down <i class="fa fa-thumbs-o-down" aria-hidden="true"></i></a></li>
                     <li><span>&nbsp;-&nbsp;</span></li>
@@ -115,9 +115,9 @@
         <div class="panel-footer feed-footer">
             <!-- Overview of likes, disliked and comment -->
             <ul>
-                <li><a href="#"><i class="fa fa-thumbs-up" aria-hidden="true"></i>&nbsp;3</a></li>
-                <li><a href="#"><i class="fa fa-thumbs-down" aria-hidden="true"></i>&nbsp;0</a></li>
-                <li><a href="#"><i class="fa fa-comment" aria-hidden="true"></i>&nbsp;23</a></li>
+                <li><a href="#"><i class="fa fa-thumbs-up" aria-hidden="true"></i>&nbsp;{{ feed.likes.count == null ? 0 : feed.likes.count }}</a></li>
+                <li><a href="#"><i class="fa fa-thumbs-down" aria-hidden="true"></i>&nbsp;{{ feed.dislikes.count == null ? 0 : feed.dislikes.count }}</a></li>
+                <li><a href="#"><i class="fa fa-comment" aria-hidden="true"></i>&nbsp;{{ feed.comment_count.count == null ? 0 : feed.comment_count.count}}</a></li>
             </ul>
             <!-- Comments list -->
             <div ng-repeat="comment in feed.comments">

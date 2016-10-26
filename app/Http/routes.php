@@ -54,6 +54,10 @@ Route::get('/conversation/{id}', 'MessengerController@getConversation')->middlew
 Route::post('/feed', 'FeedController@store')->middleware('auth');
 Route::post('/feed/{id}/comment', 'FeedController@storeComment')->middleware('auth');
 Route::post('/feed/images', 'ImageController@upload')->middleware('auth');
+Route::post('/feed/{id}/like', 'FeedController@addLike')->middleware('auth');
+Route::post('/feed/{id}/unlike', 'FeedController@removeLike')->middleware('auth');
+Route::post('/feed/{id}/dislike', 'FeedController@addDislike')->middleware('auth');
+Route::post('/feed/{id}/undislike', 'FeedController@removeDislike')->middleware('auth');
 
 Route::post('/user/friends/request/{id}', 'ProfileController@addFriendRequest')->middleware('auth');
 Route::post('/user/friends', 'ProfileController@answerFriendRequest')->middleware('auth');

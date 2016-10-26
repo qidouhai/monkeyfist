@@ -22,7 +22,8 @@ class FeedController extends Controller
 
     protected function get($skip, $take) {
     	$user = Auth::user();
-        $feeds = Feed::with('user', 'comments.user')->where('user_id', $user->id)->orderBy('id', 'desc')->skip($skip)->take($take)->get();
+
+      $feeds = Feed::with('user', 'comments.user', 'commentCount', 'likes', 'dislikes')->where('user_id', $user->id)->orderBy('id', 'desc')->skip($skip)->take($take)->get();
 
     	return $feeds;
     }
@@ -64,12 +65,16 @@ class FeedController extends Controller
     public function addLike($id) {
       $like = new FeedLike;
 
-      $like->user_id = Auth::user()->id;
-      $like->feed_id = $id;
-      $like->like = 1;
+      $status = FeedLike::where([['feed_id', $id], ['user_id', Auth::user()->id]])->get();
 
-      if($like->save()) {
-        return $like;
+      if($status->count() == 0) {
+        $like->user_id = Auth::user()->id;
+        $like->feed_id = $id;
+        $like->like = 1;
+
+        if($like->save()) {
+          return $like;
+        }
       }
     }
 
@@ -81,12 +86,16 @@ class FeedController extends Controller
     public function addDislike($id) {
       $dislike = new FeedLike;
 
-      $dislike->user_id = Auth::user()->id;
-      $dislike->feed_id = $id;
-      $dislike->like = 0;
+      $status = FeedLike::where([['feed_id', $id], ['user_id', Auth::user()->id]])->get();
 
-      if($dislike->save()) {
-        return $dislike;
+      if($status->count() == 0) {
+        $dislike->user_id = Auth::user()->id;
+        $dislike->feed_id = $id;
+        $dislike->like = 0;
+
+        if($dislike->save()) {
+          return $dislike;
+        }
       }
     }
 
