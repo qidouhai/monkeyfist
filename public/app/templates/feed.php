@@ -103,12 +103,22 @@
              </div>
              <div class="feed-links">
                 <hr>
-                <ul>
+                <ul ng-if="feed.votes.length == 0">
                     <li><a href="#" ng-click="like(feed.id)">Thumbs Up <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a></li>
                     <li><span>&nbsp;-&nbsp;</span></li>
-                    <li><a href="#">Thumbs Down <i class="fa fa-thumbs-o-down" aria-hidden="true"></i></a></li>
+                    <li><a href="#" ng-click="dislike(feed.id)">Thumbs Down <i class="fa fa-thumbs-o-down" aria-hidden="true"></i></a></li>
                     <li><span>&nbsp;-&nbsp;</span></li>
-                    <li><a href="#">Comment <i class="fa fa-comment-o" aria-hidden="true"></i></a></li>
+                    <li><a href="#" ng-click="focus(feed.id)">Comment <i class="fa fa-comment-o" aria-hidden="true"></i></a></li>
+                </ul>
+                <ul ng-if="feed.votes.length == 1 && feed.votes[0].like == 1">
+                    <li><a href="#" ng-click="unlike(feed.id)" title="Unlike">You like it&nbsp;<i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a></li>
+                    <li><span>&nbsp;-&nbsp;</span></li>
+                    <li><a href="#" ng-click="focus(feed.id)">Comment <i class="fa fa-comment-o" aria-hidden="true"></i></a></li>
+                </ul>
+                <ul ng-if="feed.votes.length == 1 && feed.votes[0].like == 0">
+                    <li><a href="#" ng-click="undislike(feed.id)" title="Undislike">You don't like it&nbsp;<i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a></li>
+                    <li><span>&nbsp;-&nbsp;</span></li>
+                    <li><a href="#" ng-click="focus(feed.id)">Comment <i class="fa fa-comment-o" aria-hidden="true"></i></a></li>
                 </ul>
              </div>
         </div>

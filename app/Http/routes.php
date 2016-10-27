@@ -74,8 +74,6 @@ Route::post('/settings/account/password', 'SettingsController@setPassword')->mid
 Route::delete('/feed/{id}', 'FeedController@delete')->middleware('auth');
 
 
-
-
 Route::any('{path?}', function() {
 	$user = Auth::user();
 	return view('layouts.internal', ["user" => $user]);

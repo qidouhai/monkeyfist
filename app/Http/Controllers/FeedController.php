@@ -11,21 +11,44 @@ use App\FeedLike;
 use App\Feed;
 use Log;
 
-class FeedController extends Controller
-{
+class FeedController extends Controller {
+
     //
 
     protected function index() {
-    	$feeds = Feed::with('user', 'comments.user')->get();
-    	return $feeds;
+        $feeds = Feed::with('user', 'comments.user')->get();
+        return $feeds;
     }
 
     protected function get($skip, $take) {
-    	$user = Auth::user();
+        $user = Auth::user();
 
-      $feeds = Feed::with('user', 'comments.user', 'commentCount', 'likes', 'dislikes')->where('user_id', $user->id)->orderBy('id', 'desc')->skip($skip)->take($take)->get();
+//        $feeds = Feed::with('user', 'comments.user', 'commentCount', 'likes', 'dislikes', 'userVote')->where('user_id', $user->id)->orderBy('id', 'desc')->skip($skip)->take($take)->get();
 
-    	return $feeds;
+        $feeds = Feed::with(
+                        [
+                            'user' => function($query) {
+                                $query->select('id','username','picture');
+                            },
+                            'comments.user' => function($query) {
+                                $query->get();
+                            },
+                            'commentCount' => function($query) {
+                                $query->get();
+                            },
+                            'likes' => function($query) {
+                                $query->get();
+                            },
+                            'dislikes' => function($query) {
+                                $query->get();
+                            },
+                            'votes' => function($query) {
+                                $query->where('user_id', Auth::user()->id)->get();
+                            }
+                        ]
+                )->where('user_id', $user->id)->orderBy('id', 'desc')->skip($skip)->take($take)->get();
+
+        return $feeds;
     }
 
     protected function getById($id) {
@@ -41,7 +64,7 @@ class FeedController extends Controller
         $feed->user_id = Auth::user()->id;
         $feed->content = $request->content;
 
-        if($feed->save()) {
+        if ($feed->save()) {
             $feed->user = $feed->user;
             $feed->comments = $feed->comments;
             return $feed;
@@ -56,57 +79,58 @@ class FeedController extends Controller
         $comment->feed_id = $request->feed_id;
         $comment->content = $request->content;
 
-        if($comment->save()){
+        if ($comment->save()) {
             $comment->user = $comment->user;
             return $comment;
         }
     }
 
     public function addLike($id) {
-      $like = new FeedLike;
+        $like = new FeedLike;
 
-      $status = FeedLike::where([['feed_id', $id], ['user_id', Auth::user()->id]])->get();
+        $status = FeedLike::where([['feed_id', $id], ['user_id', Auth::user()->id]])->get();
 
-      if($status->count() == 0) {
-        $like->user_id = Auth::user()->id;
-        $like->feed_id = $id;
-        $like->like = 1;
+        if ($status->count() == 0) {
+            $like->user_id = Auth::user()->id;
+            $like->feed_id = $id;
+            $like->like = 1;
 
-        if($like->save()) {
-          return $like;
+            if ($like->save()) {
+                return $like;
+            }
         }
-      }
     }
 
     public function removeLike($id) {
-      $status = FeedLike::where([['feed_id', $id],['user_id', Auth::user()->id], ['like', 1]])->delete();
-      return $status;
+        $status = FeedLike::where([['feed_id', $id], ['user_id', Auth::user()->id], ['like', 1]])->delete();
+        return $status;
     }
 
     public function addDislike($id) {
-      $dislike = new FeedLike;
+        $dislike = new FeedLike;
 
-      $status = FeedLike::where([['feed_id', $id], ['user_id', Auth::user()->id]])->get();
+        $status = FeedLike::where([['feed_id', $id], ['user_id', Auth::user()->id]])->get();
 
-      if($status->count() == 0) {
-        $dislike->user_id = Auth::user()->id;
-        $dislike->feed_id = $id;
-        $dislike->like = 0;
+        if ($status->count() == 0) {
+            $dislike->user_id = Auth::user()->id;
+            $dislike->feed_id = $id;
+            $dislike->like = 0;
 
-        if($dislike->save()) {
-          return $dislike;
+            if ($dislike->save()) {
+                return $dislike;
+            }
         }
-      }
     }
 
     public function removeDislike($id) {
-      $status = FeedLike::where([['feed_id', $id],['user_id', Auth::user()->id], ['like', 0]])->delete();
-      return $status;
+        $status = FeedLike::where([['feed_id', $id], ['user_id', Auth::user()->id], ['like', 0]])->delete();
+        return $status;
     }
 
     public function delete($id) {
-        $status = Feed::where([['id', $id],['user_id', Auth::user()->id]])->delete();
+        $status = Feed::where([['id', $id], ['user_id', Auth::user()->id]])->delete();
         Log::info($status);
         return $status;
     }
+
 }
