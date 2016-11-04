@@ -31,9 +31,21 @@ class User extends Authenticatable
     public function comments() {
         return $this->hasMany('App\FeedComment');
     }
-
+    
+    /**
+     * Returns friend requests sent to the user.
+     * @return type
+     */
     public function friendRequests() {
         return $this->hasMany('App\FriendRequest', 'friend_id');
+    }
+    
+    /**
+     * Returns friend requests send from the user.
+     * @return type
+     */
+    public function myRequests() {
+        return $this->hasMany('App\FriendRequest', 'user_id');
     }
 
     public function friends() {

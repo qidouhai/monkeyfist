@@ -199,6 +199,7 @@ app.controller("FeedController", function ($scope, $http, $routeParams, $locatio
     };
 
     $scope.setFeedURL = function () {
+        console.log($scope.user);
         if ($location.url().includes('feed')) {
             $scope.feedURL = '/feeds/' + $routeParams.id;
             $scope.displayPostInput = false;
@@ -206,7 +207,7 @@ app.controller("FeedController", function ($scope, $http, $routeParams, $locatio
             $('#feedloader').hide();
         } else if ($location.url().includes('profile')) {
             $scope.feedURL = '/user/' + $routeParams.id + '/feeds/skip/' + $scope.feedCounter + '/take/' + $scope.feedSteps;
-            $scope.displayPostInput = ($scope.user.id === $routeParams.id);
+            $scope.displayPostInput = (Number($scope.user.id) === Number($routeParams.id));
         } else {
             $scope.feedURL = '/feeds/skip/' + $scope.feedCounter + '/take/' + $scope.feedSteps;
             $scope.displayPostInput = true;

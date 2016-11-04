@@ -80,6 +80,14 @@
                             <button class="btn btn-warning" ng-click="answerFriendRequest(request.user.id, false)">Deny</button>
                         </td>
                     </tr>
+                    <tr ng-repeat="request in social.myrequests">
+                        <td><a href="/profile/{{ requests.target_user.id }}"><img class="img-responsive" src="/img/default-profile.png" width="45" /></a></td>
+                        <td style="vertical-align: middle;" class="text-left"><a href="/profile/{{ request.target_user.id }}">{{ request.target_user.username }}</a></td>
+                        <td style="vertical-align: middle;"><span>{{ request.created }}</span></td>
+                        <td style="vertical-align: middle;" class="text-right">
+                            <button class="btn btn-primary" ng-click="withdrawFriendRequest(request.id)">Withdraw</button>
+                        </td>
+                    </tr>
                     <tr ng-repeat="friend in social.friends">
                         <td><a href="/profile/{{ friend.user.id }}"><img class="img-responsive" src="/img/default-profile.png" width="45"></a></td>
                         <td style="vertical-align: middle;" class="text-left"><a href="/profile/{{ friend.user.id }}">{{ friend.user.username }}</a></td>

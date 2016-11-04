@@ -23,8 +23,6 @@ class FeedController extends Controller {
     protected function get($skip, $take) {
         $user = Auth::user();
 
-//        $feeds = Feed::with('user', 'comments.user', 'commentCount', 'likes', 'dislikes', 'userVote')->where('user_id', $user->id)->orderBy('id', 'desc')->skip($skip)->take($take)->get();
-
         $feeds = Feed::with(
                         [
                             'user' => function($query) {
@@ -124,6 +122,7 @@ class FeedController extends Controller {
 
     public function removeDislike($id) {
         $status = FeedLike::where([['feed_id', $id], ['user_id', Auth::user()->id], ['like', 0]])->delete();
+        Log::info($status);
         return $status;
     }
 

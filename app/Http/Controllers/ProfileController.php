@@ -8,34 +8,92 @@ use App\Http\Requests;
 use App\User;
 use Auth;
 use App\Feed;
+use App\FriendRequest;
 
-class ProfileController extends Controller
-{
+class ProfileController extends Controller {
 
     protected function profile($id) {
-    	if(Auth::user()->id == $id) {
-    		return ["user" => Auth::user(), "self" => true];
-    	} else {
-    		$user = new User;
-    		$friend_status = $user->getFriendStatus($id);
-    		return ["user" => User::find($id), "self" => false, "relation" => $friend_status];
-    	}
+        if (Auth::user()->id == $id) {
+            return ["user" => Auth::user(), "self" => true];
+        } else {
+            $user = new User;
+            $friend_status = $user->getFriendStatus($id);
+            return ["user" => User::find($id), "self" => false, "relation" => $friend_status];
+        }
     }
 
     protected function getFeeds($id) {
-    	$user = User::find($id);
-    	$feeds = Feed::with('user', 'comments.user')->where('user_id', $user->id)->orderBy('id', 'desc')->get();
+        $user = User::find($id);
 
-    	return $feeds;
+        $feeds = Feed::with(
+                        [
+                            'user' => function($query) {
+                                $query->select('id', 'username', 'picture');
+                            },
+                            'comments.user' => function($query) {
+                                $query->get();
+                            },
+                            'commentCount' => function($query) {
+                                $query->get();
+                            },
+                            'likes' => function($query) {
+                                $query->get();
+                            },
+                            'dislikes' => function($query) {
+                                $query->get();
+                            },
+                            'votes' => function($query) {
+                                $query->where('user_id', Auth::user()->id)->get();
+                            }
+                        ]
+                )->where('user_id', $user->id)->orderBy('id', 'desc')->get();
+
+        return $feeds;
     }
 
     protected function takeFeeds($id, $skip, $take) {
-    	$user = User::find($id);
-    	$feeds = Feed::with('user', 'comments.user')->where('user_id', $user->id)->orderBy('id', 'desc')->skip($skip)->take($take)->get();
+        $user = User::find($id);
 
-    	return $feeds;
+        $feeds = Feed::with(
+                        [
+                            'user' => function($query) {
+                                $query->select('id', 'username', 'picture');
+                            },
+                            'comments.user' => function($query) {
+                                $query->get();
+                            },
+                            'commentCount' => function($query) {
+                                $query->get();
+                            },
+                            'likes' => function($query) {
+                                $query->get();
+                            },
+                            'dislikes' => function($query) {
+                                $query->get();
+                            },
+                            'votes' => function($query) {
+                                $query->where('user_id', Auth::user()->id)->get();
+                            }
+                        ]
+                )->where('user_id', $user->id)->orderBy('id', 'desc')->skip($skip)->take($take)->get();
+
+        return $feeds;
     }
 
+    /**
+     * Removes a friend request by the given id,
+     * if the current user is the creator of the
+     * request.
+     * @param Request $request
+     * @return type JSON
+     */
+    protected function removeRequest(Request $request) {
+        $status = FriendRequest::where([['user_id', Auth::user()->id],['id', $request->id]])->delete();
+        if($status) {
+            return ['removed' => true, 'id' => $request->id];
+        }
+    }
+    
     protected function addFriendRequest($id) {
         // TODO: if other sent a request already -> make friends,
 
@@ -44,7 +102,7 @@ class ProfileController extends Controller
     }
 
     protected function answerFriendRequest(Request $request) {
-        if($request->answer)
+        if ($request->answer)
             $this->addFriend($request->id);
         else
             $this->removeFriendRequest($request->id);
@@ -52,7 +110,7 @@ class ProfileController extends Controller
 
     protected function removeFriendRequest($id) {
         $user_id = Auth::user()->id;
-        $query = DB::table('friend_request')->where([['user_id', $user_id], ['friend_id', $id]])->orWhere([['friend_id', $user_id],['user_id', $id]])->delete();
+        $query = DB::table('friend_request')->where([['user_id', $user_id], ['friend_id', $id]])->orWhere([['friend_id', $user_id], ['user_id', $id]])->delete();
         return ['status' => 'success', 'user_id' => $id];
     }
 
@@ -75,7 +133,31 @@ class ProfileController extends Controller
 
     // returns friends and open friend requests of current user
     protected function getFriends() {
-        $requests = User::with('friends.user','friendRequests.user')->where('id', Auth::user()->id)->get();
-        return ["requests" => $requests[0]['friendRequests'], "friends" => $requests[0]['friends']];
+        
+        $requests = User::with([
+            'friends' => function($query) {
+                $query->with([
+                    'user' => function($query) {
+                        $query->select('id', 'username', 'picture');
+                    }
+                ]);
+            },
+            'friendRequests' => function($query) {
+                $query->with([
+                    'user' => function($query) {
+                        $query->select('id', 'username', 'picture');
+                    }
+                ]);
+            },
+            'myRequests' => function($query) {
+                $query->with([
+                    'targetUser' => function($query) {
+                        $query->select('id', 'username', 'picture');
+                    }
+                ]);
+            }                           
+        ])->where('id', Auth::user()->id)->get();
+        return ["requests" => $requests[0]['friendRequests'], "myrequests" => $requests[0]['myRequests'], "friends" => $requests[0]['friends']];
     }
+
 }

@@ -43,6 +43,19 @@ angular.module("internal").service('socialService', function($http) {
 			}
 		);
 	};
+        
+        /*
+         * Sends a withdraw friend request to the server.
+         */
+        this.withdrawRequest = function(requestBody) {
+            return $http.post('/user/friends/withdraw', requestBody).then(
+                    function success(response) {
+                        return response.data;
+                    },
+                    function error(response) {
+                        console.error(response);
+                    });
+        };
 
 	this.removeFriend = function(requestBody) {
 		return $http.post('/user/friends/remove', requestBody).then(

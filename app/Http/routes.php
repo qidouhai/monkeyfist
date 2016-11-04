@@ -62,6 +62,7 @@ Route::post('/feed/{id}/undislike', 'FeedController@removeDislike')->middleware(
 Route::post('/user/friends/request/{id}', 'ProfileController@addFriendRequest')->middleware('auth');
 Route::post('/user/friends', 'ProfileController@answerFriendRequest')->middleware('auth');
 Route::post('/user/friends/remove', 'ProfileController@removeFriend')->middleware('auth');
+Route::post('/user/friends/withdraw', 'ProfileController@removeRequest')->middleware('auth');
 
 Route::post('/conversation', 'MessengerController@createConversation')->middleware('auth');
 Route::post('/conversation/search', 'MessengerController@searchConversation')->middleware('auth');
