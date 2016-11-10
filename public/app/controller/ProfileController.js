@@ -1,6 +1,6 @@
 var app = angular.module("internal");
 
-app.controller("ProfileController", function ($scope, $route, $http, $routeParams, $location, msgService, settingService) {
+app.controller("ProfileController", function ($scope, $route, $http, $routeParams, $location, msgService, settingService, socialService) {
 
     $(".modal-backdrop").hide();
 
@@ -20,6 +20,32 @@ app.controller("ProfileController", function ($scope, $route, $http, $routeParam
     
     $scope.directToMessenger = function() {
         $location.url('messenger');
+    };
+    
+    /**
+     * Queries the friends of the current user
+     * and the friends of the user with the
+     * given id. Sorts the user to common and 
+     * distinct friend arrays.
+     * @param {type} id (user)
+     */
+    $scope.getFriendsOfFriend = function(id) {
+        socialService.getFriends().then(function(response) {
+            $scope.friends = response.friends;
+            socialService.getFriendsOfFriend(id).then(function(response) {
+                $scope.friendsOfFriend = {
+                    common: [],
+                    distinct: []
+                };
+                for(let x = 0; x < response.friends.length; x++) {
+                    if(isCommonFriend(response.friends[x].user.id)){
+                        $scope.friendsOfFriend.common.push(response.friends[x]);
+                    } else {
+                        $scope.friendsOfFriend.distinct.push(response.friends[x]);
+                    }
+                }            
+            });
+        });
     };
 
     $scope.sendFriendRequest = function () {
@@ -125,12 +151,26 @@ app.controller("ProfileController", function ($scope, $route, $http, $routeParam
             }
         };
     };
+    
+    /**
+     * Checks if the user id is a common friend
+     * of the current user.
+     * @param {type} id (user)
+     * @returns {Boolean}
+     */
+    function isCommonFriend(id) {
+        for(let x = 0; x < $scope.friends.length; x++) {
+            if(Number($scope.friends[x].user.id) === Number(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     function acceptFriendRequest(response) {
         $scope.info.relation.status = 'friend';
         $scope.info.relation.friends = true;
     }
-    ;
 
     $scope.resetSettingStates();
 

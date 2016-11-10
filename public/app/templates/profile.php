@@ -35,22 +35,22 @@
                             <button type="button" data-toggle="modal" data-target="#settingsModal" class="btn btn-default">Settings&nbsp;<i class="fa fa-cog" aria-hidden="true"></i></button>
                         </div>
                         <div class="btn-group profile_buttons" ng-if="!info.self && info.relation.friends">
-                            <button type="button" class="btn btn-default">{{ info.user.prename}}'s Friends&nbsp;<i class="fa fa-users" aria-hidden="true"></i></button>
+                            <button type="button" data-toggle="modal" data-target="#friends_friendlist" ng-click="getFriendsOfFriend(info.user.id)" class="btn btn-default">{{ info.user.prename}}'s Friends&nbsp;<i class="fa fa-users" aria-hidden="true"></i></button>
                             <button type="button" ng-click="sendMessage(info.user.id)" class="btn btn-default">Send Message&nbsp;<i class="fa fa-envelope" aria-hidden="true"></i></button>
                             <button type="button" disabled="disabled" class="btn btn-default">Friends&nbsp;<i class="fa fa-check" aria-hidden="true"></i></button>
                         </div>
                         <div class="btn-group profile_buttons" ng-if="!info.self && !info.relation.friends && info.relation.status == 'requested' && info.relation.requestedByMe">
-                            <button type="button" class="btn btn-default">{{ info.user.prename}}'s Friends&nbsp;<i class="fa fa-users" aria-hidden="true"></i></button>
+                            <button type="button" data-toggle="modal" data-target="#friends_friendlist" ng-click="getFriendsOfFriend(info.user.id)" class="btn btn-default">{{ info.user.prename}}'s Friends&nbsp;<i class="fa fa-users" aria-hidden="true"></i></button>
                             <button type="button" ng-click="sendMessage(info.user.id)" class="btn btn-default">Send Message&nbsp;<i class="fa fa-envelope" aria-hidden="true"></i></button>
                             <button type="button" disabled="disabled" class="btn btn-default">Request Sent&nbsp;<i class="fa fa-check" aria-hidden="true"></i></button>
                         </div>
                         <div class="btn-group profile_buttons" ng-if="!info.self && !info.relation.friends && info.relation.status == 'requested' && !info.relation.requestedByMe">
-                            <button type="button" class="btn btn-default">{{ info.user.prename}}'s Friends&nbsp;<i class="fa fa-users" aria-hidden="true"></i></button>
+                            <button type="button" data-toggle="modal" data-target="#friends_friendlist" ng-click="getFriendsOfFriend(info.user.id)" class="btn btn-default">{{ info.user.prename}}'s Friends&nbsp;<i class="fa fa-users" aria-hidden="true"></i></button>
                             <button type="button" ng-click="sendMessage(info.user.id)" class="btn btn-default">Send Message&nbsp;<i class="fa fa-envelope" aria-hidden="true"></i></button>
                             <button type="button" ng-click="answerFriendRequest(true)" class="btn btn-default">Accept Request&nbsp;<i class="fa fa-thumbs-up" aria-hidden="true"></i></button>
                         </div>
                         <div class="btn-group profile_buttons" ng-if="!info.self && info.relation.status == 'guest'">
-                            <button type="button" class="btn btn-default">{{ info.user.prename}}'s Friends&nbsp;<i class="fa fa-users" aria-hidden="true"></i></button>
+                            <button type="button" data-toggle="modal" data-target="#friends_friendlist" ng-click="getFriendsOfFriend(info.user.id)" class="btn btn-default">{{ info.user.prename}}'s Friends&nbsp;<i class="fa fa-users" aria-hidden="true"></i></button>
                             <button type="button" ng-click="sendMessage(info.user.id)" class="btn btn-default">Send Message&nbsp;<i class="fa fa-envelope" aria-hidden="true"></i></button>
                             <button type="button" ng-click="sendFriendRequest()" class="btn btn-default">Send Friend Request&nbsp;<i class="fa fa-smile-o" aria-hidden="true"></i></button>
                         </div>
@@ -59,6 +59,39 @@
             </div>
         </div>
     </div>
+    
+    <!-- Friends List(only used to display other users' friends) -->
+<div class="modal fade" id="friends_friendlist" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">{{ info.user.prename }}'s Friends</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table" style="vertical-align: middle;">
+                    <tr>
+                        <th colspan="2">Name</th>
+                        <th>Since</th>
+                        <th>Relation</th>
+                    </tr>
+                    <tr ng-repeat="friend in friendsOfFriend.common">
+                        <td><a href="/profile/{{ friend.user.id}}"><img class="img-responsive" src="/img/default-profile.png" width="45" /></a></td>
+                        <td style="vertical-align: middle;" class="text-left"><a href="/profile/{{ friend.user.id}}">{{ friend.user.username}}</a></td>
+                        <td style="vertical-align: middle;"><span>{{ friend.created}}</span></td>
+                        <td style="vertical-align: middle;"><span>Common Friend</span></td>
+                    </tr>
+                    <tr ng-repeat="friend in friendsOfFriend.distinct">
+                        <td><a href="/profile/{{ friend.user.id}}"><img class="img-responsive" src="/img/default-profile.png" width="45" /></a></td>
+                        <td style="vertical-align: middle;" class="text-left"><a href="/profile/{{ friend.user.id}}">{{ friend.user.username}}</a></td>
+                        <td style="vertical-align: middle;"><span>{{ friend.created}}</span></td>
+                        <td style="vertical-align: middle;"><span ng-if="friend.user.id == user.id">Yourself</span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
     <!-- Modal containing the user settings -->
     <div class="modal fade" id="settingsModal" tabindex="-1" role="dialog">

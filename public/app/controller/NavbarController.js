@@ -37,7 +37,6 @@ app.controller("NavbarController", function ($scope, $http, $routeParams, social
     // request all friends and friend requests
     $scope.getFriends = function () {
         socialService.list().then(function (friends) {
-            console.log(friends);
             $scope.social = friends;
         });
     };

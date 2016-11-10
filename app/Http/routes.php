@@ -40,7 +40,10 @@ Route::get('/feeds/skip/{skip}/take/{take}', 'FeedController@get')->middleware('
 Route::get('/user', function() { return Auth::user(); })->middleware('auth');
 Route::get('/user/{id}/feeds', 'ProfileController@getFeeds')->middleware('auth');
 Route::get('/user/{id}/feeds/skip/{skip}/take/{take}', 'ProfileController@takeFeeds')->middleware('auth');
+Route::get('/user/social', 'ProfileController@getSocialStatus')->middleware('auth');
 Route::get('/user/friends', 'ProfileController@getFriends')->middleware('auth');
+// in this case it is ok to keep the id in the url
+Route::get('/user/{id}/friends', 'ProfileController@getFriendsofFriend')->middleware('auth');
 // FOR FUCKS SAKE REMOVE THE IDS IN THE URLS, ELSE EVERYBODY WILL SEE EVERYONES STUFF!!!!
 
 Route::get('/search/{query}', 'SearchController@search')->middleware('auth');

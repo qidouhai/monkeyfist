@@ -1,7 +1,7 @@
 angular.module("internal").service('socialService', function($http) {
 
 	this.list = function() {
-		return $http.get('/user/friends').then(
+		return $http.get('/user/social').then(
 			function success(response) {
 				return response.data;
 			},
@@ -21,17 +21,22 @@ angular.module("internal").service('socialService', function($http) {
 			}
 		);
 	};
-
-	this.getFriendRequests = function() {
-		return $http.get('/user/friends').then(
-			function success(response) {
-				return response.data;
-			},
-			function error(response) {
-				console.log('Error: ' + response);
-			}
-		);
-	};
+        
+        /*
+         * Requests the friends of the user with the given id.
+         * @param {type} userid
+         * @returns friends
+         */
+        this.getFriendsOfFriend = function(id) {
+            return $http.get('/user/' + id + '/friends').then(
+                    function success(response) {
+                        return response.data;
+                    },
+                    function error(response) {
+                        console.error(response);
+                    }
+            );
+        };
 
 	this.answerFriendRequest = function(requestBody) {
 		return $http.post('/user/friends', requestBody).then(

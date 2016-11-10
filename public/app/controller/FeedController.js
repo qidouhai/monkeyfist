@@ -126,7 +126,6 @@ app.controller("FeedController", function ($scope, $http, $routeParams, $locatio
                 for (let i = 0; i < response.length; i++) {
                     $scope.feeds.push(response[i]);
                 }
-                console.log($scope.feeds);
                 if (response.length < $scope.feedSteps)
                     $scope.noMoreFeeds = true;
             });
@@ -199,7 +198,6 @@ app.controller("FeedController", function ($scope, $http, $routeParams, $locatio
     };
 
     $scope.setFeedURL = function () {
-        console.log($scope.user);
         if ($location.url().includes('feed')) {
             $scope.feedURL = '/feeds/' + $routeParams.id;
             $scope.displayPostInput = false;
