@@ -135,7 +135,7 @@ app.controller("FeedController", function ($scope, $http, $routeParams, $locatio
     $scope.removeFeed = function (feedId) {
         $http.delete('/feed/' + feedId).then(
                 function success(response) {
-                    if (response.data === 1) {
+                    if (Number(response.data) === Number(1)) {
                         for (let x = 0; x < $scope.feeds.length; x++) {
                             if ($scope.feeds[x].id === feedId) {
                                 $scope.feedCounter--;
