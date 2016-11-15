@@ -35,10 +35,17 @@ app.controller("NavbarController", function ($scope, $http, $location, socialSer
     };
 
     /**
+     * Logs the user out.
+     */
+    $scope.logout = function () {
+        window.location.href = '/logout';
+    };
+
+    /**
      * Directs the user to the profile with the given id.
      * @param {type} id (userid)
      */
-    $scope.displayProfile = function(id) {
+    $scope.displayProfile = function (id) {
         $location.url('/profile/' + id);
     };
 
@@ -57,18 +64,18 @@ app.controller("NavbarController", function ($scope, $http, $location, socialSer
                 denyFriendRequest(id, response);
         });
     };
-    
+
     /*
      * Removes the request send by the current user to 
      * another user.
      * @param {Number} requestId Id of the request(!) to remove. 
      */
-    $scope.withdrawFriendRequest = function(requestId) {
-        socialService.withdrawRequest({id:requestId}).then(function(response) {
-            if(response && response.removed) {
-                for(let i = 0; i < $scope.social.myrequests.length; i++) {
-                    if(Number($scope.social.myrequests[i].id) === Number(requestId)) {
-                        $scope.social.myrequests.splice(i,1);
+    $scope.withdrawFriendRequest = function (requestId) {
+        socialService.withdrawRequest({id: requestId}).then(function (response) {
+            if (response && response.removed) {
+                for (let i = 0; i < $scope.social.myrequests.length; i++) {
+                    if (Number($scope.social.myrequests[i].id) === Number(requestId)) {
+                        $scope.social.myrequests.splice(i, 1);
                     }
                 }
             }
@@ -97,8 +104,7 @@ app.controller("NavbarController", function ($scope, $http, $location, socialSer
                 $scope.social.friends.push(request);
             }
         }
-    }
-    ;
+    };
 
     function denyFriendRequest(id, response) {
         for (let i = 0; i < $scope.social.requests.length; i++) {
@@ -107,8 +113,7 @@ app.controller("NavbarController", function ($scope, $http, $location, socialSer
                 $scope.social.requests.splice(i, 1);
             }
         }
-    }
-    ;
+    };
 
 
     // stores the friends and requests
