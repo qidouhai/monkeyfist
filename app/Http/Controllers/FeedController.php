@@ -61,13 +61,19 @@ class FeedController extends Controller {
         $feed->created = $request->created;
         $feed->user_id = Auth::user()->id;
         $feed->content = $request->content;
+        
 
         if ($feed->save()) {
             $feed->user = $feed->user;
             $feed->comments = $feed->comments;
+            $feed->likes = $feed->likes;
+            $feed->dislikes = $feed->dislikes;
+            $feed->votes = [];
+            
             return $feed;
         }
     }
+    
 
     public function storeComment(Request $request, $id) {
         $comment = new FeedComment;

@@ -214,4 +214,5 @@ app.controller("FeedController", function ($scope, $http, $routeParams, $locatio
 
     $scope.setFeedURL();
     $scope.getFeeds();
+   
 });

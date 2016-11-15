@@ -24,13 +24,13 @@
                                         <span ng-bind="$select.selected.name"></span>
                                     </ui-select-match>
                                     <ui-select-choices group-by="groupFN" repeat="item in (items | filter: $select.search) track by item.id" refresh="search($select.search)" refresh-delay="0">
-                                        <div ng-if="item.type == 'user'">
+                                        <div ng-if="item.type == 'user'" ng-click="displayProfile(item.id)">                                            
                                             <div style="display: inline-block;">
                                                 <img src="/img/default-profile.png" height="32" />
                                             </div>
                                             <div style="display: inline-block; margin-left: 15px;">
                                                 <a style="font-size: large; color: #800000;" href="/profile/{{ item.id}}" ng-bind-html="item.username | highlight: $select.search"></a>
-                                            </div>
+                                            </div>                                           
                                         </div>
                                         <span ng-bind="item.id" ng-if="item.type == 'feed'"></span>
                                     </ui-select-choices>

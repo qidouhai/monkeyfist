@@ -1,6 +1,6 @@
 var app = angular.module("internal");
 
-app.controller("NavbarController", function ($scope, $http, $routeParams, socialService) {
+app.controller("NavbarController", function ($scope, $http, $location, socialService) {
 
     $scope.items = [];
 
@@ -32,6 +32,14 @@ app.controller("NavbarController", function ($scope, $http, $routeParams, social
         if (item.type == 'feed') {
             return 'Feeds';
         }
+    };
+
+    /**
+     * Directs the user to the profile with the given id.
+     * @param {type} id (userid)
+     */
+    $scope.displayProfile = function(id) {
+        $location.url('/profile/' + id);
     };
 
     // request all friends and friend requests
