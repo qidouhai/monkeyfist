@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\NotificationSettings;
+use App\PrivacySettings;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -67,7 +69,8 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        
+        $user = User::create([
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'prename' => $data['prename'],
@@ -75,5 +78,15 @@ class AuthController extends Controller
             'username' => $data['prename'] . ' ' . $data['lastname'],
             'birthday' => $data['birthday_year'] . '-' . $data['birthday_month'] . '-' . $data['birthday_day'] 
         ]);
+        
+        // create default settings
+        $notificationSettings = new NotificationSettings;
+        $notificationSettings->user_id = $user->id;
+        $notificationSettings->save();
+        $privacySettings = new PrivacySettings;
+        $privacySettings->user_id = $user->id;
+        $privacySettings->save();
+        
+        return $user;
     }
 }

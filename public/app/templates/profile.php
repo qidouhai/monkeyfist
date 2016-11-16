@@ -113,7 +113,7 @@
                                 Privacy settings</h4>
                             <p class="list-group-item-text">Determine who can see your posts, comments and profile information.</p>
                         </a>
-                        <a href="#" class="list-group-item" onclick="settingsFactory.selectSettingGroup('notifications')">
+                        <a href="#" class="list-group-item" onclick="settingsFactory.selectSettingGroup('notification')">
                             <h4 class="list-group-item-heading"><i class="fa fa-bell" aria-hidden="true"></i>
                                 Notification settings</h4>
                             <p class="list-group-item-text">Set when and how you want to get notified about certain events.</p>
@@ -215,6 +215,76 @@
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-6">
                                 <button type="submit" class="btn btn-primary" ng-click="submitSettingPassword()">Submit</button>
+                                <button type="button" class="btn btn-default" onclick="settingsFactory.back(2)">Back</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                
+                <div class="modal-body" id="settingsModal_privacy">
+                    <div class="alert alert-danger" ng-if="settings.privacy.error" role="alert">{{ settings.privacy.message}}</div>
+                    <div class="alert alert-success" ng-if="settings.privacy.success" role="alert">{{ settings.privacy.message}}</div>
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="input_privacy_feed" class="col-sm-6 control-label">Make feeds public to monkeyfist community?</label>
+                            <div class="col-sm-6">
+                                <input type="checkbox" id="input_privacy_feed" checked data-toggle="toggle">
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <label for="input_privacy_collection" class="col-sm-6 control-label">Make collections public to monkeyfist community?</label>
+                            <div class="col-sm-6">
+                                <input type="checkbox" id="input_privacy_collection" data-toggle="toggle">
+                            </div>
+                        </div>
+                        <hr>
+                        <hr>
+                        <div class="form-group">
+                            <div class="col-sm-offset-4 col-sm-6">
+                                <button type="submit" class="btn btn-primary" ng-click="submitSettingPrivacy()">Submit</button>
+                                <button type="button" class="btn btn-default" onclick="settingsFactory.back(2)">Back</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="modal-body" id="settingsModal_notification">
+                    <div class="alert alert-danger" ng-if="settings.notification.error" role="alert">{{ settings.notification.message}}</div>
+                    <div class="alert alert-success" ng-if="settings.notification.success" role="alert">{{ settings.notification.message}}</div>
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="input_notifyMessage" class="col-sm-6 control-label">Notify on new Message</label>
+                            <div class="col-sm-6">
+                                <input type="checkbox" id="input_notifyMessage" checked data-toggle="toggle">
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <label for="input_notifyFriendRequest" class="col-sm-6 control-label">Notify on new Friend Request</label>
+                            <div class="col-sm-6">
+                                <input type="checkbox" id="input_notifyFriendRequest" data-toggle="toggle">
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <label for="input_notifyComment" class="col-sm-6 control-label">Notify on new Comment</label>
+                            <div class="col-sm-6">
+                                <input type="checkbox" class="text-right" id="input_notifyComment" data-toggle="toggle">
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <label for="input_notifyFeed" class="col-sm-6 control-label">Notify on new Feed</label>
+                            <div class="col-sm-6">
+                                <input type="checkbox" id="input_notifyFeed" data-toggle="toggle">
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <div class="col-sm-offset-4 col-sm-6">
+                                <button type="submit" class="btn btn-primary" ng-click="submitSettingNotifications()">Submit</button>
                                 <button type="button" class="btn btn-default" onclick="settingsFactory.back(2)">Back</button>
                             </div>
                         </div>

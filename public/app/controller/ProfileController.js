@@ -129,6 +129,54 @@ app.controller("ProfileController", function ($scope, $route, $http, $routeParam
             });
         }
     };
+    
+    $scope.getSettingNotifications = function() {
+        settingService.getNotifications().then(function(response) {
+            $('#input_notifyMessage').prop('checked', response.message).change();
+            $('#input_notifyFriendRequest').prop('checked', response.friend_request).change();
+            $('#input_notifyComment').prop('checked', response.comment).change();
+            $('#input_notifyFeed').prop('checked', response.feed).change();
+        });
+    };
+    
+    $scope.submitSettingNotifications = function() {
+        $scope.resetSettingStates();
+        let requestBody = {
+            notifyMessage: $('#input_notifyMessage')[0].checked,
+            notifyFriendRequest: $('#input_notifyFriendRequest')[0].checked,
+            notifyComment: $('#input_notifyComment')[0].checked,
+            notifiyFeed: $('#input_notifyFeed')[0].checked
+        };        
+        settingService.setNotifications(requestBody).then(function(response) {
+            if(response.error)
+                $scope.settings.notification.error = true;
+            else
+                $scope.settings.notification.success = true;
+            $scope.settings.notification.message = response.message;
+        });
+    };
+    
+    $scope.getSettingPrivacy = function() {
+        settingService.getPrivacy().then(function(response) {
+            String(response.feeds) === String('private') ? $('#input_privacy_feed').bootstrapToggle('off') : $('#input_privacy_feed').bootstrapToggle('on');
+            String(response.collections) === String('private') ? $('#input_privacy_collection').bootstrapToggle('off') : $('#input_privacy_collection').bootstrapToggle('on');
+        });
+    };
+    
+    $scope.submitSettingPrivacy = function() {
+        $scope.resetSettingStates();
+        let requestBody = {
+            feeds: $('#input_privacy_feed')[0].checked ? String('public') : String('private'),
+            collections: $('#input_privacy_collection')[0].checked ? String('public') : String('private')
+        };
+        settingService.setPrivacy(requestBody).then(function(response) {
+            if(response.error)
+                $scope.settings.privacy.error = true;
+            else
+                $scope.settings.privacy.success = true;
+            $scope.settings.privacy.message = response.message;
+        });
+    };
 
     $scope.resetSettingStates = function () {
         $scope.settings = {
@@ -148,6 +196,16 @@ app.controller("ProfileController", function ($scope, $route, $http, $routeParam
                     success: false,
                     message: null
                 }
+            },
+            privacy: {
+                error: false,
+                success: false,
+                message: null
+            },
+            notification: {
+                error: false,
+                success: false,
+                message: null
             }
         };
     };
@@ -167,11 +225,15 @@ app.controller("ProfileController", function ($scope, $route, $http, $routeParam
         return false;
     }
 
-    function acceptFriendRequest(response) {
+    function acceptFriendRequest() {
         $scope.info.relation.status = 'friend';
         $scope.info.relation.friends = true;
     }
 
-    $scope.resetSettingStates();
+    if(Number($routeParams.id) === Number($scope.user.id)) {
+        $scope.resetSettingStates();
+        $scope.getSettingNotifications();
+        $scope.getSettingPrivacy();
+    }
 
 });

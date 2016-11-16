@@ -7,8 +7,8 @@ use Illuminate\Contracts\Auth\CanResetPassword;
 use DB;
 use Auth;
 
-class User extends Authenticatable
-{
+class User extends Authenticatable {
+
     /**
      * The attributes that are mass assignable.
      *
@@ -27,11 +27,18 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-
     public function comments() {
         return $this->hasMany('App\FeedComment');
     }
-    
+
+    public function notificationSettings() {
+        return $this->hasOne('App\NotificationSettings');
+    }
+
+    public function privacySettings() {
+        return $this->hasOne('App\PrivacySettings');
+    }
+
     /**
      * Returns friend requests sent to the user.
      * @return type
@@ -39,7 +46,7 @@ class User extends Authenticatable
     public function friendRequests() {
         return $this->hasMany('App\FriendRequest', 'friend_id');
     }
-    
+
     /**
      * Returns friend requests send from the user.
      * @return type
@@ -62,14 +69,14 @@ class User extends Authenticatable
 
     public function getFriendStatus($id) {
 
-        if(Auth::user()->id == $id) {
+        if (Auth::user()->id == $id) {
             return ["status" => "That's you Jim!"];
         }
 
         $status = DB::table('friends')->where([['user_id', Auth::user()->id], ['friend_id', $id]])->get();
 
         // if friends -> return
-        if($status && $status[0]->id) {
+        if ($status && $status[0]->id) {
             return ["friends" => true, "status" => "friend", "since" => $status[0]->created];
         }
 
@@ -77,8 +84,8 @@ class User extends Authenticatable
         $status = DB::table('friend_request')->where([['user_id', Auth::user()->id], ['friend_id', $id]])->orWhere([['user_id', $id], ['friend_id', Auth::user()->id]])->get();
 
         // if request exists -> return
-        if($status && $status[0]->id) {
-            if($status[0]->user_id == $id) {
+        if ($status && $status[0]->id) {
+            if ($status[0]->user_id == $id) {
                 // request has been sent by other user
                 return ["friends" => false, "status" => "requested", "requestedByMe" => false, "requestedBy" => $id];
             } else {
@@ -88,4 +95,5 @@ class User extends Authenticatable
 
         return ["friends" => false, "status" => "guest"];
     }
+
 }

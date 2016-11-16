@@ -25,6 +25,7 @@
     <![endif]-->
     <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/lib/bootstrap-toggle/css/bootstrap-toggle.min.css">
     <link rel="stylesheet" href="/lib/angular-ui-select/dist/select.css">
     <link rel="stylesheet" href="/lib/select2/dist/css/select2.css">
     <link rel="stylesheet" type="text/css" href="/lib/dropzone/dist/dropzone.css">
@@ -41,6 +42,7 @@
     <!-- Frameworks and Libraries -->
     <script type="text/javascript" src="/lib/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/lib/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
     <script type="text/javascript" src="/lib/moment/moment.js"></script>
     <script type="text/javascript" src="/lib/bootbox.js/bootbox.js"></script>
     <script type="text/javascript" src="/lib/dropzone/dist/dropzone.js"></script>
