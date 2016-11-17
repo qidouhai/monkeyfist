@@ -19,9 +19,19 @@ class FeedController extends Controller {
         $feeds = Feed::with('user', 'comments.user')->get();
         return $feeds;
     }
-
+    
+    /**
+     * Returns the feeds for the current user's dashboard.
+     * @param Number $skip
+     * @param Number $take
+     * @return Feed[]
+     */
     protected function get($skip, $take) {
-        $user = Auth::user();
+        $currentUser = Auth::user();
+        
+        // get all friend ids
+        $friend_ids = $currentUser->friends()->pluck('user_id')->toArray();
+        array_push($friend_ids, $currentUser->id); // add own id
 
         $feeds = Feed::with(
                         [
@@ -40,11 +50,11 @@ class FeedController extends Controller {
                             'dislikes' => function($query) {
                                 $query->get();
                             },
-                            'votes' => function($query) {
-                                $query->where('user_id', Auth::user()->id)->get();
+                            'votes' => function($query) use ($currentUser) {
+                                $query->where('user_id', $currentUser->id)->get();
                             }
                         ]
-                )->where('user_id', $user->id)->orderBy('id', 'desc')->skip($skip)->take($take)->get();
+                )->whereIn('user_id', array_values($friend_ids))->orderBy('id', 'desc')->skip($skip)->take($take)->get();
 
         return $feeds;
     }

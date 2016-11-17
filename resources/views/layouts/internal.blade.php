@@ -33,7 +33,7 @@
     <link rel="stylesheet" href="/css/style.css">
 
 </head>
-<body id="app-layout" ng-app="internal">
+<body id="app-layout" ng-app="internal" style="overflow:auto;">
 
     <div ng-view>
 

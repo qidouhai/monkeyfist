@@ -30,11 +30,17 @@ class User extends Authenticatable {
     public function comments() {
         return $this->hasMany('App\FeedComment');
     }
-
+    
+    /*
+     * Returns user's notification settings.
+     */
     public function notificationSettings() {
         return $this->hasOne('App\NotificationSettings');
     }
-
+    
+    /*
+     * Returns user's privacy settings.
+     */
     public function privacySettings() {
         return $this->hasOne('App\PrivacySettings');
     }
@@ -57,6 +63,15 @@ class User extends Authenticatable {
 
     public function friends() {
         return $this->hasMany('App\Friend', 'friend_id');
+    }
+    
+    /**
+     * Returns true if the given user is a friend of the current user.
+     * @param type $id user id
+     * @return boolean true if given user is friend of current user.
+     */
+    public function isFriend($id) {
+        return (DB::table('friends')->where([['user_id', Auth::user()->id],['friend_id', $id]])->count() == 1);        
     }
 
     public function feeds() {

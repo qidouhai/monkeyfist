@@ -23,62 +23,48 @@ class ProfileController extends Controller {
         }
     }
 
-    protected function getFeeds($id) {
-        $user = User::find($id);
+    /**
+     * Returns the feeds of the given user,
+     * if current user is authorized to see them.
+     * @param Number $id user id
+     * @param Number $skip (optional)
+     * @param Number $take (optional)
+     * @return Feed[]
+     */
+    protected function getFeeds($id, $skip = 0, $take = 999999) {
+        $currentUser = Auth::user();
+        $givenUser = User::find($id);
+        // check if given user is current user
+        // or if the given user's feed settings are public
+        // of if given user is a friend of current user
+        if ($currentUser->id == $id || $givenUser->privacySettings()->first()->feeds == 'public' || $currentUser->isFriend($id)) {
+            $feeds = Feed::with(
+                            [
+                                'user' => function($query) {
+                                    $query->select('id', 'username', 'picture');
+                                },
+                                'comments.user' => function($query) {
+                                    $query->get();
+                                },
+                                'commentCount' => function($query) {
+                                    $query->get();
+                                },
+                                'likes' => function($query) {
+                                    $query->get();
+                                },
+                                'dislikes' => function($query) {
+                                    $query->get();
+                                },
+                                'votes' => function($query) use ($currentUser) {
+                                    $query->where('user_id', $currentUser->id)->get();
+                                }
+                            ]
+                    )->where('user_id', $givenUser->id)->orderBy('id', 'desc')->skip($skip)->take($take)->get();
 
-        $feeds = Feed::with(
-                        [
-                            'user' => function($query) {
-                                $query->select('id', 'username', 'picture');
-                            },
-                            'comments.user' => function($query) {
-                                $query->get();
-                            },
-                            'commentCount' => function($query) {
-                                $query->get();
-                            },
-                            'likes' => function($query) {
-                                $query->get();
-                            },
-                            'dislikes' => function($query) {
-                                $query->get();
-                            },
-                            'votes' => function($query) {
-                                $query->where('user_id', Auth::user()->id)->get();
-                            }
-                        ]
-                )->where('user_id', $user->id)->orderBy('id', 'desc')->get();
-
-        return $feeds;
-    }
-
-    protected function takeFeeds($id, $skip, $take) {
-        $user = User::find($id);
-
-        $feeds = Feed::with(
-                        [
-                            'user' => function($query) {
-                                $query->select('id', 'username', 'picture');
-                            },
-                            'comments.user' => function($query) {
-                                $query->get();
-                            },
-                            'commentCount' => function($query) {
-                                $query->get();
-                            },
-                            'likes' => function($query) {
-                                $query->get();
-                            },
-                            'dislikes' => function($query) {
-                                $query->get();
-                            },
-                            'votes' => function($query) {
-                                $query->where('user_id', Auth::user()->id)->get();
-                            }
-                        ]
-                )->where('user_id', $user->id)->orderBy('id', 'desc')->skip($skip)->take($take)->get();
-
-        return $feeds;
+            return $feeds;
+        } else {
+            return [];
+        }
     }
 
     /**
@@ -131,23 +117,24 @@ class ProfileController extends Controller {
         $query = DB::table('friends')->where([['user_id', $user_id], ['friend_id', $request->id]])->orWhere([['user_id', $request->id], ['friend_id', $user_id]])->delete();
         return ["friend_id" => $request->id, "id" => $user_id];
     }
-    
+
     /*
      * Returns the friends of the current user.
      * @return type json
      */
+
     protected function getFriends() {
-        
+
         $f = Auth::user()->with([
-            'friends' => function($query) {
-                $query->with([
-                    'user' => function($query) {
-                        $query->select('id', 'username','picture');
+                    'friends' => function($query) {
+                        $query->with([
+                            'user' => function($query) {
+                                $query->select('id', 'username', 'picture');
+                            }
+                        ]);
                     }
-                ]);
-            }
-        ])->select('id', 'username', 'picture')->first();
-        
+                ])->select('id', 'username', 'picture')->first();
+
         return $f;
     }
 
@@ -179,23 +166,24 @@ class ProfileController extends Controller {
                 ])->where('id', Auth::user()->id)->get();
         return ["requests" => $requests[0]['friendRequests'], "myrequests" => $requests[0]['myRequests'], "friends" => $requests[0]['friends']];
     }
-    
+
     /*
      * Returns the friends of a user.
      * @return type json
      */
+
     protected function getFriendsOfFriend($id) {
-        
+
         $f = User::with([
-            'friends' => function($query) {
-                $query->with([
-                    'user' => function($query) {
-                        $query->select('id', 'username','picture');
+                    'friends' => function($query) {
+                        $query->with([
+                            'user' => function($query) {
+                                $query->select('id', 'username', 'picture');
+                            }
+                        ]);
                     }
-                ]);
-            }
-        ])->where('id', $id)->select('id', 'username', 'picture')->first();
-        
+                ])->where('id', $id)->select('id', 'username', 'picture')->first();
+
         return $f;
     }
 
