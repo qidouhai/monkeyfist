@@ -1,11 +1,17 @@
 var app = angular.module("internal");
 
-app.controller("NavbarController", function ($scope, $http, $location, socialService) {
+app.controller("NavbarController", function ($scope, $http, $location, $rootScope, socialService, msgService, socketService) {
 
     $scope.items = [];
-
+    $rootScope.notifications = {
+        subscribed: false,
+        messenger: {
+            conversations: []
+        }
+    };
+    
     $scope.search = function (term) {
-        if (term.trim() != '') {
+        if (term.trim() !== '') {
             $http.get('/search/' + term).then(
                     function (response) {
                         let result = [];
@@ -26,14 +32,26 @@ app.controller("NavbarController", function ($scope, $http, $location, socialSer
     };
 
     $scope.groupFN = function (item) {
-        if (item.type == 'user') {
+        if (String(item.type) === String('user')) {
             return 'Users';
         }
-        if (item.type == 'feed') {
+        if (String(item.type) === String('feed')) {
             return 'Feeds';
         }
     };
-
+    
+    $scope.getUnreadConversations = function() {
+        msgService.getUnreadConversations().then(function(response) {
+            $rootScope.notifications.messenger.conversations = response;
+        });
+    };
+    
+    socketService.on('messenger-channel:' + $scope.user.id, function (data) {
+        if($.inArray(data.conversation_id, $rootScope.notifications.messenger.conversations) === -1) {
+            $rootScope.notifications.messenger.conversations.push(data.conversation_id);
+        }
+    });
+    
     /**
      * Logs the user out.
      */
@@ -98,7 +116,7 @@ app.controller("NavbarController", function ($scope, $http, $location, socialSer
     function acceptFriendRequest(id, response) {
         let request = null;
         for (let i = 0; i < $scope.social.requests.length; i++) {
-            if ($scope.social.requests[i].user_id == id) {
+            if (Number($scope.social.requests[i].user_id) === Number(id)) {
                 request = $scope.social.requests[i];
                 $scope.social.requests.splice(i, 1);
                 $scope.social.friends.push(request);
@@ -108,15 +126,15 @@ app.controller("NavbarController", function ($scope, $http, $location, socialSer
 
     function denyFriendRequest(id, response) {
         for (let i = 0; i < $scope.social.requests.length; i++) {
-            if ($scope.social.requests[i].user_id == id) {
+            if (Number($scope.social.requests[i].user_id) === Number(id)) {
                 // remove friend from friends list
                 $scope.social.requests.splice(i, 1);
             }
         }
     };
 
-
     // stores the friends and requests
     $scope.social;
     $scope.getFriends();
+    $scope.getUnreadConversations();
 });

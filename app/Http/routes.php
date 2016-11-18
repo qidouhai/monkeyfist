@@ -43,6 +43,7 @@ Route::get('/search/{query}', 'SearchController@search')->middleware('auth');
 
 Route::get('/friend/{id}', 'ProfileController@profile')->middleware('auth');
 
+Route::get('/conversation/unread', 'MessengerController@getUnreadConversations')->middleware('auth');
 Route::get('/conversation', 'MessengerController@listConversations')->middleware('auth');
 Route::get('/conversation/{id}', 'MessengerController@getConversation')->middleware('auth');
 

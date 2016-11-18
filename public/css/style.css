@@ -131,6 +131,12 @@ body {
 	background-color: white;
 }
 
+.messenger_badge{
+    padding: 0px 1px 2px 7px;
+    background-color: rgba(0,0,0,0);
+    font-size: large;
+}
+
 
 /*!
  * Start Bootstrap - Simple Sidebar (http://startbootstrap.com/)
