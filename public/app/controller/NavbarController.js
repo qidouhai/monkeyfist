@@ -46,11 +46,16 @@ app.controller("NavbarController", function ($scope, $http, $location, $rootScop
         });
     };
     
-    socketService.on('messenger-channel:' + $scope.user.id, function (data) {
-        if($.inArray(data.conversation_id, $rootScope.notifications.messenger.conversations) === -1) {
-            $rootScope.notifications.messenger.conversations.push(data.conversation_id);
+    $scope.subscribeToMessages = function() {
+        if(!$location.url().includes('messenger')) {
+            socketService.on('messenger-channel:' + $scope.user.id, function (data) {
+                if($.inArray(data.conversation_id, $rootScope.notifications.messenger.conversations) === -1) {
+                    $rootScope.notifications.messenger.conversations.push(data.conversation_id);
+                }
+                console.log(data);
+            });
         }
-    });
+    }
     
     /**
      * Logs the user out.
@@ -137,4 +142,5 @@ app.controller("NavbarController", function ($scope, $http, $location, $rootScop
     $scope.social;
     $scope.getFriends();
     $scope.getUnreadConversations();
+    $scope.subscribeToMessages()
 });

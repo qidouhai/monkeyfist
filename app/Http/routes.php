@@ -66,6 +66,7 @@ Route::post('/user/friends/withdraw', 'ProfileController@removeRequest')->middle
 Route::post('/conversation', 'MessengerController@createConversation')->middleware('auth');
 Route::post('/conversation/search', 'MessengerController@searchConversation')->middleware('auth');
 Route::post('/message', 'MessengerController@addMessage')->middleware('auth');
+Route::post('/participant/{id}/updatelastread', 'MessengerController@updateLastRead')->middleware('auth');
 
 Route::post('/settings/account/names', 'SettingsController@setNames')->middleware('auth');
 Route::post('/settings/account/email', 'SettingsController@setEmail')->middleware('auth');

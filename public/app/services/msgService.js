@@ -70,5 +70,21 @@ angular.module('internal').service('msgService', function($http) {
                     }
             );
         };
+        
+        /**
+         * Updates the last_read attribute of a participant.
+         * @param {Number} participantId
+         * @param {Object} responseBody
+         */
+        this.updateLastRead = function(participantId, responseBody) {
+            return $http.post('/participant/' + participantId + '/updatelastread', responseBody).then(
+                    function success(response) {
+                        return response.data;
+                    },
+                    function error(response) {
+                        console.error(response);
+                    }
+            );
+        };
 
 });

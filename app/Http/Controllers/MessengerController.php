@@ -61,7 +61,6 @@ class MessengerController extends Controller {
     }
 
     // get list of a user's conversations (sorted by last message and including the last read attribute for each conversation)
-    // ADD LAST MESSAGE TIMESTAMP TO EACH CONVERSATION
     protected function listConversations() {
         $conversations = Participant::where('user_id', Auth::user()->id)->get(['conversation_id']);
 
@@ -104,6 +103,14 @@ class MessengerController extends Controller {
 
         return ["exists" => true, "member" => true, "data" => $conversation];
     }
+    
+    protected function updateLastRead($id, Request $request) {
+        $participant = Participant::find($id);
+        if($participant->user->id == Auth::user()->id) {
+            $participant->last_read = $request->last_read;
+            $participant->save();
+        }
+    }
 
     // add a message to a conversation and update its last_message timestamp
     protected function addMessage(Request $request) {
@@ -121,26 +128,27 @@ class MessengerController extends Controller {
             $conversation = Conversation::find($message->conversation_id);
             $conversation->last_message = $message->created_at;
             $conversation->save();
+            $message->conversation = $conversation;
             event(new MessageSent($message));
             return ['saved' => $message];
         }
         return ['saved' => false];
     }
-    
+
     /**
      * Returns the ids of the current user's
      * conversations that contain messages
      * not yet read by the current user.
      * @return Number[] Ids of conversations with unread messages.
      */
-    protected function getUnreadConversations() {        
+    protected function getUnreadConversations() {
         return DB::table('conversations')
-                ->join('participants', function($join) {
-                    $join->on('participants.conversation_id', '=', 'conversations.id')
+                        ->join('participants', function($join) {
+                            $join->on('participants.conversation_id', '=', 'conversations.id')
                             ->on('participants.last_read', '<', 'conversations.last_message')
                             ->where('participants.user_id', '=', Auth::user()->id);
-                })
-                ->pluck('conversation_id');
+                        })
+                        ->pluck('conversation_id');
     }
 
     // update last read of timestamp of a conversation
