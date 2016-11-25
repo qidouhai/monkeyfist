@@ -23,14 +23,14 @@
         document.createElement('ui-select-choices');
         </script>
     <![endif]-->
-    <link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/lib/bootstrap-toggle/css/bootstrap-toggle.min.css">
-    <link rel="stylesheet" href="/lib/angular-ui-select/dist/select.css">
-    <link rel="stylesheet" href="/lib/select2/dist/css/select2.css">
-    <link rel="stylesheet" type="text/css" href="/lib/dropzone/dist/dropzone.css">
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('/lib/font-awesome/css/font-awesome.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('/lib/bootstrap/dist/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('/lib/bootstrap-toggle/css/bootstrap-toggle.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('/lib/angular-ui-select/dist/select.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('/lib/select2/dist/css/select2.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('/lib/dropzone/dist/dropzone.css') }}">
     <link href='http://fonts.googleapis.com/css?family=Bungee+Inline|Kalam' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('/css/style.css') }}">
 
 </head>
 <body id="app-layout" ng-app="internal" style="overflow:auto;">
@@ -40,38 +40,38 @@
     </div>
 
     <!-- Frameworks and Libraries -->
-    <script type="text/javascript" src="/lib/jquery/dist/jquery.js"></script>
-    <script type="text/javascript" src="/lib/bootstrap/dist/js/bootstrap.js"></script>
-    <script type="text/javascript" src="/lib/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
-    <script type="text/javascript" src="/lib/moment/moment.js"></script>
-    <script type="text/javascript" src="/lib/bootbox.js/bootbox.js"></script>
-    <script type="text/javascript" src="/lib/dropzone/dist/dropzone.js"></script>
-    <script type="text/javascript" src="/lib/angular/angular.js"></script>
-    <script type="text/javascript" src="/lib/angular-route/angular-route.js"></script>
-    <script type="text/javascript" src="/lib/angular-sanitize/angular-sanitize.js"></script>
-    <script type="text/javascript" src="/lib/angular-ui-select/dist/select.js"></script>
-    <script type="text/javascript" src="/lib/angular-scroll-glue/src/scrollglue.js"></script>
-    <script type="text/javascript" src="/lib/socket.io-client/socket.io.js"></script>
+    <script type="text/javascript" src="{{ URL::asset('/lib/jquery/dist/jquery.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('/lib/bootstrap/dist/js/bootstrap.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('/lib/bootstrap-toggle/js/bootstrap-toggle.min.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('/lib/moment/moment.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('/lib/bootbox.js/bootbox.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('/lib/dropzone/dist/dropzone.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('/lib/angular/angular.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('/lib/angular-route/angular-route.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('/lib/angular-sanitize/angular-sanitize.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('/lib/angular-ui-select/dist/select.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('/lib/angular-scroll-glue/src/scrollglue.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('/lib/socket.io-client/socket.io.js') }}"></script>
 
     <!-- Custom Scripts -->
-    <script type="text/javascript" src="/js/InsertImageToPost.js"></script>
-    <script type="text/javascript" src="/js/SettingsFactory.js"></script>
+    <script type="text/javascript" src="{{ URL::asset('/js/InsertImageToPost.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('/js/SettingsFactory.js') }}"></script>
 
     <!-- Angular App -->
-    <script type="text/javascript" src="/app/app.js"></script>
+    <script type="text/javascript" src="{{ URL::asset('/app/app.js') }}"></script>
 
     <!-- Angular Services -->
-    <script type="text/javascript" src="/app/services/socialService.js"></script>
-    <script type="text/javascript" src="/app/services/msgService.js"></script>
-    <script type="text/javascript" src="/app/services/socketService.js"></script>
-    <script type="text/javascript" src="/app/services/settingService.js"></script>
-    <script type="text/javascript" src="/app/services/feedService.js"></script>
+    <script type="text/javascript" src="{{ URL::asset('/app/services/socialService.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('/app/services/msgService.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('/app/services/socketService.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('/app/services/settingService.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('/app/services/feedService.js') }}"></script>
 
     <!-- Angular Controller -->
-    <script type="text/javascript" src="/app/controller/NavbarController.js"></script>
-    <script type="text/javascript" src="/app/controller/DashboardController.js"></script>
-    <script type="text/javascript" src="/app/controller/FeedController.js"></script>
-    <script type="text/javascript" src="/app/controller/ProfileController.js"></script>
-    <script type="text/javascript" src="/app/controller/MessengerController.js"></script>
+    <script type="text/javascript" src="{{ URL::asset('/app/controller/NavbarController.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('/app/controller/DashboardController.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('/app/controller/FeedController.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('/app/controller/ProfileController.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('/app/controller/MessengerController.js') }}"></script>
 </body>
 </html>

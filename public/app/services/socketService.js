@@ -1,5 +1,5 @@
 angular.module('internal').factory('socketService', function ($rootScope) {
-    let socket = io('http://localhost:3333');
+    let socket = io('http://monkeytest.ddns.net:3000');
 
     return {
         on: function (eventName, callback) {
