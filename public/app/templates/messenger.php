@@ -11,20 +11,23 @@
         <ul class="sidebar-nav">
             <li class="sidebar-brand" ng-repeat="conversation in conversations">
                 <a href="#" ng-click="setConversation(conversation.id)">
-                    <div>
-                        <div style="width: 75px; display: table-cell; vertical-align: middle;">
-                            <img ng-if="conversation.participants.length == 2" src="/img/default-profile.png" height="50" width="50" style="padding-left: 8px;" />
-                            <i ng-if="conversation.participants.length > 2" class="fa fa-globe fa-3x" aria-hidden="true" style="padding-left: 8px; color: black;"></i>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <img ng-if="conversation.participants.length == 2" src="/img/default-profile.png" class="img-responsive" />
+                            <i ng-if="conversation.participants.length > 2" class="fa fa-globe fa-3x" aria-hidden="true" style="color: black;"></i>
                         </div>
-                        <div style="width: 200px; max-width: 200px; vertical-align: middle; overflow: hidden; text-overflow: ellipsis; display: table-cell;">
+                        <div class="col-sm-8" style="overflow: hidden; text-overflow: ellipsis;">
                             <span style="font-weight: bold;">
                                 {{ conversation.participants | enumerateParticipants:user.id }}
                             </span>
                             <br>
                             <span>
-                                metas here
+                                Last Message: {{ conversation.last_message }}
                             </span>
                         </div>
+                        <div ng-if="!hasUnreadMessage(conversation.id)" class="col-sm-1" style="background-color: #f6f7f9; padding:0px; height: 60px;"></div>
+                        <div ng-if="hasUnreadMessage(conversation.id)" class="col-sm-1" style="background-color: #800000; padding:0px; height: 60px;"></div>
+                    </div>
                 </a>
             </li>
         </ul>

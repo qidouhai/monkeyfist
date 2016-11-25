@@ -1,6 +1,6 @@
 var app = angular.module("internal");
 
-app.controller("MessengerController", function ($scope, $routeParams, $rootScope, $window, msgService, socketService) {
+app.controller("MessengerController", function ($scope, $routeParams, $rootScope, msgService, socketService) {
 
     $scope.conversations;
 
@@ -22,6 +22,7 @@ app.controller("MessengerController", function ($scope, $routeParams, $rootScope
         msgService.getConversations().then(function (response) {
             $scope.conversations = response;
             $scope.conversations.sort(compareConversations);
+            console.log($scope.conversations);
         });
     };
 
@@ -49,25 +50,34 @@ app.controller("MessengerController", function ($scope, $routeParams, $rootScope
         }
         $('#message_input_field').val('');
     };
+    
+    /**
+     * Checks if the given conversation contains unread messages.
+     * @param {Number} conversationId
+     * @returns {Boolean} true if conversation contains an unread message
+     */
+    $scope.hasUnreadMessage = function(conversationId) {
+        return $.inArray(conversationId, $rootScope.notifications.messenger.conversations) > -1;
+    };
 
     socketService.on('messenger-channel:' + $scope.user.id, function (data) {
         if (Number(data.conversation_id) === Number($scope.currentConversation.id)) {
             $scope.currentConversation.messages.push(data);
         }
         // if new message arrives, trigger notification (unless message is sent in current conversation)
-        if($.inArray(data.conversation_id, $rootScope.notifications.messenger.conversations) === -1 && data.conversation_id !== $scope.currentConversation.id) {
-            $rootScope.notifications.messenger.conversations.push(data.conversation_id);
+        if($.inArray(data.conversation_id, $rootScope.notifications.messenger.conversations) === -1) {
+            if(data.conversation_id !== $scope.currentConversation.id)
+                // new message is sent -> update conversation notification
+                $rootScope.notifications.messenger.conversations.push(data.conversation_id);
+            else
+                // new message is sent in current conversation -> update last read attribute of current user
+                msgService.updateLastRead($scope.currentParticipant.id, {last_read: moment().toISOString()});
         }
         // update last_message attribute of current conversation and resort conversations
         $scope.conversations[indexOfConversation(data.conversation_id)].last_message = data.created_at;
         $scope.conversations.sort(compareConversations);
     });
     
-    // when user leaves messenger, update last_read attribute
-    $scope.$on('$locationChangeStart', function() {
-        if($scope.currentParticipant !== -1)
-            msgService.updateLastRead($scope.currentParticipant.id, {last_read: moment().toISOString()});
-    });
 
     // load user's conversations
     $scope.getConversations();
@@ -111,7 +121,7 @@ app.controller("MessengerController", function ($scope, $routeParams, $rootScope
                 return i;
         }
         return -1;
-    }
+    }    
 
     // position textarea at page bottom
     angular.element(document).ready(function () {
