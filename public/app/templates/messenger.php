@@ -25,8 +25,9 @@
                                 Last Message: {{ conversation.last_message }}
                             </span>
                         </div>
-                        <div ng-if="!hasUnreadMessage(conversation.id)" class="col-sm-1" style="background-color: #f6f7f9; padding:0px; height: 60px;"></div>
-                        <div ng-if="hasUnreadMessage(conversation.id)" class="col-sm-1" style="background-color: #800000; padding:0px; height: 60px;"></div>
+                        <div ng-if="currentConversation.id !== conversation.id && !hasUnreadMessage(conversation.id)" class="col-sm-1" style="background-color: #f6f7f9; padding:0px; height: 60px;"></div>
+                        <div ng-if="currentConversation.id !== conversation.id && hasUnreadMessage(conversation.id)" class="col-sm-1" style="background-color: #800000; padding:0px; height: 60px;"></div>
+                        <div ng-if="currentConversation.id === conversation.id" class="col-sm-1" style="background-color: orange; padding:0px; height: 60px;"></div>
                     </div>
                 </a>
             </li>
@@ -48,7 +49,8 @@
                                     <span>{{ message.created_at}}</span>
                                 </div>
                                 <div class="message_container_body">
-                                    <p>{{ message.body}}</p>
+                                    <p style="white-space: pre-line;" ng-bind-html="message.body | embed"></p>
+                                    <!--<ng-emoticons emoticons-data="message.body" emoticons-options="emoticonOptions"/>-->
                                 </div>
                             </div>
 

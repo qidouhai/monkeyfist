@@ -29,6 +29,7 @@
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('/lib/angular-ui-select/dist/select.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('/lib/select2/dist/css/select2.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('/lib/dropzone/dist/dropzone.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('/lib/ngEmbed/dist/ng-embed.min.css') }}">
     <link href='http://fonts.googleapis.com/css?family=Bungee+Inline|Kalam' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('/css/style.css') }}">
 
@@ -52,6 +53,7 @@
     <script type="text/javascript" src="{{ URL::asset('/lib/angular-ui-select/dist/select.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('/lib/angular-scroll-glue/src/scrollglue.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('/lib/socket.io-client/socket.io.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('/lib/ngEmbed/dist/ng-embed.min.js') }}"></script>
 
     <!-- Custom Scripts -->
     <script type="text/javascript" src="{{ URL::asset('/js/InsertImageToPost.js') }}"></script>

@@ -255,6 +255,10 @@ body {
     border-right: 1px solid black;
 }
 
+.message_container{
+    font-size:1.3em;
+}
+
 .message_container_head a:link, .message_container_head a:visited {
     text-decoration: none;
     color: #800000;
