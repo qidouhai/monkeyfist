@@ -49,8 +49,7 @@
                                     <span>{{ message.created_at}}</span>
                                 </div>
                                 <div class="message_container_body">
-                                    <p style="white-space: pre-line;" ng-bind-html="message.body | embed"></p>
-                                    <!--<ng-emoticons emoticons-data="message.body" emoticons-options="emoticonOptions"/>-->
+                                    <ng-embed embed-data="message.body" embed-options="embedOptions"/></ng-embed>
                                 </div>
                             </div>
 

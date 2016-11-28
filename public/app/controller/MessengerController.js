@@ -12,6 +12,50 @@ app.controller("MessengerController", function ($scope, $routeParams, $rootScope
     };
     // stores participant representing the current user in the current conversation
     $scope.currentParticipant = -1;
+    // ngEmbed options
+    // TODO: move api key to config file
+    $scope.embedOptions = {
+        fontSmiley: true,
+        emoji: true,
+        link: true,
+        linkTarget: '_blank',
+        basicVideo: false,
+        pdf: {
+            embed: true
+        },
+        image: {
+            embed: true
+        },
+        gdevAuth: 'AIzaSyCehcVrjF6WuDBNXmeKThGCdgrcaqC7EyU',
+        video: {
+            embed: true,
+            width: null,
+            ytTheme: 'light',
+            details: false,
+            autoplay: false
+        },
+        tweetEmbed: false,
+        code: {
+            highlight: false,
+            lineNumbers: false
+        },
+        audio: {
+            embed: false
+        },
+        twitchtvEmbed: false,
+        dailymotionEmbed: false,
+        tedEmbed: false,
+        dotsubEmbed: false,
+        liveleakEmbed: false,
+        soundCloudEmbed: false,
+        spotifiyEmbed: false,
+        codepenEmbed: false,
+        codepenHeight: false,
+        jsfiddleEmbed: false,
+        plunkerEmbed: false,
+        githubgistEmbed: false,
+        ideoneEmbed: false
+    };
 
     $scope.setConversation = function (conversationId) {
         $scope.getMessages(conversationId);
@@ -34,7 +78,7 @@ app.controller("MessengerController", function ($scope, $routeParams, $rootScope
                 $scope.currentConversation.messages = response.data.messages;
                 $scope.currentParticipant = $scope.currentConversation.participants[indexOfParticipant($scope.user.id)];
                 // remove this conversation from unreadconversations array
-                $rootScope.notifications.messenger.conversations.splice($.inArray(conversationId, $rootScope.notifications.messenger.conversations),1);
+                $rootScope.notifications.messenger.conversations.splice($.inArray(conversationId, $rootScope.notifications.messenger.conversations), 1);
                 // update last read attribute of participant
                 msgService.updateLastRead($scope.currentParticipant.id, {last_read: moment().toISOString()});
             }
@@ -50,13 +94,13 @@ app.controller("MessengerController", function ($scope, $routeParams, $rootScope
         }
         $('#message_input_field').val('');
     };
-    
+
     /**
      * Checks if the given conversation contains unread messages.
      * @param {Number} conversationId
      * @returns {Boolean} true if conversation contains an unread message
      */
-    $scope.hasUnreadMessage = function(conversationId) {
+    $scope.hasUnreadMessage = function (conversationId) {
         return $.inArray(conversationId, $rootScope.notifications.messenger.conversations) > -1;
     };
 
@@ -65,8 +109,8 @@ app.controller("MessengerController", function ($scope, $routeParams, $rootScope
             $scope.currentConversation.messages.push(data);
         }
         // if new message arrives, trigger notification (unless message is sent in current conversation)
-        if($.inArray(data.conversation_id, $rootScope.notifications.messenger.conversations) === -1) {
-            if(data.conversation_id !== $scope.currentConversation.id)
+        if ($.inArray(data.conversation_id, $rootScope.notifications.messenger.conversations) === -1) {
+            if (data.conversation_id !== $scope.currentConversation.id)
                 // new message is sent -> update conversation notification
                 $rootScope.notifications.messenger.conversations.push(data.conversation_id);
             else
@@ -77,7 +121,7 @@ app.controller("MessengerController", function ($scope, $routeParams, $rootScope
         $scope.conversations[indexOfConversation(data.conversation_id)].last_message = data.created_at;
         $scope.conversations.sort(compareConversations);
     });
-    
+
 
     // load user's conversations
     $scope.getConversations();
@@ -86,14 +130,14 @@ app.controller("MessengerController", function ($scope, $routeParams, $rootScope
         $scope.getMessages(parseInt($routeParams.conversationId));
 
     // comparison function for conversations (sorts by last message)
-    function compareConversations(a,b) {
-        if(moment(a.last_message) > moment(b.last_message))
+    function compareConversations(a, b) {
+        if (moment(a.last_message) > moment(b.last_message))
             return -1;
-        if(moment(a.last_message) < moment(b.last_message))
+        if (moment(a.last_message) < moment(b.last_message))
             return 1;
         return 0;
     }
-    
+
     /**
      * Search the index of the conversation in the
      * conversation array.
@@ -101,13 +145,13 @@ app.controller("MessengerController", function ($scope, $routeParams, $rootScope
      * @returns {Number} index of conversation, else -1
      */
     function indexOfConversation(conversationId) {
-        for(let i = 0; i < $scope.conversations.length; i++) {
-            if(Number(conversationId) === Number($scope.conversations[i].id))
+        for (let i = 0; i < $scope.conversations.length; i++) {
+            if (Number(conversationId) === Number($scope.conversations[i].id))
                 return i;
         }
         return -1;
     }
- 
+
     /**
      * Search the index of the current user in 
      * the participant array of the current
@@ -116,12 +160,12 @@ app.controller("MessengerController", function ($scope, $routeParams, $rootScope
      * @returns {Number} index of user, else -1
      */
     function indexOfParticipant(userId) {
-        for(let i = 0; i < $scope.currentConversation.participants.length; i++) {
-            if(Number(userId) === Number($scope.currentConversation.participants[i].user_id))
+        for (let i = 0; i < $scope.currentConversation.participants.length; i++) {
+            if (Number(userId) === Number($scope.currentConversation.participants[i].user_id))
                 return i;
         }
         return -1;
-    }    
+    }
 
     // position textarea at page bottom
     angular.element(document).ready(function () {

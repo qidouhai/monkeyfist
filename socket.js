@@ -10,7 +10,7 @@ redis.on('message', function(channel, message) {
     message = JSON.parse(message);
 
     for(var i = 0; i < message.data.participants.length; i++) {
-    	io.emit(channel + ':' + message.data.participants[i].user_id, message.data.message)
+    	io.emit(channel + ':' + message.data.participants[i].user_id, message.data.message);
     }
 
     // io.emit(channel, message.data);
