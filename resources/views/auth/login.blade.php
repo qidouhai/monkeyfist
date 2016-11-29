@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="css/style.css">
 
 </head>
-<body>
+<body style="padding-top: 75px;">
 
     <nav class="navbar navbar-inverse navbar-fixed-top" style="background-color: #800000">
         <div class="container">
@@ -65,7 +65,7 @@
                     <h1 style="font-size: 4em;" class="text-center">Welcome to Monkeyfist</h1>
 
                     <p style="font-size: x-large; font-color: #BDBDBD; padding: 5%;" class="text-center">
-                        Monkeyfist is a small community of internet enthusiasts. We try to differentiate from the big social mass networks by taking care of the personal needs of our users. Our community is small yet powerful. We love what we do and if you do not believe, <a href="#registration">register below</a> and find out. And this is a banana, as bananas are not just delicious, but also very healthy.
+                        Monkeyfist is a very lighweight, easy extensible social network completely built with open source software. Running a monkeyfist server takes only three simple steps. Monkeyfist runs with a common Apache Webserver extended by a simple node script for websockets. Wanna take a look? <a href="#registration">Register below ;)</a> If you want to setup your own monkeyfist server, simply follow the steps described at <a href="http://github.com/avi92/monkeyfist" target="_blank">github.com/avi92/monkeyfist</a> to run your own social network.
                     </p>
 
                     <img class="center-block" src="{{URL::asset('/img/banana.png')}}" alt="This is where a banana should appear." class="img-rounded center">

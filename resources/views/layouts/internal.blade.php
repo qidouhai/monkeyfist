@@ -36,7 +36,7 @@
 </head>
 <body id="app-layout" ng-app="internal" style="overflow:auto;">
 
-    <div ng-view>
+    <div ng-view style="height:100%;">
 
     </div>
 
@@ -52,7 +52,7 @@
     <script type="text/javascript" src="{{ URL::asset('/lib/angular-sanitize/angular-sanitize.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('/lib/angular-ui-select/dist/select.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('/lib/angular-scroll-glue/src/scrollglue.js') }}"></script>
-    <script type="text/javascript" src="{{ URL::asset('/lib/socket.io-client/socket.io.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('/lib/socket.io-client/dist/socket.io.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('/lib/ngEmbed/dist/ng-embed.min.js') }}"></script>
 
     <!-- Custom Scripts -->

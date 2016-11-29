@@ -4,78 +4,68 @@
 
 <!-- </div> -->
 
-<div id="messenger">
-
-    <!-- Sidebar -->
-    <div id="messenger_sidebar">
-        <ul class="sidebar-nav">
-            <li class="sidebar-brand" ng-repeat="conversation in conversations">
-                <a href="#" ng-click="setConversation(conversation.id)">
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <img ng-if="conversation.participants.length == 2" src="/img/default-profile.png" class="img-responsive" />
-                            <i ng-if="conversation.participants.length > 2" class="fa fa-globe fa-3x" aria-hidden="true" style="color: black;"></i>
+<div id="messenger" class="row" style="min-height: 100%; height: 100%;">
+    
+    <div class="col-md-10 col-md-offset-1" style="height:100%;">
+        <div class="row" style="height:100%;">
+            
+            <!-- The sidebar with all the open conversations -->
+            <div id="messenger_sidebar" class="col-md-4 col-sm-4 col-xs-4">
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="conversation in conversations">
+                        <a href="" ng-click="setConversation(conversation.id)">
+                            <div class="row">
+                                <div class="col-sm-3 messenger_sidebar_thumbnail">
+                                    <img ng-if="conversation.participants.length==2" src="/img/default-profile.png" style="max-width:65px;" class="img-responsive" />
+                                    <i ng-if="conversation.participants.length > 2" class="fa fa-globe fa-3x" aria-hidden="true" style="color:black"></i>
+                                </div>
+                                <div class="col-sm-8" style="overflow:hidden;text-overflow:ellipsis;">
+                                    <span class="messenger_sidebar_participants">
+                                        {{ conversation.participants | enumerateParticipants:user.id }}
+                                    </span>
+                                    <br />
+                                    <span class="messenger_sidebar_lastMessage">
+                                        Last Message: {{ conversation.last_message }}
+                                    </span>
+                                </div>
+                                <div ng-if="currentConversation.id !== conversation.id && !hasUnreadMessage(conversation.id)" class="col-sm-1" style="background-color:#f6f7f9;padding:0px;"></div>
+                                <div ng-if="currentConversation.id !== conversation.id && hasUnreadMessage(conversation.id)" class="col-sm-1" style="background-color:#800000;padding:0px;"></div>
+                                <div ng-if="currentConversation.id === conversation.id" class="col-sm-1" style="background-color:orange;padding:0px;"></div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- All the messages and the input area -->
+            <div id="messenger_content" style="height:100%; max-height: 100%; min-height:100%;" class="col-md-8 col-sm-8 col-xs-8">
+                <div class="message_wrapper" scroll-glue>
+                    <div class="message_container" ng-repeat="message in currentConversation.messages">
+                        <div class="message_container_head">
+                            <a href="/profile/{{ message.participant | mapById: currentConversation.participants:'user:id' }}">{{ message.participant | mapById: currentConversation.participants:'user.username' }}</a>
+                            <span>{{ message.created_at }}</span>
                         </div>
-                        <div class="col-sm-8" style="overflow: hidden; text-overflow: ellipsis;">
-                            <span style="font-weight: bold;">
-                                {{ conversation.participants | enumerateParticipants:user.id }}
-                            </span>
-                            <br>
-                            <span>
-                                Last Message: {{ conversation.last_message }}
-                            </span>
+                        <div class="message_container_body">
+                            <ng-embed embed-data="message.body" embed-options="embedOptions"/></ng-embed>
                         </div>
-                        <div ng-if="currentConversation.id !== conversation.id && !hasUnreadMessage(conversation.id)" class="col-sm-1" style="background-color: #f6f7f9; padding:0px; height: 60px;"></div>
-                        <div ng-if="currentConversation.id !== conversation.id && hasUnreadMessage(conversation.id)" class="col-sm-1" style="background-color: #800000; padding:0px; height: 60px;"></div>
-                        <div ng-if="currentConversation.id === conversation.id" class="col-sm-1" style="background-color: orange; padding:0px; height: 60px;"></div>
                     </div>
-                </a>
-            </li>
-        </ul>
-    </div>
-
-    <!-- Main -->
-    <div id="messenger_content">
-        <div class="container-fluid" style="padding: 0px;">
-            <div class="row">
-                <div class="col-lg-12" style="padding: 0px;">
-                    <div style="width: 70%;">
-
-                        <div class="message_wrapper" scroll-glue>
-
-                            <div class="message_container" ng-repeat="message in currentConversation.messages">
-                                <div class="message_container_head">
-                                    <a href="/profile/{{ message.participant | mapById: currentConversation.participants:'user_id' }}">{{ message.participant | mapById: currentConversation.participants:'user.username' }}</a>
-                                    <span>{{ message.created_at}}</span>
-                                </div>
-                                <div class="message_container_body">
-                                    <ng-embed embed-data="message.body" embed-options="embedOptions"/></ng-embed>
-                                </div>
+                </div>
+                <div class="message_input_wrapper" style="background-color:#f6f7f9">
+                    <div class="form-group message_input" style="background-color:white;">
+                        <form ng-submit="submitMessage()">
+                            <div class="message_input_row1" style="border-top:1px solid #ccc;border-right:1px solid #ccc;border-left:1px solid #ccc;border-bottom:1px solid #e6e6e6;">
+                                <textarea id="message_input_field" style="border:none;" class="form-control" rows="3" placeholder="Write a message..."></textarea>
                             </div>
-
-                        </div>
-
-                        <div class="message_input_wrapper" style="background-color: #f6f7f9;">
-
-                            <div class="form-group message_input" style="background-color: white;">
-                                <form ng-submit="submitMessage()">
-                                    <div class="message_input_row1" style="border-top: 1px solid #ccc; border-right: 1px solid #ccc; border-left: 1px solid #ccc; border-bottom: 1px solid #e6e6e6;">
-                                        <textarea id="message_input_field" style="border: none;" class="form-control" rows="3" placeholder="Write a message..."></textarea>
-                                    </div>
-                                    <div class="message_input_row2 text-right" style="border-bottom: 1px solid #ccc; border-right: 1px solid #ccc; border-left: 1px solid #ccc;">
-                                        <button class="btn btn-primary" style="border: none;">Send Message</button>
-                                    </div>
-                                </form>
+                            <div class="message_input_row2 text-right" style="border-bottom: 1px solid #ccc; border-right: 1px solid #ccc; border-left: 1px solid #ccc;">
+                                <button class="btn btn-primary" style="border:none;">Send Message</button>
                             </div>
-
-                        </div>
-
+                        </form>
                     </div>
                 </div>
             </div>
-        </div>
+            
+        </div>        
     </div>
-
 </div>
 
 

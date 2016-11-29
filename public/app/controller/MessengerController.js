@@ -67,6 +67,14 @@ app.controller("MessengerController", function ($scope, $routeParams, $rootScope
             $scope.conversations = response;
             $scope.conversations.sort(compareConversations);
             console.log($scope.conversations);
+            
+            // select initial conversation
+            // if no conversation is selected,
+            // show the latest
+            if ($routeParams.conversationId)
+                $scope.getMessages(parseInt($routeParams.conversationId));
+            else if ($scope.conversations.length > 0)
+                $scope.getMessages($scope.conversations[0].id);
         });
     };
 
@@ -93,6 +101,7 @@ app.controller("MessengerController", function ($scope, $routeParams, $rootScope
             });
         }
         $('#message_input_field').val('');
+        $('#message_input_field').focus();
     };
 
     /**
@@ -120,14 +129,7 @@ app.controller("MessengerController", function ($scope, $routeParams, $rootScope
         // update last_message attribute of current conversation and resort conversations
         $scope.conversations[indexOfConversation(data.conversation_id)].last_message = data.created_at;
         $scope.conversations.sort(compareConversations);
-    });
-
-
-    // load user's conversations
-    $scope.getConversations();
-    // check if a conversation is selected
-    if ($routeParams.conversationId)
-        $scope.getMessages(parseInt($routeParams.conversationId));
+    });  
 
     // comparison function for conversations (sorts by last message)
     function compareConversations(a, b) {
@@ -166,14 +168,29 @@ app.controller("MessengerController", function ($scope, $routeParams, $rootScope
         }
         return -1;
     }
+    
+    /**
+     * Repositions the text input for new messages, so that it appears
+     * on the bottom of the page.
+     */
+    function fitToWindow() {
+        let sidebar_height = $('#messenger_sidebar').height();
+        let input_height = $('.message_input_wrapper').height();
+        let message_wrapper_height = sidebar_height - input_height;
+
+        $('.message_wrapper').css('height', message_wrapper_height);
+    }
+    // listen for changes to the window size
+    $(window).resize(function() {
+        fitToWindow();
+    });
 
     // position textarea at page bottom
     angular.element(document).ready(function () {
-        let sidebar_height = $('#messenger_sidebar').height();
-        let input_height = $('.message_input_wrapper').height();
-        let message_wrapper_height = sidebar_height - input_height - 92;
-
-        $('.message_wrapper').css('height', message_wrapper_height);
+        fitToWindow();
     });
+    
+    // load user's conversations
+    $scope.getConversations();
 
 });

@@ -55,7 +55,7 @@ app.controller("NavbarController", function ($scope, $http, $location, $rootScop
                 console.log(data);
             });
         }
-    }
+    };
     
     /**
      * Logs the user out.
@@ -116,7 +116,7 @@ app.controller("NavbarController", function ($scope, $http, $location, $rootScop
                 }
             }
         });
-    }
+    };
 
     function acceptFriendRequest(id, response) {
         let request = null;
@@ -142,5 +142,5 @@ app.controller("NavbarController", function ($scope, $http, $location, $rootScop
     $scope.social;
     $scope.getFriends();
     $scope.getUnreadConversations();
-    $scope.subscribeToMessages()
+    $scope.subscribeToMessages();
 });

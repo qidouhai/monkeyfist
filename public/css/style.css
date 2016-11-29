@@ -1,7 +1,12 @@
+html {
+    height:100%;
+}
+
 body {
-	padding-top: 75px;
+	padding-top: 50px;
 	font-family: "Times New Roman", Times, serif;
 	overflow-x: hidden;
+        height:100%;
 }
 
 #internal_navbar a:link, #internal_navbar a:visited, #internal_navbar li{
@@ -137,138 +142,61 @@ body {
     font-size: large;
 }
 
-
-/*!
- * Start Bootstrap - Simple Sidebar (http://startbootstrap.com/)
- * Copyright 2013-2016 Start Bootstrap
- * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
- */
-
-/* Toggle Styles */
-
 #messenger {
-    padding-left: 0;
-    margin-top: -24px;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
+    overflow:hidden;
+    margin:0px;
 }
 
-#messenger_sidebar {
-    z-index: 1000;
-    position: fixed;
-    left: 250px;
-    width: 0;
+#messenger_sidebar{
     height: 100%;
-    margin-left: -250px;
-    overflow-y: auto;
-    background: #fff;
-    border-right: 1px solid black;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    padding: 0px;
 }
 
-#messenger.toggled #messenger_sidebar {
-    width: 250px;
+#messenger_sidebar ul li:hover{
+    background-color: #ddd;
 }
 
-#messenger_content {
-    width: 100%;
-    position: absolute;
-}
-
-#messenger.toggled #messenger_content {
-    position: absolute;
-    margin-right: -250px;
-}
-
-/* Sidebar Styles */
-
-.sidebar-nav {
-    position: absolute;
-    top: 0;
-    width: 300px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-.sidebar-nav li {
-    line-height: 30px;
-    white-space: nowrap;
-    border-top: 1px solid black;
-}
-
-.sidebar-nav li a {
-    display: block;
-    text-decoration: none;
+.messenger_sidebar_participants{
     color: #800000;
+    font-size:1.2em;
+    font-weight: bold;
 }
 
-.sidebar-nav a:hover {
-    text-decoration: none;
-    color: white;
-    background: rgba(128,0,0,0.3);
+.messenger_sidebar_lastMessage{
+    color:black;
 }
 
-.sidebar-nav li a:active,
-.sidebar-nav li a:focus {
-    text-decoration: none;
-}
-
-.sidebar-nav > .sidebar-brand a {
-    color: #800000;
-}
-
-.sidebar-nav > .sidebar-brand a:hover {
-    color: #000;
-    background: none;
-    background: rgba(128,0,0,0.3);
-}
-
-@media(min-width:768px) {
-    #messenger {
-        padding-left: 300px;
-    }
-
-    #messenger_sidebar {
-        width: 300px;
-    }
-
-    #messenger_content {
-        position: relative;
-    }
+#messenger_content{
+    border-right: 1px solid #ddd;
+    padding: 0px;
 }
 
 .message_wrapper {
-    padding: 20px 30px;
-    border-right: 1px solid black;
-    border-bottom: 1px solid black;
-    overflow-y: auto;
+    overflow-y:auto;
+    padding: 0px 20px 10px 20px;
+    font-size: 1.3em;
 }
 
-.message_input_wrapper {
-    padding: 20px 30px;
-    border-right: 1px solid black;
-}
-
-.message_container{
-    font-size:1.3em;
-}
-
-.message_container_head a:link, .message_container_head a:visited {
+.message_container_head a:link {
     text-decoration: none;
     color: #800000;
 }
-
 .message_container_head a:hover {
     text-decoration: underline;
 }
-
 .message_container_head span {
-    color: #999999;
-    font-size: 0.7em;
+    color:#999999;
+    font-size:0.7em;
+}
+
+#message_input_field{
+    font-size:1.2em;
+}
+
+@media screen and (max-width:768px) {
+    .messenger_sidebar_thumbnail {
+        display: none;
+    }
 }
