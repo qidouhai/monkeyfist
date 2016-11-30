@@ -74,7 +74,7 @@
 
 <div ng-repeat="feed in feeds">
 
-	<div class="panel panel-default feed">
+    <div class="panel panel-default feed">
         <div class="panel-heading feed-header">
             <table style="width: 100%;">
             <tr>
@@ -132,16 +132,16 @@
             <!-- Comments list -->
             <div ng-repeat="comment in feed.comments">
                 <div class="feed-footer-comment row">
-                    <div class="comment-image col-md-1">
+                    <div class="comment-image col-md-1 col-sm-2 col-xs-3">
                         <a href="#">
-                            <img src="/img/default-profile.png" class="img-rounded" height="32">
+                            <img src="/img/default-profile.png" class="img-responsive img-thumbnail" style="max-width:60px;">
                         </a>
                     </div>
-                    <div class="comment-non-image col-md-10">
+                    <div class="comment-non-image col-md-11 col-sm-10 col-xs-9">
                         <span class="comment-user">
                             <a href="#">{{ comment.user.username }}</a>
                         </span>
-                        <span class="comment-text">
+                        <span class="comment-text" style="word-wrap:break-word;">
                             {{ comment.content }}
                         </span>
                         <span class="comment-date">
@@ -153,12 +153,12 @@
 
             <!-- Comment input -->
             <div class="comment-input row">
-                <div class="comment-image col-md-1">
+                <div class="comment-image col-md-1 col-sm-2 col-xs-3">
                     <a href="#">
-                        <img src="/img/default-profile.png" class="img-rounded" height="32">
+                        <img src="/img/default-profile.png" class="img-responsive img-thumbnail" style="max-width:60px;">
                     </a>
                 </div>
-                <div class="input-group col-md-10 comment-input-textfield">
+                <div class="input-group col-md-11 col-sm-10 col-xs-9 comment-input-textfield">
                     <form ng-submit="submitComment( feed.id )">
                         <input type="text" class="form-control" id="comment-text-{{ feed.id }}" placeholder="Comment..." name="comment">
                     </form>

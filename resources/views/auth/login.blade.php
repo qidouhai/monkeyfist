@@ -29,29 +29,25 @@
             <div id="navbar" class="collapse navbar-collapse">
                 <form action="{{ url('/login') }}" method="POST">
                 {{ csrf_field() }}
-                    <table style="float: right; margin-top: 15px;">
-                        <tr>
-                            <td>
-                                 <div class="form-group form-group-sm">
-                                    <input type="email" class="form-control" placeholder="Email" name="email">
-                                    <a href="#registration" style="color: white;">Not yet registered?</a>
-                                </div>
-                            </td>
-                            <td>
-                                 <div class="form-group form-group-sm">
-                                    <input type="password" class="form-control" placeholder="Password" name="password">
-                                    <a href="/password/reset" style="color: white;">Forgot password?</a>
-                                </div>
-                            </td>
-                            <td colspan="1" style="vertical-align: top;">
-                                <div class="form-group form-group-sm">
-                                    <input type="submit" class="form-control" value="Login" name="">
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
+                    <div class="row" style="float:right;padding-top:15px;width:35%;">
+                        <div class="form-group form-group-sm col-lg-5 col-md-5 col-sm-5" style="padding:0px;margin-bottom:0px;">
+                            <input type="email" class="form-control" placeholder="Email" name="email">
+                        </div>
+                        <div class="form-group form-group-sm col-lg-5 col-md-5 col-sm-5" style="padding:0px;margin-bottom:0px;">
+                            <input type="password" class="form-control" placeholder="Password" name="password">
+                        </div>
+                        <div class="form-group form-group-sm col-lg-2 col-md-2 col-sm-2" style="padding:0px;margin-bottom:0px;">
+                            <input type="submit" class="form-control" value="Login" name="">
+                        </div>
+                         <div class="form-group form-group-sm col-lg-5 col-md-5 col-sm-5 col-xs-6" style="padding:0px;margin-bottom:0px;">
+                            <a href="#registration" style="color: white;">Not yet registered?</a>
+                        </div>
+                        <div class="form-group form-group-sm col-lg-5 col-md-5 col-sm-5 col-xs-6" style="padding:0px;">
+                            <a href="/password/reset" style="color: white;">Forgot password?</a>
+                        </div>
+                    </div>                   
                 </form>
-            </div><!--/.nav-collapse -->
+            </div>
         </div>
     </nav>
 
@@ -68,7 +64,7 @@
                         Monkeyfist is a very lighweight, easy extensible social network completely built with open source software. Running a monkeyfist server takes only three simple steps. Monkeyfist runs with a common Apache Webserver extended by a simple node script for websockets. Wanna take a look? <a href="#registration">Register below ;)</a> If you want to setup your own monkeyfist server, simply follow the steps described at <a href="http://github.com/avi92/monkeyfist" target="_blank">github.com/avi92/monkeyfist</a> to run your own social network.
                     </p>
 
-                    <img class="center-block" src="{{URL::asset('/img/banana.png')}}" alt="This is where a banana should appear." class="img-rounded center">
+                    <img class="img-responsive img-rounded center-block" src="{{URL::asset('/img/banana.png')}}" alt="This is where a banana should appear.">
 
                 </div>
 
@@ -158,6 +154,5 @@
 
     <script type="text/javascript" src="/lib/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="/lib/bootstrap/dist/js/bootstrap.js"></script>
-    {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 </body>
 </html>

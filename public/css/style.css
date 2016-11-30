@@ -81,14 +81,10 @@ body {
 
 .comment-image {
 	vertical-align: top;
-	padding-right: 0px;
-	display: table-cell;
 }
 
 .comment-non-image {
-	padding-left: 0px;
-	left: -20px;
-	display: inline-block;
+	/*padding-left: 0px;*/
 }
 
 .comment-user a:hover {
@@ -101,7 +97,7 @@ body {
 }
 
 .comment-input-textfield {
-	left: -20px;
+	/*left: -20px;*/
 }
 
 #feedloader {
