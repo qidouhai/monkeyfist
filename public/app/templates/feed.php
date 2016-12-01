@@ -79,7 +79,7 @@
             <table style="width: 100%;">
             <tr>
                 <td rowspan="2" style="width: 5%; padding-right: 5px;"><img src="/img/default-profile.png" height="48" class="img-rounded"></td>
-                <td><a href="#">{{ feed.user.username }}</a></td>
+                <td><a href="#">{{ feed.user.username}}</a></td>
                 <td rowspan="2" style="text-align: right;">
                     <div class="dropdown">
                         <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="border: none; background-color: inherit;">
@@ -129,41 +129,38 @@
                 <li><a href="#"><i class="fa fa-thumbs-down" aria-hidden="true"></i>&nbsp;{{ feed.dislikes.count == null ? 0 : feed.dislikes.count }}</a></li>
                 <li><a href="#"><i class="fa fa-comment" aria-hidden="true"></i>&nbsp;{{ feed.comment_count.count == null ? 0 : feed.comment_count.count}}</a></li>
             </ul>
-            <!-- Comments list -->
+            
+            <!--Comment List-->
             <div ng-repeat="comment in feed.comments">
-                <div class="feed-footer-comment row">
-                    <div class="comment-image col-md-1 col-sm-2 col-xs-3">
-                        <a href="#">
-                            <img src="/img/default-profile.png" class="img-responsive img-thumbnail" style="max-width:60px;">
-                        </a>
-                    </div>
-                    <div class="comment-non-image col-md-11 col-sm-10 col-xs-9">
+                <div class="input-group feed-footer-comment">
+                    <a href="/profile/{{ comment.user.id }}" class="input-group-addon" id="comment-{{ comment.id}}" style="padding: 0px 6px;background-color:inherit;border:none;vertical-align:top;">
+                        <img src="/img/default-profile.png" width="34" height="34" style="border:1px solid #ccc; background-color:white;">
+                    </a>
+                    <div class="" aria-describedby="comment-{{ comment.id}}">
                         <span class="comment-user">
-                            <a href="#">{{ comment.user.username }}</a>
+                            <a href="/profile/{{ comment.user.id }}">
+                                {{ comment.user.username }}
+                            </a>
                         </span>
                         <span class="comment-text" style="word-wrap:break-word;">
-                            {{ comment.content }}
+                            {{ comment.content}}
                         </span>
                         <span class="comment-date">
-                            <br>{{ comment.created }}
+                            {{ comment.created}}
                         </span>
                     </div>
                 </div>
             </div>
 
             <!-- Comment input -->
-            <div class="comment-input row">
-                <div class="comment-image col-md-1 col-sm-2 col-xs-3">
-                    <a href="#">
-                        <img src="/img/default-profile.png" class="img-responsive img-thumbnail" style="max-width:60px;">
+            <form ng-submit="submitComment(feed.id)">
+                <div class="input-group">
+                    <a href="#" class="input-group-addon" id="comment-input-{{ feed.id}}" style="padding: 0px 6px;background-color:inherit;border:none;">
+                        <img src="/img/default-profile.png" width="34" height="34" style="border:1px solid #ccc; background-color:white;">
                     </a>
+                    <input type="text" class="form-control" placeholder="Comment..." aria-describedby="comment-input-{{ feed.id}}" id="comment-text-{{ feed.id}}">
                 </div>
-                <div class="input-group col-md-11 col-sm-10 col-xs-9 comment-input-textfield">
-                    <form ng-submit="submitComment( feed.id )">
-                        <input type="text" class="form-control" id="comment-text-{{ feed.id }}" placeholder="Comment..." name="comment">
-                    </form>
-                </div>
-            </div>
+            </form>
 
         </div>
     </div>

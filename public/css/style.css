@@ -9,6 +9,10 @@ body {
         height:100%;
 }
 
+body a:link, body a:visited {
+    color: #800000;
+}
+
 #internal_navbar a:link, #internal_navbar a:visited, #internal_navbar li{
 	color: white;
 	font-weight: bold;
@@ -70,6 +74,10 @@ body {
 	margin: 8px 0px;
 }
 
+.feed-links a:link, .feed-links a:visited {
+    color: #800000;
+}
+
 .feed-footer a:link, .feed-footer a:visited {
 	color: black;
 	text-decoration: none;
@@ -91,13 +99,13 @@ body {
 	text-decoration: underline;
 }
 
-.comment-user {
+.comment-user a:link, .comment-user a:visited {
 	font-weight: bold;
 	color: #800000;
 }
 
-.comment-input-textfield {
-	/*left: -20px;*/
+.comment-date {
+    color: #999999;
 }
 
 #feedloader {
