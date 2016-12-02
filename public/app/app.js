@@ -14,7 +14,7 @@ angular.module('dropzone', []).directive('dropzone', function () {
     };
 });
 
-var app = angular.module("internal", ['ngRoute', 'ngSanitize', 'ui.select', 'dropzone', 'luegg.directives', 'ngEmbed']);
+var app = angular.module("internal", ['ngRoute', 'ngSanitize', 'ui.select', 'dropzone', 'luegg.directives']);
 
 app.config(function ($routeProvider, $locationProvider) {
     $routeProvider

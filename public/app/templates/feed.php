@@ -16,9 +16,7 @@
             <div class="col-md-4" >
                 <div class="btn-toolbar" role="toolbar">
                     <div class="btn-group" role="group">
-                        <button type="button" ng-click="addLinkToPost()" title="Insert Link" class="btn btn-default"><i class="fa fa-link" aria-hidden="true"></i></button>
-                        <button type="button" ng-click="addYoutubeToPost()" title="Insert Youtube Video" class="btn btn-default"><i class="fa fa-youtube" aria-hidden="true"></i></button>
-                        <button type="button" data-toggle="modal" data-target="#insertImageModal" onclick="insertImageFactory.reset()" title="Insert Image" class="btn btn-default"><i class="fa fa-picture-o" aria-hidden="true"></i></button>
+                        <button type="button" data-toggle="modal" data-target="#insertImageModal" onclick="insertImageFactory.reset()" title="Insert Image" class="btn btn-default"><i class="fa fa-upload" aria-hidden="true"></i></button>
                     </div>
                 </div>
             </div>
@@ -39,10 +37,6 @@
             </div>
             <div class="modal-body" id="insertImageModal_selection">
                 <div class="list-group">
-                    <a href="#" class="list-group-item" onclick="insertImageFactory.select('imageURL')">
-                        <h4 class="list-group-item-heading">Insert from URL</h4>
-                        <p class="list-group-item-text">Insert an Image from the web by using the Image URL.</p>
-                    </a>
                     <a href="#" class="list-group-item" onclick="insertImageFactory.select('uploadImage')">
                         <h4 class="list-group-item-heading">Upload Image</h4>
                         <p class="list-group-item-text">Upload an image from your device to Monkeyfist.</p>
@@ -98,7 +92,7 @@
             </table>
         </div>
         <div class="panel-body" style="padding-bottom: 0px;">
-            <div class="feed-content" ng-bind-html="feed.content | trustHTML">
+            <div class="feed-content" ng-bind-html="feed.content | mediaEmbed">
             	<!-- Feed Content -->
              </div>
              <div class="feed-links">

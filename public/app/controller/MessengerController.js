@@ -12,50 +12,6 @@ app.controller("MessengerController", function ($scope, $routeParams, $rootScope
     };
     // stores participant representing the current user in the current conversation
     $scope.currentParticipant = -1;
-    // ngEmbed options
-    // TODO: move api key to config file
-    $scope.embedOptions = {
-        fontSmiley: true,
-        emoji: true,
-        link: true,
-        linkTarget: '_blank',
-        basicVideo: false,
-        pdf: {
-            embed: true
-        },
-        image: {
-            embed: true
-        },
-        gdevAuth: 'AIzaSyCehcVrjF6WuDBNXmeKThGCdgrcaqC7EyU',
-        video: {
-            embed: true,
-            width: null,
-            ytTheme: 'light',
-            details: false,
-            autoplay: false
-        },
-        tweetEmbed: false,
-        code: {
-            highlight: false,
-            lineNumbers: false
-        },
-        audio: {
-            embed: false
-        },
-        twitchtvEmbed: false,
-        dailymotionEmbed: false,
-        tedEmbed: false,
-        dotsubEmbed: false,
-        liveleakEmbed: false,
-        soundCloudEmbed: false,
-        spotifiyEmbed: false,
-        codepenEmbed: false,
-        codepenHeight: false,
-        jsfiddleEmbed: false,
-        plunkerEmbed: false,
-        githubgistEmbed: false,
-        ideoneEmbed: false
-    };
 
     $scope.setConversation = function (conversationId) {
         $scope.getMessages(conversationId);

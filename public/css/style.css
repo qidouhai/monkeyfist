@@ -19,10 +19,6 @@ body a:link, body a:visited {
 	font-size: large;
 }
 
-/*.navbar_links {
-	display: inline-block;
-}*/
-
 .navbar_links li:hover {
 	background-color: #750000;
 }
@@ -50,15 +46,7 @@ body a:link, body a:visited {
 .feed-content {
 	font-size: large;
 	padding-bottom: 10px;
-}
-
-.feed-content iframe {
-	width: 90%;
-	min-height: 450px;
-	display: block;
-	margin: auto;
-	max-width: 800px;
-	padding: 10px 0px;
+        white-space: pre-wrap;
 }
 
 .feed-links ul, .feed-footer ul {
@@ -193,6 +181,10 @@ body a:link, body a:visited {
 .message_container_head span {
     color:#999999;
     font-size:0.7em;
+}
+
+.message_container_body {
+    white-space: pre-wrap;
 }
 
 #message_input_field{

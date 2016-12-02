@@ -3,7 +3,6 @@
 <div ng-include="'/app/templates/includes/navbar.php'" ng-controller="NavbarController"></div>
 
 <!-- </div> -->
-
 <div id="messenger" class="row" style="min-height: 100%; height: 100%;">
     
     <div class="col-md-10 col-md-offset-1" style="height:100%;">
@@ -45,8 +44,7 @@
                             <a href="/profile/{{ message.participant | mapById: currentConversation.participants:'user:id' }}">{{ message.participant | mapById: currentConversation.participants:'user.username' }}</a>
                             <span>{{ message.created_at }}</span>
                         </div>
-                        <div class="message_container_body">
-                            <ng-embed embed-data="message.body" embed-options="embedOptions"/></ng-embed>
+                        <div class="message_container_body" ng-bind-html="message.body | mediaEmbed">
                         </div>
                     </div>
                 </div>
