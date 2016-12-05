@@ -1,5 +1,5 @@
 angular.module('internal').filter('mediaEmbed',['$sce', function($sce) {
-    return function (input) {
+    return function (input,embedYoutube=true) {
         // sanitize links
         let map = {'&': '&amp', '>': '&gt', '<': '&lt'};
         if(!angular.isNumber(input)) input = input.toString();
@@ -8,7 +8,8 @@ angular.module('internal').filter('mediaEmbed',['$sce', function($sce) {
         // encapsulate links with <a target="_blank"> tags
         input = urlEmbed(input);
         // if youtube link -> append responsive youtube iframe
-        input = youtubeEmbed(input);
+        if(embedYoutube)
+            input = youtubeEmbed(input);
         // insert emojis
         input = insertEmoji(input);
         

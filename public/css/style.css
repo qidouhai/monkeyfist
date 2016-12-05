@@ -3,10 +3,10 @@ html {
 }
 
 body {
-	padding-top: 50px;
-	font-family: "Times New Roman", Times, serif;
-	overflow-x: hidden;
-        height:100%;
+    padding-top: 50px;
+    font-family: "Times New Roman", Times, serif;
+    overflow-x: hidden;
+    height:100%;
 }
 
 body a:link, body a:visited {
@@ -14,52 +14,47 @@ body a:link, body a:visited {
 }
 
 #internal_navbar a:link, #internal_navbar a:visited, #internal_navbar li{
-	color: white;
-	font-weight: bold;
-	font-size: large;
+    color: white;
+    font-weight: bold;
+    font-size: large;
 }
 
 .navbar_links li:hover {
-	background-color: #750000;
+    background-color: #750000;
 }
 
 .select2 input {
-	color: black;
-}
-
-.feed {
-	width: 80%;
-	margin: 15px auto;
+    color: black;
 }
 
 .feed-header a:link, .feed-header a:visited{
-	font-weight: bold;
-	color: #800000;
-	text-decoration: none;
-	font-size: large;
+    font-weight: bold;
+    color: #800000;
+    text-decoration: none;
+    font-size: large;
 }
 
 .feed-header a:hover {
-	text-decoration: underline;
+    text-decoration: underline;
 }
 
 .feed-content {
-	font-size: large;
-	padding-bottom: 10px;
-        white-space: pre-wrap;
+    font-size: large;
+    padding-bottom: 10px;
+    white-space: pre-wrap;
 }
 
 .feed-links ul, .feed-footer ul {
-	list-style: none;
-	padding: 0px;
+    list-style: none;
+    padding: 0px;
 }
 
 .feed-links ul li, .feed-footer ul li {
-	display: inline-block;
+    display: inline-block;
 }
 
 .feed-links hr {
-	margin: 8px 0px;
+    margin: 8px 0px;
 }
 
 .feed-links a:link, .feed-links a:visited {
@@ -67,65 +62,65 @@ body a:link, body a:visited {
 }
 
 .feed-footer a:link, .feed-footer a:visited {
-	color: black;
-	text-decoration: none;
+    color: black;
+    text-decoration: none;
 }
 
 .feed-footer-comment {
-	padding-bottom: 5px;
+    padding-bottom: 5px;
+}
+
+.comment-wrapper {
+    font-size:1.2em;
+    line-height: 1;
 }
 
 .comment-image {
-	vertical-align: top;
-}
-
-.comment-non-image {
-	/*padding-left: 0px;*/
+    vertical-align: top;
 }
 
 .comment-user a:hover {
-	text-decoration: underline;
+    text-decoration: underline;
 }
 
 .comment-user a:link, .comment-user a:visited {
-	font-weight: bold;
-	color: #800000;
+    font-weight: bold;
+    color: #800000;
 }
 
 .comment-date {
     color: #999999;
+    font-size: 0.9em;
 }
 
 #feedloader {
-	width: 80%;
-	margin: 0px auto 15px auto;
-	text-align: center;
+    text-align: center;
 }
 
 #feedloader a:link, #feedloader a:visited {
-	font-size: x-large;
-	color: #800000;
+    font-size: x-large;
+    color: #800000;
 }
 
 .profile_buttons {
-	vertical-align: bottom;
+    vertical-align: bottom;
 }
 
 #friends_list a{
-	font-size: large;
+    font-size: large;
 }
 
 /* Search Bar */
 .ui-select-container {
-	margin-top: 10px;
+    margin-top: 10px;
 }
 
 .dropdown-header {
-	font-size: large;
+    font-size: large;
 }
 
 .ui-select-choices-row {
-	background-color: white;
+    background-color: white;
 }
 
 .messenger_badge{
