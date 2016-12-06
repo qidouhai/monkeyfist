@@ -63,6 +63,7 @@
     
     <!-- Angular Filters -->
     <script type="text/javascript" src="{{ URL::asset('/app/filters/mediaEmbed.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('/app/filters/util.js') }}"></script>
 
     <!-- Angular Services -->
     <script type="text/javascript" src="{{ URL::asset('/app/services/socialService.js') }}"></script>

@@ -38,7 +38,7 @@
                 <tr>
                     <td rowspan="2" style="width: 5%; padding-right: 5px;"><img src="/img/default-profile.png" height="48" class="img-rounded"></td>
                     <td><a href="#">{{ feed.user.username}}</a></td>
-                    <td rowspan="2" style="text-align: right;">
+                    <td ng-if="feed.user.id === user.id" rowspan="2" style="text-align: right;">
                         <div class="dropdown">
                             <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="border: none; background-color: inherit;">
                                 <!-- Name of Drodown Menu -->
@@ -51,7 +51,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>{{ feed.created | date:'medium' }}</td>
+                    <td><span title="{{ feed.created }}">{{ feed.created | formatTime }}</span></td>
                 </tr>
                 </table>
             </div>
@@ -102,8 +102,8 @@
                             </span>
                             <span class="comment-text" style="word-wrap:break-word;" ng-bind-html="comment.content | mediaEmbed:false">
                             </span>
-                            <span class="comment-date">
-                                <br />{{ comment.created}}
+                            <span class="comment-date" title="{{ comment.created }}">
+                                <br />{{ comment.created | formatTime }}
                             </span>
                         </div>
                     </div>

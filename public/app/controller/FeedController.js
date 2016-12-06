@@ -128,6 +128,7 @@ app.controller("FeedController", function ($scope, $http, $routeParams, $locatio
                 }
                 if (response.length < $scope.feedSteps)
                     $scope.noMoreFeeds = true;
+                console.log($scope.feeds);
             });
         }
     };
@@ -146,36 +147,6 @@ app.controller("FeedController", function ($scope, $http, $routeParams, $locatio
                 }, function error(response) {
             console.log(response);
         });
-    };
-
-    $scope.addLinkToPost = function () {
-        bootbox.prompt("Enter link:", function (result) {
-            if (result !== null) {
-                let link = '<a href="' + result + '">' + result + '</a>';
-                $('#post_content').val($('#post_content').val() + link);
-            }
-        });
-    };
-
-    $scope.addYoutubeToPost = function () {
-        bootbox.prompt("Enter Youtube Link:", function (result) {
-            if (result !== null) {
-                let youtube = '<iframe src ="//www.youtube.com/embed/' + $scope.findYoutubeId(result) + '" allowfullscreen="" frameborder="0"></iframe>';
-                $('#post_content').val($('#post_content').val() + youtube);
-            }
-        });
-    };
-
-    $scope.findYoutubeId = function (url) {
-        // extracts the video id from the youtube url
-        var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-        var match = url.match(regExp);
-        if (match && match[2].length == 11) {
-            return match[2];
-        } else {
-            bootbox.alert("Unknown Youtube Video ID!");
-            return null;
-        }
     };
 
     $scope.publishPost = function () {
