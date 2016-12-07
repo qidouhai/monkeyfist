@@ -1,6 +1,3 @@
-
-<div ng-if="displayNavbar" ng-include="templates.navbar" ng-controller="NavbarController"></div>
-
 <!-- Create Post Panel -->
 <div class="row">
     <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12">
@@ -23,7 +20,7 @@
                         </div>
                     </div>
                     <div class="col-xs-8 text-right">
-                        <button type="button" title="Publish Post" ng-click="publishPost()" class="btn btn-success">Publish</button>
+                        <button type="button" title="Publish Feed" ng-click="publishFeed()" class="btn btn-success">Publish</button>
                     </div>
                 </div>
             </div>
@@ -126,7 +123,7 @@
 
 </div>
 
-<div class="well col-md-offset-1 col-md-10 col-sm-12 col-xs-12" id="feedloader" ng-if="!noMoreFeeds">
+<div class="well col-md-offset-1 col-md-10 col-sm-12 col-xs-12" id="feedloader" ng-if="moreFeeds">
     <a href="" ng-click="getFeeds()">I want more!</a>
 </div>
 
