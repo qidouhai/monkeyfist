@@ -3,7 +3,7 @@
 ## What is Monkeyfist?
 Monkeyfist is a lightweight, easy-extensible mini social network completely build with open source software. To setup your own Monkeyfist server requires no programming skills and can be achieved in only a couple of minutes.
 
-#### **NOTE:**  Monkeyfist is still in development. A release will be published as soon as a first stable version is available. However, if you want to know how Monkeyfist looks like right now, you can get a first look [here](http://monkeytest.ddns.net). (Test-Login: E-Mail:test@test.com PW: testing)
+#### **NOTE:**  Monkeyfist is still in development. A release will be published as soon as a first stable version is available. 
 
 ## Requirements
 These are the software requirements necessary to set up your own Monkeyfist server.
