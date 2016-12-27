@@ -1,80 +1,66 @@
-angular.module("internal").service('settingService', function($http) {
+angular.module("internal").service('settingService', function ($resource) {
 
-  this.setNames = function(requestBody) {
-    return $http.post('/settings/account/names', requestBody).then(
-      function success(response) {
-        return response.data;
-      },
-      function error(response) {
-        console.error(response);
-      }
-    );
-  };
+    let httpPost = {query: {method: 'POST'}};
 
-  this.setEmail = function(requestBody) {
-    return $http.post('/settings/account/email', requestBody).then(
-      function success(response) {
-        return response.data;
-      },
-      function error(response) {
-        console.error(response);
-      }
-    );
-  };
+    /**
+     * Return resource to change user name.
+     * @param {Object} requestBody request content
+     * @returns {Object}
+     */
+    this.setNames = function (requestBody) {
+        return $resource('/settings/account/names', requestBody, httpPost);
+    };
 
-  this.setPassword = function(requestBody) {
-    return $http.post('/settings/account/password', requestBody).then(
-      function success(response) {
-        return response.data;
-      },
-      function error(response) {
-        console.error(response);
-      }
-    );
-  };
-  
-  this.getNotifications = function() {
-      return $http.get('/settings/notifications').then(
-        function success(response) {
-            return response.data;
-        },
-        function error(response) {
-            console.error(response);
-        }
-    );
-  };
-  
-  this.setNotifications = function(requestBody) {
-      return $http.post('/settings/notifications', requestBody).then(
-        function success(response) {
-            return response.data;
-        },
-        function error(response) {
-            console.error(response);
-        }
-    );
-  };
-  
-  this.getPrivacy = function() {
-      return $http.get('/settings/privacy').then(
-        function success(response) {
-            return response.data;
-        },
-        function error(response) {
-            console.error(response);
-        }
-    );
-  };
-  
-  this.setPrivacy = function(requestBody) {
-      return $http.post('/settings/privacy', requestBody).then(
-        function success(response) {
-            return response.data;
-        },
-        function error(response) {
-            console.error(response);
-        }
-    );
-  };
+    /**
+     * Return resource to change user email.
+     * @param {Object} requestBody request content
+     * @returns {Object}
+     */
+    this.setEmail = function (requestBody) {
+        return $resource('/settings/account/email', requestBody, httpPost);
+    };
+
+    /**
+     * Return resource to change user password.
+     * @param {Object} requestBody request content
+     * @returns {Object}
+     */
+    this.setPassword = function (requestBody) {
+        return $resource('/settings/account/password', requestBody, httpPost);
+    };
+
+    /**
+     * Return resource to query user notification settings.
+     * @returns {NotificationSettings}
+     */
+    this.getNotifications = function () {
+        return $resource('/settings/notifications');
+    };
+
+    /**
+     * Return resource to change user notification settings.
+     * @param {Object} requestBody request content
+     * @returns {Object}
+     */
+    this.setNotifications = function (requestBody) {
+        return $resource('/settings/notifications', requestBody, httpPost);
+    };
+
+    /**
+     * Return resource to query user privacy settings.
+     * @returns {PrivacySettings}
+     */
+    this.getPrivacy = function () {
+        return $resource('/settings/privacy');
+    };
+
+    /**
+     * Return resource to change privacy settings.
+     * @param {Object} requestBody request content
+     * @returns {Object}
+     */
+    this.setPrivacy = function (requestBody) {
+        return $resource('/settings/privacy', requestBody, httpPost);
+    };
 
 });

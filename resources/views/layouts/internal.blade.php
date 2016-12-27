@@ -50,6 +50,7 @@
     <script type="text/javascript" src="{{ URL::asset('/lib/angular/angular.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('/lib/angular-route/angular-route.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('/lib/angular-sanitize/angular-sanitize.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('/lib/angular-resource/angular-resource.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('/lib/angular-ui-select/dist/select.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('/lib/angular-scroll-glue/src/scrollglue.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('/lib/socket.io-client/dist/socket.io.js') }}"></script>

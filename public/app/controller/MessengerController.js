@@ -19,7 +19,7 @@ app.controller("MessengerController", function ($scope, $routeParams, $rootScope
     };
 
     $scope.getConversations = function () {
-        msgService.getConversations().then(function (response) {
+        msgService.getConversations().query(function (response) {
             $scope.conversations = response;
             $scope.conversations.sort(compareConversations);
             console.log($scope.conversations);
@@ -35,7 +35,7 @@ app.controller("MessengerController", function ($scope, $routeParams, $rootScope
     };
 
     $scope.getMessages = function (conversationId) {
-        msgService.getMessages(conversationId).then(function (response) {
+        msgService.getMessages(conversationId).get(function (response) {
             if (response.exists && response.member) {
                 $scope.currentConversation.id = response.data.id;
                 $scope.currentConversation.participants = response.data.participants;
@@ -52,7 +52,7 @@ app.controller("MessengerController", function ($scope, $routeParams, $rootScope
     $scope.submitMessage = function () {
         let input = $('#message_input_field').val().trim();
         if (input !== '') {
-            msgService.sendMessage({conversation_id: $scope.currentConversation.id, body: input}).then(function (response) {
+            msgService.sendMessage({conversation_id: $scope.currentConversation.id, body: input}).save(function (response) {
                 console.log(response);
             });
         }

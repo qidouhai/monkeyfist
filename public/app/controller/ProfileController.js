@@ -1,27 +1,17 @@
 var app = angular.module("internal");
 
-app.controller("ProfileController", function ($scope, $route, $http, $routeParams, $location, msgService, settingService, socialService) {
-
-    $(".modal-backdrop").hide();
-
-    settingsFactory = new SettingsFactory();
-
-    $scope.settings = {};
-
-    $http.get('/friend/' + $routeParams.id).success(function (response) {
-        $scope.info = response;
-    });
+app.controller("ProfileController", function ($scope, $routeParams, $location, msgService, settingService, socialService) {
 
     $scope.sendMessage = function (userId) {
-        msgService.searchConversation({participants: [$scope.user.id, userId]}).then(function (response) {
+        msgService.searchConversation({participants: [$scope.user.id, userId]}).get(function (response) {
             $location.url('messenger/' + response.conversation_id);
         });
     };
-    
-    $scope.directToMessenger = function() {
+
+    $scope.directToMessenger = function () {
         $location.url('messenger');
     };
-    
+
     /**
      * Queries the friends of the current user
      * and the friends of the user with the
@@ -29,48 +19,38 @@ app.controller("ProfileController", function ($scope, $route, $http, $routeParam
      * distinct friend arrays.
      * @param {type} id (user)
      */
-    $scope.getFriendsOfFriend = function(id) {
-        socialService.getFriends().then(function(response) {
+    $scope.getFriendsOfFriend = function (id) {
+        socialService.getFriends().query(function (response) {
             $scope.friends = response.friends;
-            socialService.getFriendsOfFriend(id).then(function(response) {
+            socialService.getFriendsOfFriend(id).query(function (response) {
                 $scope.friendsOfFriend = {
                     common: [],
                     distinct: []
                 };
-                for(let x = 0; x < response.friends.length; x++) {
-                    if(isCommonFriend(response.friends[x].user.id)){
+                for (let x = 0; x < response.friends.length; x++) {
+                    if (isCommonFriend(response.friends[x].user.id)) {
                         $scope.friendsOfFriend.common.push(response.friends[x]);
                     } else {
                         $scope.friendsOfFriend.distinct.push(response.friends[x]);
                     }
-                }            
+                }
             });
         });
     };
 
     $scope.sendFriendRequest = function () {
-        let id = $routeParams.id;
-        $http.post('/user/friends/request/' + id).then(
-                function success(response) {
-                    if (response.data) {
-                        $scope.info.relation.status = "requested";
-                        $scope.info.relation.requestedByMe = true;
-                    }
-                }, function error(response) {
-            console.log(response);
+        socialService.sendFriendRequest($routeParams.id).save(function (response) {
+            if (response) {
+                $scope.info.relation.status = "requested";
+                $scope.info.relation.requestedByMe = true;
+            }
         });
     };
 
     $scope.answerFriendRequest = function (answer) {
-        let id = $routeParams.id;
         if (answer) {
-            $http.post('/user/friends/' + id).then(
-                    function (response) {
-                        // as this is only for the profile page,
-                        // there is no need for a deny option
-                        acceptFriendRequest(response);
-                    }, function (response) {
-                handleError(response);
+            socialService.answerFriendRequest({id: $routeParams.id, answer: answer}).save(function (response) {
+                acceptFriendRequest(response);
             });
         }
     };
@@ -83,7 +63,7 @@ app.controller("ProfileController", function ($scope, $route, $http, $routeParam
         if (prename === '' || lastname === '' || (prename === $scope.user.prename && lastname === $scope.user.lastname)) {
             // do nothing
         } else {
-            settingService.setNames({'prename': prename, 'lastname': lastname}).then(function (response) {
+            settingService.setNames({'prename': prename, 'lastname': lastname}).save(function (response) {
                 if (response.error)
                     $scope.settings.account.name.error = true;
                 else
@@ -100,7 +80,7 @@ app.controller("ProfileController", function ($scope, $route, $http, $routeParam
         if (email === '' || email === $scope.user.email) {
             // do nothing
         } else {
-            settingService.setEmail({'email': email}).then(function (response) {
+            settingService.setEmail({'email': email}).save(function (response) {
                 console.log(response);
                 if (response.error)
                     $scope.settings.account.email.error = true;
@@ -120,7 +100,7 @@ app.controller("ProfileController", function ($scope, $route, $http, $routeParam
         if (pw1 === '' || pw2 === '') {
             console.log('Both fields have to be completed!');
         } else {
-            settingService.setPassword({'password': pw1, 'password_confirmation': pw2}).then(function (response) {
+            settingService.setPassword({'password': pw1, 'password_confirmation': pw2}).save(function (response) {
                 if (response.error)
                     $scope.settings.account.password.error = true;
                 else
@@ -129,48 +109,48 @@ app.controller("ProfileController", function ($scope, $route, $http, $routeParam
             });
         }
     };
-    
-    $scope.getSettingNotifications = function() {
-        settingService.getNotifications().then(function(response) {
+
+    $scope.getSettingNotifications = function () {
+        settingService.getNotifications().get(function (response) {
             $('#input_notifyMessage').prop('checked', response.message).change();
             $('#input_notifyFriendRequest').prop('checked', response.friend_request).change();
             $('#input_notifyComment').prop('checked', response.comment).change();
             $('#input_notifyFeed').prop('checked', response.feed).change();
         });
     };
-    
-    $scope.submitSettingNotifications = function() {
+
+    $scope.submitSettingNotifications = function () {
         $scope.resetSettingStates();
         let requestBody = {
             notifyMessage: $('#input_notifyMessage')[0].checked,
             notifyFriendRequest: $('#input_notifyFriendRequest')[0].checked,
             notifyComment: $('#input_notifyComment')[0].checked,
             notifiyFeed: $('#input_notifyFeed')[0].checked
-        };        
-        settingService.setNotifications(requestBody).then(function(response) {
-            if(response.error)
+        };
+        settingService.setNotifications(requestBody).save(function (response) {
+            if (response.error)
                 $scope.settings.notification.error = true;
             else
                 $scope.settings.notification.success = true;
             $scope.settings.notification.message = response.message;
         });
     };
-    
-    $scope.getSettingPrivacy = function() {
-        settingService.getPrivacy().then(function(response) {
+
+    $scope.getSettingPrivacy = function () {
+        settingService.getPrivacy().get(function (response) {
             String(response.feeds) === String('private') ? $('#input_privacy_feed').bootstrapToggle('off') : $('#input_privacy_feed').bootstrapToggle('on');
             String(response.collections) === String('private') ? $('#input_privacy_collection').bootstrapToggle('off') : $('#input_privacy_collection').bootstrapToggle('on');
         });
     };
-    
-    $scope.submitSettingPrivacy = function() {
+
+    $scope.submitSettingPrivacy = function () {
         $scope.resetSettingStates();
         let requestBody = {
             feeds: $('#input_privacy_feed')[0].checked ? String('public') : String('private'),
             collections: $('#input_privacy_collection')[0].checked ? String('public') : String('private')
         };
-        settingService.setPrivacy(requestBody).then(function(response) {
-            if(response.error)
+        settingService.setPrivacy(requestBody).save(function (response) {
+            if (response.error)
                 $scope.settings.privacy.error = true;
             else
                 $scope.settings.privacy.success = true;
@@ -209,7 +189,7 @@ app.controller("ProfileController", function ($scope, $route, $http, $routeParam
             }
         };
     };
-    
+
     /**
      * Checks if the user id is a common friend
      * of the current user.
@@ -217,8 +197,8 @@ app.controller("ProfileController", function ($scope, $route, $http, $routeParam
      * @returns {Boolean}
      */
     function isCommonFriend(id) {
-        for(let x = 0; x < $scope.friends.length; x++) {
-            if(Number($scope.friends[x].user.id) === Number(id)) {
+        for (let x = 0; x < $scope.friends.length; x++) {
+            if (Number($scope.friends[x].user.id) === Number(id)) {
                 return true;
             }
         }
@@ -230,10 +210,20 @@ app.controller("ProfileController", function ($scope, $route, $http, $routeParam
         $scope.info.relation.friends = true;
     }
 
-    if(Number($routeParams.id) === Number($scope.user.id)) {
+    $(".modal-backdrop").hide();
+
+    socialService.getFriend($routeParams.id).get(function (response) {
+        console.log(response);
+        $scope.info = response;
+    });
+
+    settingsFactory = new SettingsFactory();
+
+    $scope.settings = {};
+
+    if (Number($routeParams.id) === Number($scope.user.id)) {
         $scope.resetSettingStates();
         $scope.getSettingNotifications();
         $scope.getSettingPrivacy();
     }
-
 });

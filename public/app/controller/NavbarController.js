@@ -9,7 +9,7 @@ app.controller("NavbarController", function ($scope, $http, $location, $rootScop
             conversations: []
         }
     };
-    
+
     $scope.search = function (term) {
         if (term.trim() !== '') {
             $http.get('/search/' + term).then(
@@ -39,24 +39,24 @@ app.controller("NavbarController", function ($scope, $http, $location, $rootScop
             return 'Feeds';
         }
     };
-    
-    $scope.getUnreadConversations = function() {
-        msgService.getUnreadConversations().then(function(response) {
+
+    $scope.getUnreadConversations = function () {
+        msgService.getUnreadConversations().query(function (response) {
             $rootScope.notifications.messenger.conversations = response;
         });
     };
-    
-    $scope.subscribeToMessages = function() {
-        if(!$location.url().includes('messenger')) {
+
+    $scope.subscribeToMessages = function () {
+        if (!$location.url().includes('messenger')) {
             socketService.on('messenger-channel:' + $scope.user.id, function (data) {
-                if($.inArray(data.conversation_id, $rootScope.notifications.messenger.conversations) === -1) {
+                if ($.inArray(data.conversation_id, $rootScope.notifications.messenger.conversations) === -1) {
                     $rootScope.notifications.messenger.conversations.push(data.conversation_id);
                 }
                 console.log(data);
             });
         }
     };
-    
+
     /**
      * Logs the user out.
      */
@@ -74,17 +74,17 @@ app.controller("NavbarController", function ($scope, $http, $location, $rootScop
 
     // request all friends and friend requests
     $scope.getFriends = function () {
-        socialService.list().then(function (friends) {
+        socialService.list().get(function (friends) {
             $scope.social = friends;
         });
     };
 
     $scope.answerFriendRequest = function (id, answer) {
-        socialService.answerFriendRequest({id: id, answer: answer}).then(function (response) {
+        socialService.answerFriendRequest({id: id, answer: answer}).save(function (response) {
             if (answer)
-                acceptFriendRequest(id, response);
+                acceptFriendRequest(id);
             else
-                denyFriendRequest(id, response);
+                denyFriendRequest(id);
         });
     };
 
@@ -94,7 +94,7 @@ app.controller("NavbarController", function ($scope, $http, $location, $rootScop
      * @param {Number} requestId Id of the request(!) to remove. 
      */
     $scope.withdrawFriendRequest = function (requestId) {
-        socialService.withdrawRequest({id: requestId}).then(function (response) {
+        socialService.withdrawRequest({id: requestId}).save(function (response) {
             if (response && response.removed) {
                 for (let i = 0; i < $scope.social.myrequests.length; i++) {
                     if (Number($scope.social.myrequests[i].id) === Number(requestId)) {
@@ -106,10 +106,10 @@ app.controller("NavbarController", function ($scope, $http, $location, $rootScop
     };
 
     $scope.unfriend = function (id) {
-        socialService.removeFriend({id: id}).then(function (response) {
+        socialService.removeFriend({id: id}).save(function (response) {
             if (response) {
                 for (let i = 0; i < $scope.social.friends.length; i++) {
-                    if ($scope.social.friends[i].user_id == response.friend_id) {
+                    if (Number($scope.social.friends[i].user_id) === Number(response.friend_id)) {
                         // remove friend from friends list
                         $scope.social.friends.splice(i, 1);
                     }
@@ -118,7 +118,7 @@ app.controller("NavbarController", function ($scope, $http, $location, $rootScop
         });
     };
 
-    function acceptFriendRequest(id, response) {
+    function acceptFriendRequest(id) {
         let request = null;
         for (let i = 0; i < $scope.social.requests.length; i++) {
             if (Number($scope.social.requests[i].user_id) === Number(id)) {
@@ -129,7 +129,7 @@ app.controller("NavbarController", function ($scope, $http, $location, $rootScop
         }
     };
 
-    function denyFriendRequest(id, response) {
+    function denyFriendRequest(id) {
         for (let i = 0; i < $scope.social.requests.length; i++) {
             if (Number($scope.social.requests[i].user_id) === Number(id)) {
                 // remove friend from friends list

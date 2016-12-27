@@ -1,76 +1,76 @@
-angular.module("internal").service('socialService', function($http) {
+angular.module("internal").service('socialService', function ($resource) {
 
-	this.list = function() {
-		return $http.get('/user/social').then(
-			function success(response) {
-				return response.data;
-			},
-			function error(response) {
-				console.log('Error: ' + response);
-			}
-		);
-	};
+    // dummy objects for different http methods
+    let httpPost = {query: {method: 'POST'}};
 
-	this.getFriends = function() {
-		return $http.get('/user/friends').then(
-			function success(response) {
-				return response.data;
-			},
-			function error(response) {
-				console.log('Error: ' + response);
-			}
-		);
-	};
-        
-        /*
-         * Requests the friends of the user with the given id.
-         * @param {type} userid
-         * @returns friends
-         */
-        this.getFriendsOfFriend = function(id) {
-            return $http.get('/user/' + id + '/friends').then(
-                    function success(response) {
-                        return response.data;
-                    },
-                    function error(response) {
-                        console.error(response);
-                    }
-            );
-        };
+    /**
+     * Returns resource to get friends and friend requests of user.
+     * @returns {Object}
+     */
+    this.list = function () {
+        return $resource('/user/social');
+    };
 
-	this.answerFriendRequest = function(requestBody) {
-		return $http.post('/user/friends', requestBody).then(
-			function success(response) {
-				return response.data;
-			},
-			function error(response) {
-				console.log('Error: ' + response);
-			}
-		);
-	};
-        
-        /*
-         * Sends a withdraw friend request to the server.
-         */
-        this.withdrawRequest = function(requestBody) {
-            return $http.post('/user/friends/withdraw', requestBody).then(
-                    function success(response) {
-                        return response.data;
-                    },
-                    function error(response) {
-                        console.error(response);
-                    });
-        };
+    /**
+     * Returns resource to get single friend.
+     * @param {Number} friendId id of friend
+     * @returns {Friend}
+     */
+    this.getFriend = function (friendId) {
+        return $resource('/friend/' + friendId);
+    };
 
-	this.removeFriend = function(requestBody) {
-		return $http.post('/user/friends/remove', requestBody).then(
-			function success(response) {
-				return response.data;
-			},
-			function error(response) {
-				console.log('Error: ' + response);
-			}
-		);
-	};
+    /**
+     * Returns resource to get friends of user.
+     * @returns {Object}
+     */
+    this.getFriends = function () {
+        return $resource('/user/friends');
+    };
+
+    /**
+     * Returns resource to send friend request to single user.
+     * @param {Number} userId id of user to send request to.
+     * @returns {FriendRequest}
+     */
+    this.sendFriendRequest = function (userId) {
+        return $resource('/user/friends/request/' + userId, {}, httpPost);
+    };
+
+    /**
+     * Returns resource to get all friends of a friend.
+     * @param {Number} id id of user to get friends of.
+     * @returns {User[]}
+     */
+    this.getFriendsOfFriend = function (id) {
+        return $resource('/user/' + id + '/friends');
+    };
+
+    /**
+     * Returns resource to answer friend request.
+     * @param {Object} requestBody request content
+     * @returns {Object}
+     */
+    this.answerFriendRequest = function (requestBody) {
+        return $resource('/user/friends', requestBody, httpPost);
+    };
+
+    /**
+     * Returns resource to withdraw friend request.
+     * @param {Object} requestBody request content
+     * @returns {Object}
+     */
+    this.withdrawRequest = function (requestBody) {
+        return $resource('/user/friends/withdraw', requestBody, httpPost);
+    };
+
+    /**
+     * Returns resource to remove friend.
+     * @param {Object} requestBody request content
+     * @returns {Object}
+     */
+    this.removeFriend = function (requestBody) {
+        return $resource('/user/friends/remove', requestBody, httpPost);
+    };
 
 });

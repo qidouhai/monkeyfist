@@ -14,7 +14,7 @@ angular.module('dropzone', []).directive('dropzone', function () {
     };
 });
 
-var app = angular.module("internal", ['ngRoute', 'ngSanitize', 'ui.select', 'dropzone', 'luegg.directives']);
+var app = angular.module("internal", ['ngRoute', 'ngResource', 'ngSanitize', 'ui.select', 'dropzone', 'luegg.directives']);
 
 app.config(function ($routeProvider, $locationProvider) {
     $routeProvider
@@ -67,11 +67,12 @@ app.config(function ($routeProvider, $locationProvider) {
 let checkLogin = function ($q, $http, $rootScope) {
     let deferred = $q.defer();
 
-    $http.get('/user').success(function (user) {
-        if (user.id) {
-            $rootScope.user = user;
+    $http.get('/user').then(function (user) {
+        if (user.data.id) {
+            $rootScope.user = user.data;
             deferred.resolve();
         } else {
+            window.href = "login";
             deferred.resolve();
         }
     });

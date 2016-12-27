@@ -89,10 +89,11 @@ class ProfileController extends Controller {
     }
 
     protected function answerFriendRequest(Request $request) {
-        if ($request->answer)
+        if (strtolower($request->answer) === 'true') {
             $this->addFriend($request->id);
-        else
+        } else {
             $this->removeFriendRequest($request->id);
+        }
     }
 
     protected function removeFriendRequest($id) {
@@ -122,7 +123,6 @@ class ProfileController extends Controller {
      * Returns the friends of the current user.
      * @return type json
      */
-
     protected function getFriends() {
 
         $f = Auth::user()->with([

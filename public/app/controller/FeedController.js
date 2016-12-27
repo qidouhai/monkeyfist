@@ -1,8 +1,17 @@
 var app = angular.module("internal");
 
-app.controller("FeedController", function ($scope, $http, $routeParams, $location, feedService) {
+app.controller("FeedController", function ($scope, $routeParams, $location, feedService) {
 
     insertImageFactory = new InsertImageFactory();
+
+    this.$onInit = () => {
+        $scope.displayInput();
+        $scope.getFeeds();
+    };
+
+    let querySize = 4;
+    $scope.moreFeeds = true;
+    $scope.feeds = [];
 
     $scope.dropzoneConfig = {
         'options': {
@@ -26,9 +35,9 @@ app.controller("FeedController", function ($scope, $http, $routeParams, $locatio
     };
 
     $scope.getFeeds = function () {
-        feedService.getFeeds().then(function (response) {
-            $scope.feeds = feedService.feeds();
-            $scope.moreFeeds = feedService.moreFeeds();
+        feedService.getFeeds($scope.feeds.length, querySize).query(function (response) {
+            $scope.feeds.push.apply($scope.feeds, response);
+            $scope.moreFeeds = response.length === querySize;
         });
     };
 
@@ -36,20 +45,19 @@ app.controller("FeedController", function ($scope, $http, $routeParams, $locatio
     $scope.publishFeed = function () {
         let post_content = $('#post_content').val().trim();
         if (post_content !== "") {
-            feedService.addPost({
+            feedService.addFeed({
                 'created': moment().format('YYYY-MM-DD HH:mm:ss'),
                 'content': post_content
-            }).then(function (response) {
-                $scope.feeds = feedService.feeds();
+            }).save(function (response) {
+                $scope.feeds.splice(0, 0, response);
                 $('#post_content').val('');
             });
         }
     };
 
     $scope.removeFeed = function (feedId) {
-        feedService.removeFeed(feedId).then(function (response) {
-            $scope.feeds = feedService.feeds();
-            console.log(response);
+        feedService.removeFeed(feedId).remove(function (response) {
+            $scope.feeds.splice(searchFeedIndex(feedId), 1);
         });
     };
 
@@ -61,34 +69,42 @@ app.controller("FeedController", function ($scope, $http, $routeParams, $locatio
                 'feed_id': feedId,
                 'content': comment_text,
                 'created': moment().format('YYYY-MM-DD HH:mm:ss')
-            }).then(function (response) {
-                $scope.feeds = feedService.feeds();
+            }).save(function (response) {
+                searchFeed(feedId).comments.push(response);
                 $('#comment-text-' + feedId).val('');
             });
         }
     };
 
     $scope.like = function (feedId) {
-        feedService.like(feedId).then(function (response) {
-            $scope.feeds = feedService.feeds();
+        feedService.like(feedId).save(function (response) {
+            let feed = searchFeed(feedId);
+            feed.likes = feed.likes === null ? {count: 1} : feed.likes.count + 1;
+            feed.votes[0] = {feed_id: feedId, id: $scope.user.id, like: 1};
         });
     };
 
     $scope.dislike = function (feedId) {
-        feedService.dislike(feedId).then(function (response) {
-            $scope.feeds = feedService.feeds();
+        feedService.dislike(feedId).save(function (response) {
+            let feed = searchFeed(feedId);
+            feed.dislikes = feed.dislikes === null ? {count: 1} : feed.dislikes.count + 1;
+            feed.votes[0] = {feed_id: feedId, id: $scope.user.id, like: 0};
         });
     };
 
     $scope.unlike = function (feedId) {
-        feedService.unlike(feedId).then(function (response) {
-            $scope.feeds = feedService.feeds();
+        feedService.unlike(feedId).save(function (response) {
+            let feed = searchFeed(feedId);
+            feed.likes.count--;
+            feed.votes = [];
         });
     };
 
     $scope.undislike = function (feedId) {
-        feedService.undislike(feedId).then(function (response) {
-            $scope.feeds = feedService.feeds();
+        feedService.undislike(feedId).save(function (response) {
+            let feed = searchFeed(feedId);
+            feed.dislikes.count--;
+            feed.votes = [];
         });
     };
 
@@ -106,7 +122,22 @@ app.controller("FeedController", function ($scope, $http, $routeParams, $locatio
         }
     };
 
-    $scope.displayInput();
-    $scope.getFeeds();
+    // search and return feed index in array
+    let searchFeedIndex = function (feedId) {
+        for (let x = 0; x < $scope.feeds.length; x++) {
+            if ($scope.feeds[x].id === feedId)
+                return x;
+        }
+        return -1;
+    };
+
+    // search and return feed in array
+    let searchFeed = function (feedId) {
+        for (let x = 0; x < $scope.feeds.length; x++) {
+            if ($scope.feeds[x].id === feedId)
+                return $scope.feeds[x];
+        }
+        return null;
+    };
 
 });
