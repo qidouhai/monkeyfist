@@ -1,14 +1,8 @@
 var app = angular.module("internal");
 
-app.controller("NavbarController", function ($scope, $http, $location, $rootScope, socialService, msgService, socketService) {
+app.controller("NavbarController", function ($scope, $http, $location, socialService) {
 
     $scope.items = [];
-    $rootScope.notifications = {
-        subscribed: false,
-        messenger: {
-            conversations: []
-        }
-    };
 
     $scope.search = function (term) {
         if (term.trim() !== '') {
@@ -37,23 +31,6 @@ app.controller("NavbarController", function ($scope, $http, $location, $rootScop
         }
         if (String(item.type) === String('feed')) {
             return 'Feeds';
-        }
-    };
-
-    $scope.getUnreadConversations = function () {
-        msgService.getUnreadConversations().query(function (response) {
-            $rootScope.notifications.messenger.conversations = response;
-        });
-    };
-
-    $scope.subscribeToMessages = function () {
-        if (!$location.url().includes('messenger')) {
-            socketService.on('messenger-channel:' + $scope.user.id, function (data) {
-                if ($.inArray(data.conversation_id, $rootScope.notifications.messenger.conversations) === -1) {
-                    $rootScope.notifications.messenger.conversations.push(data.conversation_id);
-                }
-                console.log(data);
-            });
         }
     };
 
@@ -141,6 +118,4 @@ app.controller("NavbarController", function ($scope, $http, $location, $rootScop
     // stores the friends and requests
     $scope.social;
     $scope.getFriends();
-    $scope.getUnreadConversations();
-    $scope.subscribeToMessages();
 });

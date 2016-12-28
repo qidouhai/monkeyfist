@@ -3,7 +3,7 @@ var app = angular.module("internal");
 app.controller("ProfileController", function ($scope, $routeParams, $location, msgService, settingService, socialService) {
 
     $scope.sendMessage = function (userId) {
-        msgService.searchConversation({participants: [$scope.user.id, userId]}).get(function (response) {
+        msgService.searchConversation({user1: $scope.user.id, user2: userId}).save(function (response) {
             $location.url('messenger/' + response.conversation_id);
         });
     };
@@ -213,7 +213,6 @@ app.controller("ProfileController", function ($scope, $routeParams, $location, m
     $(".modal-backdrop").hide();
 
     socialService.getFriend($routeParams.id).get(function (response) {
-        console.log(response);
         $scope.info = response;
     });
 

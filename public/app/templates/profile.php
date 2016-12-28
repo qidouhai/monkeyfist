@@ -6,8 +6,8 @@
     <!-- User metadata -->
     <div class="row">
         <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12" style="margin-top:20px;">
-            <div class="panel panel-default">
-                <div class="panel-heading">
+            <div class="panel panel-default profile-panel">
+                <div class="panel-heading profile-header">
                     <h2 class="text-center" style="margin: 0px auto;"><a href="/profile/{{ info.user.id}}">{{ info.user.username}}</a></h2>
                 </div>
                 <div class="panel-body">

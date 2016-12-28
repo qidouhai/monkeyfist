@@ -11,14 +11,14 @@
             <!-- The sidebar with all the open conversations -->
             <div id="messenger_sidebar" class="col-md-4 col-sm-4 col-xs-4">
                 <ul class="list-group">
-                    <li class="list-group-item" ng-repeat="conversation in conversations">
+                    <li class="list-group-item" ng-repeat="conversation in conversations" ng-style="{ 'background-color': currentConversation.id == conversation.id ? '#ddd' : 'white' }">
                         <a href="" ng-click="setConversation(conversation.id)">
                             <div class="row">
                                 <div class="col-sm-3 messenger_sidebar_thumbnail">
                                     <img ng-if="conversation.participants.length==2" src="/img/default-profile.png" style="max-width:65px;" class="img-responsive" />
                                     <i ng-if="conversation.participants.length > 2" class="fa fa-globe fa-3x" aria-hidden="true" style="color:black"></i>
                                 </div>
-                                <div class="col-sm-8" style="overflow:hidden;text-overflow:ellipsis;">
+                                <div class="col-sm-9" style="overflow:hidden;text-overflow:ellipsis;">
                                     <span class="messenger_sidebar_participants">
                                         {{ conversation.participants | enumerateParticipants:user.id }}
                                     </span>
@@ -26,10 +26,11 @@
                                     <span class="messenger_sidebar_lastMessage">
                                         Last Message: {{ conversation.last_message }}
                                     </span>
+                                    <br />
+                                    <span ng-if="currentConversation.id !== conversation.id && hasUnreadMessage(conversation.id)">
+                                        <span class="badge">Unread Messages!</span>
+                                    </span>
                                 </div>
-                                <div ng-if="currentConversation.id !== conversation.id && !hasUnreadMessage(conversation.id)" class="col-sm-1" style="background-color:#f6f7f9;padding:0px;"></div>
-                                <div ng-if="currentConversation.id !== conversation.id && hasUnreadMessage(conversation.id)" class="col-sm-1" style="background-color:#800000;padding:0px;"></div>
-                                <div ng-if="currentConversation.id === conversation.id" class="col-sm-1" style="background-color:orange;padding:0px;"></div>
                             </div>
                         </a>
                     </li>

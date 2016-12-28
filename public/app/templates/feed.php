@@ -1,8 +1,8 @@
 <!-- Create Post Panel -->
 <div class="row">
     <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12">
-        <div class="panel panel-default" style="margin-top:20px;padding:0px;" ng-if="displayPostInput">
-            <div class="panel-heading">
+        <div class="panel panel-default create-feed-panel" style="margin-top:20px;padding:0px;" ng-if="displayPostInput">
+            <div class="panel-heading create-feed-header">
                 <h3 style="margin: 0px auto;">Create new Post</h3>
             </div>
             <div class="panel-body">
@@ -10,7 +10,7 @@
                     <textarea class="form-control" id="post_content" rows="5" placeholder="Write a post..."></textarea>
                 </div>
             </div>
-            <div class="panel-footer">
+            <div class="panel-footer create-feed-footer">
                 <div class="row">
                     <div class="col-xs-4" >
                         <div class="btn-toolbar" role="toolbar">
@@ -29,11 +29,11 @@
 
     <div ng-repeat="feed in feeds" class="feed col-md-offset-1 col-md-10 col-sm-12 col-xs-12">
 
-        <div class="panel panel-default">
+        <div class="panel panel-default feed-panel">
             <div class="panel-heading feed-header">
                 <table style="width: 100%;">
                 <tr>
-                    <td rowspan="2" style="width: 5%; padding-right: 5px;"><img src="/img/default-profile.png" height="48" class="img-rounded"></td>
+                    <td rowspan="2" style="width: 5%; padding-right: 5px;"><img src="/img/default-profile.png" height="48" class="img-thumbnail"></td>
                     <td><a href="#">{{ feed.user.username}}</a></td>
                     <td ng-if="feed.user.id === user.id" rowspan="2" style="text-align: right;">
                         <div class="dropdown">

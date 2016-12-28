@@ -2,7 +2,7 @@ var app = angular.module("internal");
 
 app.controller("MessengerController", function ($scope, $routeParams, $rootScope, msgService, socketService) {
 
-    $scope.conversations;
+    $scope.conversations = [];
 
     // stores the current conversation
     $scope.currentConversation = {
@@ -22,7 +22,6 @@ app.controller("MessengerController", function ($scope, $routeParams, $rootScope
         msgService.getConversations().query(function (response) {
             $scope.conversations = response;
             $scope.conversations.sort(compareConversations);
-            console.log($scope.conversations);
             
             // select initial conversation
             // if no conversation is selected,
@@ -44,7 +43,7 @@ app.controller("MessengerController", function ($scope, $routeParams, $rootScope
                 // remove this conversation from unreadconversations array
                 $rootScope.notifications.messenger.conversations.splice($.inArray(conversationId, $rootScope.notifications.messenger.conversations), 1);
                 // update last read attribute of participant
-                msgService.updateLastRead($scope.currentParticipant.id, {last_read: moment().toISOString()});
+                msgService.updateLastRead($scope.currentParticipant.id, {last_read: moment().toISOString()}).save();
             }
         });
     };
@@ -53,7 +52,7 @@ app.controller("MessengerController", function ($scope, $routeParams, $rootScope
         let input = $('#message_input_field').val().trim();
         if (input !== '') {
             msgService.sendMessage({conversation_id: $scope.currentConversation.id, body: input}).save(function (response) {
-                console.log(response);
+//                console.log(response);
             });
         }
         $('#message_input_field').val('');
@@ -69,23 +68,44 @@ app.controller("MessengerController", function ($scope, $routeParams, $rootScope
         return $.inArray(conversationId, $rootScope.notifications.messenger.conversations) > -1;
     };
 
-    socketService.on('messenger-channel:' + $scope.user.id, function (data) {
-        if (Number(data.conversation_id) === Number($scope.currentConversation.id)) {
-            $scope.currentConversation.messages.push(data);
-        }
-        // if new message arrives, trigger notification (unless message is sent in current conversation)
-        if ($.inArray(data.conversation_id, $rootScope.notifications.messenger.conversations) === -1) {
-            if (data.conversation_id !== $scope.currentConversation.id)
-                // new message is sent -> update conversation notification
-                $rootScope.notifications.messenger.conversations.push(data.conversation_id);
-            else
-                // new message is sent in current conversation -> update last read attribute of current user
+    $scope.$watch(function() {
+        return socketService.getMessage();
+    }, function(message) {
+        if(message !== null) {
+            // if message belongs to current conversation -> add message
+            if (Number(message.conversation_id) === Number($scope.currentConversation.id)) {
+                $scope.currentConversation.messages.push(message);
+            }
+
+            if(message.conversation_id === $scope.currentConversation.id) {
                 msgService.updateLastRead($scope.currentParticipant.id, {last_read: moment().toISOString()});
+            }
+
+            // update last_message attribute of conversation the new message belongs to and resort conversations
+            $scope.conversations[indexOfConversation(message.conversation_id)].last_message = message.created_at;
+            $scope.conversations.sort(compareConversations);
         }
-        // update last_message attribute of current conversation and resort conversations
-        $scope.conversations[indexOfConversation(data.conversation_id)].last_message = data.created_at;
-        $scope.conversations.sort(compareConversations);
-    });  
+    }, true);
+    
+    
+
+//    socketService.on('messenger-channel:' + $scope.user.id, function (data) {
+//        if (Number(data.conversation_id) === Number($scope.currentConversation.id)) {
+//            $scope.currentConversation.messages.push(data);
+//        }
+//        // if new message arrives, trigger notification (unless message is sent in current conversation)
+//        if ($.inArray(data.conversation_id, $rootScope.notifications.messenger.conversations) === -1) {
+//            if (data.conversation_id !== $scope.currentConversation.id)
+//                // new message is sent -> update conversation notification
+//                $rootScope.notifications.messenger.conversations.push(data.conversation_id);
+//            else
+//                // new message is sent in current conversation -> update last read attribute of current user
+//                msgService.updateLastRead($scope.currentParticipant.id, {last_read: moment().toISOString()});
+//        }
+//        // update last_message attribute of current conversation and resort conversations
+//        $scope.conversations[indexOfConversation(data.conversation_id)].last_message = data.created_at;
+//        $scope.conversations.sort(compareConversations);
+//    });  
 
     // comparison function for conversations (sorts by last message)
     function compareConversations(a, b) {

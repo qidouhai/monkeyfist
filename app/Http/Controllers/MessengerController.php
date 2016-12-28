@@ -20,11 +20,10 @@ class MessengerController extends Controller {
         // return ['request' => $request];
         // request does not contain the request parameters, as intended by the Request object
         // $participants = Participant::where('user_id', $request->participants[0])->orWhere('user_id', $request->participants[1])->get();
-
         $conversation = Conversation::whereHas('participants', function($query) use ($request) {
-                    $query->where('user_id', $request->participants[0]);
+                    $query->where('user_id', $request->user1);
                 })->whereHas('participants', function($query) use ($request) {
-                    $query->where('user_id', $request->participants[1]);
+                    $query->where('user_id', $request->user2);
                 })->has('participants', 2)->select('id')->first();
 
         if ($conversation == null) {
@@ -45,6 +44,7 @@ class MessengerController extends Controller {
                     $conversation = new Conversation;
                     $conversation->save();
 
+                    $request->participants = array($request->user1, $request->user2);
                     // add participants
                     for ($i = 0; $i < sizeof($request->participants); $i++) {
                         $participant = new Participant;

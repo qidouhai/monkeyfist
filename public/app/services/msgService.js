@@ -49,7 +49,7 @@ angular.module('internal').service('msgService', function ($resource) {
     /**
      * Returns resource to get amount of conversations containing unread
      * messages.
-     * @returns {Number} amount of conversations with unread messages
+     * @returns {Number[]} array of conversation ids with unread messages
      */
     this.getUnreadConversations = function () {
         return $resource('conversation/unread');

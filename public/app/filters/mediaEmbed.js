@@ -49,7 +49,7 @@ angular.module('internal').filter('mediaEmbed',['$sce', function($sce) {
         str = str.replace(new RegExp("(" + Object.keys(emojiCodes).map(function(i){return i.replace(/[()*<>$]/g, "\\$&");}).join("|") + ")", "g"), function(s){ return emojiCodes[s];});
 
         return str.replace(emojiRegex, function (match, text) {
-            return "<i class='emoticon emoticon-" + text + "' title=':" + text + ":'></i>";
+            return "<span class='emoticon emoticon-" + text + "' title=':" + text + ":'></span>";
         });
     }
     

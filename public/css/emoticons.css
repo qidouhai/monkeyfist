@@ -4,6 +4,8 @@
     height         : 22px;
     width          : 22px;
     vertical-align : middle;
+    transform: scale(0.9);
+    margin: -10000px 0;
 }
 
 @media all and (-webkit-min-device-pixel-ratio : 1), all and (min--moz-device-pixel-ratio : 1), all and (-o-min-device-pixel-ratio : 1), all and (min-device-pixel-ratio : 1), all and (min-resolution : 96dpi) {

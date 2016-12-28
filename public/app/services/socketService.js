@@ -1,7 +1,28 @@
-angular.module('internal').factory('socketService', function ($rootScope) {
-    let socket = io('http://monkeytest.ddns.net:3000');
+angular.module('internal').factory('socketService', function ($rootScope, msgService) {
+    let socket = io('http://localhost:3000');
+    
+    $rootScope.notifications = {
+        messenger: {
+            conversations: []
+        }
+    };    
+    let lastMessage = null;
+    
+    msgService.getUnreadConversations().query(function(response) {
+        $rootScope.notifications.messenger.conversations = response;
+    });
+    
+    socket.on('messenger-channel:' + $rootScope.user.id, function(data) {
+        if($.inArray(data.conversation_id, $rootScope.notifications.messenger.conversations) === -1 && (data.user_id !== $rootScope.user.id))
+            $rootScope.notifications.messenger.conversations.push(data.conversation_id);
+        lastMessage = data;
+        $rootScope.$apply();
+    });
 
     return {
+        getMessage: function() {
+            return lastMessage;
+        },
         on: function (eventName, callback) {
             socket.off(eventName);
             socket.on(eventName, function () {
