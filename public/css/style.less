@@ -1,0 +1,237 @@
+@navyblue: #173e43;
+@lightblue: #f8f9f9;
+@tertiary_navyblue: #173e43;
+/*@bloodorange: #CC4314;*/
+@bloodorange: #fff;
+
+html {
+    height:100%;
+}
+
+body {
+    padding-top: 50px;
+    font-family: "Times New Roman", Times, serif;
+    overflow-x: hidden;
+    height:100%;
+    background: linear-gradient(135deg, #58b28d, #79b743),#68b468;
+}
+
+body a:link, body a:visited {
+    color: @navyblue;
+}
+
+#internal_navbar a:link, #internal_navbar a:visited, #internal_navbar li{
+    color: white;
+    font-weight: bold;
+    font-size: large;
+}
+
+.top_navigation{
+    background-color: @navyblue;
+    margin-bottom: 0px;
+}
+
+.create-feed-panel, .profile-panel {
+    border-color: @navyblue;
+}
+
+.create-feed-header, .create-feed-footer, .profile-header {
+    background-color: @navyblue !important;
+    h1,h2,h3,h4 {
+        color: white;
+    }
+    a:link, a:visited {
+        color: white;
+    }
+}
+
+.feed-panel {
+    border-color: @lightblue;
+}
+
+.feed-header, .feed-footer {
+    background-color: @lightblue !important;
+}
+
+.navbar_links li:hover {
+    background-color: #750000;
+}
+
+.select2 input {
+    color: black;
+}
+
+.feed-header a:link, .feed-header a:visited{
+    font-weight: bold;
+    /*color: #800000;*/
+    color: #173e43;
+    text-decoration: none;
+    font-size: large;
+}
+
+.feed-header a:hover {
+    text-decoration: underline;
+}
+
+.feed-content {
+    font-size: large;
+    padding-bottom: 10px;
+    white-space: pre-wrap;
+}
+
+.feed-links ul, .feed-footer ul {
+    list-style: none;
+    padding: 0px;
+}
+
+.feed-links ul li, .feed-footer ul li {
+    display: inline-block;
+}
+
+.feed-links hr {
+    margin: 8px 0px;
+}
+
+.feed-links a:link, .feed-links a:visited {
+/*    color: #800000;*/
+    color: #173e43;
+}
+
+.feed-footer a:link, .feed-footer a:visited {
+    color: black;
+    text-decoration: none;
+}
+
+.feed-footer-comment {
+    padding-bottom: 5px;
+}
+
+.comment-wrapper {
+    font-size:1.2em;
+    line-height: 1;
+}
+
+.comment-image {
+    vertical-align: top;
+}
+
+.comment-user a:hover {
+    text-decoration: underline;
+}
+
+.comment-user a:link, .comment-user a:visited {
+    font-weight: bold;
+    /*color: #800000;*/
+    color: #173e43;
+}
+
+.comment-date {
+    color: #999999;
+    font-size: 0.9em;
+}
+
+#feedloader {
+    text-align: center;
+}
+
+#feedloader a:link, #feedloader a:visited {
+    font-size: x-large;
+    /*color: #800000;*/
+    color: #173e43;
+}
+
+.profile_buttons {
+    vertical-align: bottom;
+}
+
+#friends_list a{
+    font-size: large;
+}
+
+/* Search Bar */
+.ui-select-container {
+    margin-top: 10px;
+}
+
+.dropdown-header {
+    font-size: large;
+}
+
+.ui-select-choices-row {
+    background-color: white;
+}
+
+.messenger_badge{
+    padding: 0px 1px 2px 7px;
+    background-color: rgba(0,0,0,0);
+    font-size: large;
+}
+
+#messenger {
+    overflow:hidden;
+    margin:0px;
+}
+
+#messenger_sidebar{
+    height: 100%;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    padding: 0px;
+}
+
+#messenger_sidebar ul li:hover{
+    background-color: #ddd;
+}
+
+.messenger_sidebar_item {
+    background-color: #ddd;
+}
+
+.messenger_sidebar_participants{
+    /*color: #800000;*/
+    color: #173e43;
+    font-size:1.2em;
+    font-weight: bold;
+}
+
+.messenger_sidebar_lastMessage{
+    color:black;
+}
+
+#messenger_content{
+    border-right: 1px solid #ddd;
+    padding: 0px;
+}
+
+.message_wrapper {
+    overflow-y:auto;
+    padding: 0px 20px 10px 20px;
+    font-size: 1.3em;
+}
+
+.message_container_head a:link {
+    text-decoration: none;
+    /*color: #800000;*/
+    color: #173e43;
+}
+.message_container_head a:hover {
+    text-decoration: underline;
+}
+.message_container_head span {
+    color:#999999;
+    font-size:0.7em;
+}
+
+.message_container_body {
+    white-space: pre-wrap;
+}
+
+#message_input_field{
+    font-size:1.2em;
+}
+
+@media screen and (max-width:768px) {
+    .messenger_sidebar_thumbnail {
+        display: none;
+    }
+}

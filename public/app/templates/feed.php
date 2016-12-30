@@ -33,7 +33,7 @@
             <div class="panel-heading feed-header">
                 <table style="width: 100%;">
                 <tr>
-                    <td rowspan="2" style="width: 5%; padding-right: 5px;"><img src="/img/default-profile.png" height="48" class="img-thumbnail"></td>
+                    <td rowspan="2" style="width: 5%; padding-right: 5px;"><img src="{{ feed.user.thumbnail }}" class="img-thumbnail" style="width:48px;height:48px;"></td>
                     <td><a href="#">{{ feed.user.username}}</a></td>
                     <td ng-if="feed.user.id === user.id" rowspan="2" style="text-align: right;">
                         <div class="dropdown">
@@ -89,7 +89,7 @@
                 <div ng-repeat="comment in feed.comments">
                     <div class="input-group feed-footer-comment">
                         <a href="/profile/{{ comment.user.id }}" class="input-group-addon" id="comment-{{ comment.id}}" style="padding: 0px 6px;background-color:inherit;border:none;vertical-align:top;">
-                            <img src="/img/default-profile.png" width="34" height="34" style="border:1px solid #ccc; background-color:white;">
+                            <img src="{{ comment.user.thumbnail }}" style="border:1px solid #ccc; background-color:white; width: 34px; height: 34px;">
                         </a>
                         <div class="comment-wrapper" aria-describedby="comment-{{ comment.id}}">
                             <span class="comment-user">
@@ -110,7 +110,7 @@
                 <form ng-submit="submitComment(feed.id)">
                     <div class="input-group">
                         <a href="#" class="input-group-addon" id="comment-input-{{ feed.id}}" style="padding: 0px 6px;background-color:inherit;border:none;">
-                            <img src="/img/default-profile.png" width="34" height="34" style="border:1px solid #ccc; background-color:white;">
+                            <img src="{{ user.thumbnail }}" style="border:1px solid #ccc; background-color:white; width:34px; height: 34px;">
                         </a>
                         <input type="text" class="form-control" placeholder="Comment..." aria-describedby="comment-input-{{ feed.id}}" id="comment-text-{{ feed.id}}">
                     </div>

@@ -1,6 +1,55 @@
 var app = angular.module("internal");
 
-app.controller("ProfileController", function ($scope, $routeParams, $location, msgService, settingService, socialService) {
+app.controller("ProfileController", function ($scope, $rootScope, $routeParams, $location, msgService, settingService, socialService) {
+    
+    $scope.fileSelected = false;
+    $scope.dropzoneConfig = {
+        'options': {
+            'url': '/upload/profile',
+            'method': 'post',
+            'maxFileSize': 15,
+            'uploadMultiple': false,
+            'maxFiles': 2,
+            'acceptedFiles': 'image/*',
+            'previewsContainer': '.dropzone-previews',
+            'thumbnailWidth': 250,
+            'thumbnailHeight': 250,
+            'previewTemplate': '<span class="preview test42" id="test42" style="display:none;"><img data-dz-thumbnail src="/img/default-profile.png" width="130" height="130" class="img-responsive img-thumbnail" /></span>',
+            'autoProcessQueue': false,
+            'headers': {
+                'X-CSRF-Token': $scope.csrf
+            },
+            'init': function () {
+                $scope.dropzone = this;
+            }
+        },
+        'eventHandlers': {
+            'success': function (file, response) {
+                $scope.fileSelected = false;
+                $scope.uploading = false;
+                $scope.$apply();
+                $scope.submitSettingImage(response.image, response.thumbnail);                
+            },
+            'sending': function(file) {
+                $scope.uploading = true;
+                $scope.fileSelected = null;
+            },
+            'uploadprogress': function(file,progress,bytesSent) {
+                $('#progressbar-upload').children().first().width(progress);
+            },
+            'thumbnail': function(file, dataUrl) {
+                $scope.fileSelected = true;
+                $scope.$apply();
+                $('#profile-preview').attr('src', dataUrl);
+            }
+        }
+    };
+    
+    $scope.removeSelection = function() {
+        $scope.dropzone.removeAllFiles();
+        $scope.fileSelected = false;
+        $('#profile-preview').attr('src', $scope.user.picture);
+    };
 
     $scope.sendMessage = function (userId) {
         msgService.searchConversation({user1: $scope.user.id, user2: userId}).save(function (response) {
@@ -109,6 +158,22 @@ app.controller("ProfileController", function ($scope, $routeParams, $location, m
             });
         }
     };
+    
+    $scope.submitSettingImage = function(imagePath, thumbnailPath) {
+        $scope.resetSettingStates();
+        
+        settingService.setImage({'imagePath': imagePath, 'thumbnailPath': thumbnailPath}).save(function (response) {
+            if(response.error)
+                $scope.settings.account.image.error = true;
+            else {
+                $scope.settings.account.image.success = true;
+                $rootScope.user = response.user;
+                // as user can change pic only on his own profile, no check required
+                $scope.info.picture = response.user.picture;
+            }
+            $scope.settings.account.image.message = response.message;
+        });
+    };
 
     $scope.getSettingNotifications = function () {
         settingService.getNotifications().get(function (response) {
@@ -172,6 +237,11 @@ app.controller("ProfileController", function ($scope, $routeParams, $location, m
                     message: null
                 },
                 password: {
+                    error: false,
+                    success: false,
+                    message: null
+                },
+                image: {
                     error: false,
                     success: false,
                     message: null

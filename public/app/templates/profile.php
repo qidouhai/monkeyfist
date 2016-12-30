@@ -12,8 +12,8 @@
                 </div>
                 <div class="panel-body">
                     <div class="row">
-                        <div class="col-md-3 text-center" style="border-right: 1px solid #ddd;;">
-                            <img src="/img/default-profile.png" class="img-responsive center-block img-circle" width="150" height="150" style="vertical-align: center;" />
+                        <div class="col-md-3 text-center" style="border-right: 1px solid #ddd;">
+                            <img src="{{ info.user.thumbnail }}" class="img-responsive center-block img-thumbnail" style="vertical-align: middle; height: 150px; width: 150px;" />
                         </div>
                         <div class="col-md-9 table-responsive">
                             <table class="table" style="margin: 10px auto; font-size: medium; height: 100%;">
@@ -63,39 +63,39 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Friends List(only used to display other users' friends) -->
-<div class="modal fade" id="friends_friendlist" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">{{ info.user.prename }}'s Friends</h4>
-            </div>
-            <div class="modal-body">
-                <table class="table" style="vertical-align: middle;">
-                    <tr>
-                        <th colspan="2">Name</th>
-                        <th>Since</th>
-                        <th>Relation</th>
-                    </tr>
-                    <tr ng-repeat="friend in friendsOfFriend.common">
-                        <td><a href="/profile/{{ friend.user.id}}"><img class="img-responsive" src="/img/default-profile.png" width="45" /></a></td>
-                        <td style="vertical-align: middle;" class="text-left"><a href="/profile/{{ friend.user.id}}">{{ friend.user.username}}</a></td>
-                        <td style="vertical-align: middle;"><span>{{ friend.created}}</span></td>
-                        <td style="vertical-align: middle;"><span>Common Friend</span></td>
-                    </tr>
-                    <tr ng-repeat="friend in friendsOfFriend.distinct">
-                        <td><a href="/profile/{{ friend.user.id}}"><img class="img-responsive" src="/img/default-profile.png" width="45" /></a></td>
-                        <td style="vertical-align: middle;" class="text-left"><a href="/profile/{{ friend.user.id}}">{{ friend.user.username}}</a></td>
-                        <td style="vertical-align: middle;"><span>{{ friend.created}}</span></td>
-                        <td style="vertical-align: middle;"><span ng-if="friend.user.id == user.id">Yourself</span></td>
-                    </tr>
-                </table>
+    <div class="modal fade" id="friends_friendlist" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">{{ info.user.prename}}'s Friends</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table" style="vertical-align: middle;">
+                        <tr>
+                            <th colspan="2">Name</th>
+                            <th>Since</th>
+                            <th>Relation</th>
+                        </tr>
+                        <tr ng-repeat="friend in friendsOfFriend.common">
+                            <td><a href="/profile/{{ friend.user.id}}"><img class="img-responsive" src="/img/default-profile.png" width="45" /></a></td>
+                            <td style="vertical-align: middle;" class="text-left"><a href="/profile/{{ friend.user.id}}">{{ friend.user.username}}</a></td>
+                            <td style="vertical-align: middle;"><span>{{ friend.created}}</span></td>
+                            <td style="vertical-align: middle;"><span>Common Friend</span></td>
+                        </tr>
+                        <tr ng-repeat="friend in friendsOfFriend.distinct">
+                            <td><a href="/profile/{{ friend.user.id}}"><img class="img-responsive" src="/img/default-profile.png" width="45" /></a></td>
+                            <td style="vertical-align: middle;" class="text-left"><a href="/profile/{{ friend.user.id}}">{{ friend.user.username}}</a></td>
+                            <td style="vertical-align: middle;"><span>{{ friend.created}}</span></td>
+                            <td style="vertical-align: middle;"><span ng-if="friend.user.id == user.id">Yourself</span></td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
     <!-- Modal containing the user settings -->
     <div class="modal fade" id="settingsModal" tabindex="-1" role="dialog">
@@ -141,6 +141,11 @@
                             <h4 class="list-group-item-heading"><i class="fa fa-key" aria-hidden="true"></i>
                                 Change password</h4>
                             <p class="list-group-item-text">Change your account password.</p>
+                        </a>
+                        <a href="#" class="list-group-item" onclick="settingsFactory.selectSetting('image')">
+                            <h4 class="list-group-item-heading"><i class="fa fa-camera" aria-hidden="true"></i>
+                                Change profile picture</h4>
+                            <p class="list-group-item-text">Change your profile picture.</p>
                         </a>
                         <a href="#" class="list-group-item" onclick="settingsFactory.back(1)">
                             <h4 class="list-group-item-heading"><i class="fa fa-arrow-left" aria-hidden="true"></i>
@@ -224,8 +229,35 @@
                         </div>
                     </form>
                 </div>
-                
-                
+
+                <div class="modal-body" id="settingsModal_account_image">
+                    <div class="alert alert-danger" ng-if="settings.account.image.error" role="alert">{{ settings.account.image.message}}</div>
+                    <div class="alert alert-success" ng-if="settings.account.image.success" role="alert">{{ settings.account.image.message}}</div>
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <div class="col-sm-8 col-sm-offset-2 dropzone-previews text-center" style="margin-bottom:20px;" id="dropzone-preview">
+                                <span class="preview">
+                                    <img id="profile-preview" data-dz-thumbnail src="{{ user.thumbnail }}" width="250" height="250" class="img-responsive img-thumbnail" />
+                                </span>
+                            </div>
+                            <button ng-if="!fileSelected" class="col-sm-4 col-sm-offset-4 dz-clickable btn btn-primary" dropzone="dropzoneConfig">Select</button>
+                            <button ng-if="fileSelected" class="col-sm-4 col-sm-offset-4 dz-clickable btn btn-primary" ng-click="removeSelection()">Remove</button>
+                            <div ng-if="uploading" class="progress col-sm-offset-4 col-sm-4" id="progressbar-upload">
+                                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:60%;">
+                                    <span class="sr-only">60% Complete</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-4 col-sm-4">
+                                <button type="submit" class="btn btn-success col-sm-6" ng-click="dropzone.processQueue()">Save</button>
+                                <button type="button" class="btn btn-default col-sm-offset-1 col-sm-5" onclick="settingsFactory.back(2)">Back</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+
                 <div class="modal-body" id="settingsModal_privacy">
                     <div class="alert alert-danger" ng-if="settings.privacy.error" role="alert">{{ settings.privacy.message}}</div>
                     <div class="alert alert-success" ng-if="settings.privacy.success" role="alert">{{ settings.privacy.message}}</div>
@@ -253,7 +285,7 @@
                         </div>
                     </form>
                 </div>
-                
+
                 <div class="modal-body" id="settingsModal_notification">
                     <div class="alert alert-danger" ng-if="settings.notification.error" role="alert">{{ settings.notification.message}}</div>
                     <div class="alert alert-success" ng-if="settings.notification.success" role="alert">{{ settings.notification.message}}</div>

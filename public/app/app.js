@@ -70,6 +70,7 @@ let checkLogin = function ($q, $http, $rootScope) {
     $http.get('/user').then(function (user) {
         if (user.data.id) {
             $rootScope.user = user.data;
+            $rootScope.csrf = $('meta[name="csrf-token"]')[0].content;
             deferred.resolve();
         } else {
             window.href = "login";

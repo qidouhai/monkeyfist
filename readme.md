@@ -20,6 +20,9 @@ Monkeyfist uses [Node.js](https://nodejs.org/) Websockets for push notifications
 #### 4. Redis
 Monkeyfist uses the [Redis](https://redis.io/download) message broker for its messenger. Redis for Windows is available [here](https://github.com/MSOpenTech/redis/releases).
 
+#### 5. ImageMagick
+Monkeyfist uses the [ImageMagick](http://www.imagemagick.org/script/index.php) libraries to convert and create image thumbnails. ImageMagick is available [here](http://www.imagemagick.org/script/binary-releases.php).
+
 ## Installation Guide
 This guide will provide the basic steps required to run Monkeyfist on an Apache Webserver.
 

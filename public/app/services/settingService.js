@@ -28,6 +28,15 @@ angular.module("internal").service('settingService', function ($resource) {
     this.setPassword = function (requestBody) {
         return $resource('/settings/account/password', requestBody, httpPost);
     };
+    
+    /**
+     * Return resource to change profile picture.
+     * @param {Object} requestBody request content
+     * @returns {Object}
+     */
+    this.setImage = function (requestBody) {
+        return $resource('/settings/account/image', requestBody, httpPost);
+    };
 
     /**
      * Return resource to query user notification settings.

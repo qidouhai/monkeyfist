@@ -7,7 +7,7 @@ body {
   font-family: "Times New Roman", Times, serif;
   overflow-x: hidden;
   height: 100%;
-  background-color: #fff;
+  background: linear-gradient(135deg, #58b28d, #79b743), #68b468;
 }
 body a:link,
 body a:visited {
@@ -56,11 +56,11 @@ body a:visited {
   color: white;
 }
 .feed-panel {
-  border-color: #5882FA;
+  border-color: #f8f9f9;
 }
 .feed-header,
 .feed-footer {
-  background-color: #5882FA !important;
+  background-color: #f8f9f9 !important;
 }
 .navbar_links li:hover {
   background-color: #750000;

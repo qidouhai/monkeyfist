@@ -1,6 +1,6 @@
 var app = angular.module("internal");
 
-app.controller("NavbarController", function ($scope, $http, $location, socialService) {
+app.controller("NavbarController", function ($scope, $http, $location, socialService, socketService) {
 
     $scope.items = [];
 

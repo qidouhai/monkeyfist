@@ -84,7 +84,7 @@
                         <th>Options</th>
                     </tr>
                     <tr ng-repeat="request in social.requests">
-                        <td><a href="/profile/{{ request.user.id}}"><img class="img-responsive" src="/img/default-profile.png" width="45" /></a></td>
+                        <td><a href="/profile/{{ request.user.id}}"><img class="img-responsive" src="{{ request.user.thumbnail }}" style="height:45px;width:45px;" /></a></td>
                         <td style="vertical-align: middle;" class="text-left"><a href="/profile/{{ request.user.id}}">{{ request.user.username}}</a></td>
                         <td style="vertical-align: middle;"><span>{{ request.created}}</span></td>
                         <td style="vertical-align: middle;" class="text-right">
@@ -93,7 +93,7 @@
                         </td>
                     </tr>
                     <tr ng-repeat="friend in social.friends">
-                        <td><a href="/profile/{{ friend.user.id}}"><img class="img-responsive" src="/img/default-profile.png" width="45"></a></td>
+                        <td><a href="/profile/{{ friend.user.id}}"><img class="img-responsive" src="{{ friend.user.thumbnail }}" style="height:45px;width:45px;"></a></td>
                         <td style="vertical-align: middle;" class="text-left"><a href="/profile/{{ friend.user.id}}">{{ friend.user.username}}</a></td>
                         <td style="vertical-align: middle;"><span>{{ friend.created}}</span></td>
                         <td style="vertical-align: middle;" class="text-right">

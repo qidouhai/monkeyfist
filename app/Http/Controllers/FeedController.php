@@ -36,7 +36,7 @@ class FeedController extends Controller {
         $feeds = Feed::with(
                         [
                             'user' => function($query) {
-                                $query->select('id','username','picture');
+                                $query->select('id','username','picture','thumbnail');
                             },
                             'comments.user' => function($query) {
                                 $query->get();

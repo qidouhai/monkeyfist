@@ -71,8 +71,11 @@ Route::post('/participant/{id}/updatelastread', 'MessengerController@updateLastR
 Route::post('/settings/account/names', 'SettingsController@setNames')->middleware('auth');
 Route::post('/settings/account/email', 'SettingsController@setEmail')->middleware('auth');
 Route::post('/settings/account/password', 'SettingsController@setPassword')->middleware('auth');
+Route::post('/settings/account/image', 'SettingsController@setImage')->middleware('auth');
 Route::post('/settings/notifications', 'SettingsController@setNotificationSettings')->middleware('auth');
 Route::post('/settings/privacy', 'SettingsController@setPrivacySettings')->middleware('auth');
+
+Route::post('/upload/profile', 'ImageController@uploadProfilePicture')->middleware('auth');
 
 Route::delete('/feed/{id}', 'FeedController@delete')->middleware('auth');
 

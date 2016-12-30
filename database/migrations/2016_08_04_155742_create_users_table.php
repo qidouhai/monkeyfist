@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->date('birthday');
             $table->string('picture');
+            $table->string('thumbnail');
         });
     }
 

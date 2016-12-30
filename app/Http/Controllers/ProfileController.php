@@ -41,7 +41,7 @@ class ProfileController extends Controller {
             $feeds = Feed::with(
                             [
                                 'user' => function($query) {
-                                    $query->select('id', 'username', 'picture');
+                                    $query->select('id', 'username', 'picture', 'thumbnail');
                                 },
                                 'comments.user' => function($query) {
                                     $query->get();
@@ -129,11 +129,11 @@ class ProfileController extends Controller {
                     'friends' => function($query) {
                         $query->with([
                             'user' => function($query) {
-                                $query->select('id', 'username', 'picture');
+                                $query->select('id', 'username', 'picture','thumbnail');
                             }
                         ]);
                     }
-                ])->select('id', 'username', 'picture')->first();
+                ])->select('id', 'username', 'picture', 'thumbnail')->first();
 
         return $f;
     }
@@ -145,21 +145,21 @@ class ProfileController extends Controller {
                     'friends' => function($query) {
                         $query->with([
                             'user' => function($query) {
-                                $query->select('id', 'username', 'picture');
+                                $query->select('id', 'username', 'picture', 'thumbnail');
                             }
                         ]);
                     },
                     'friendRequests' => function($query) {
                         $query->with([
                             'user' => function($query) {
-                                $query->select('id', 'username', 'picture');
+                                $query->select('id', 'username', 'picture', 'thumbnail');
                             }
                         ]);
                     },
                     'myRequests' => function($query) {
                         $query->with([
                             'targetUser' => function($query) {
-                                $query->select('id', 'username', 'picture');
+                                $query->select('id', 'username', 'picture', 'thumbnail');
                             }
                         ]);
                     }
@@ -178,11 +178,11 @@ class ProfileController extends Controller {
                     'friends' => function($query) {
                         $query->with([
                             'user' => function($query) {
-                                $query->select('id', 'username', 'picture');
+                                $query->select('id', 'username', 'picture', 'thumbnail');
                             }
                         ]);
                     }
-                ])->where('id', $id)->select('id', 'username', 'picture')->first();
+                ])->where('id', $id)->select('id', 'username', 'picture', 'thumbnail')->first();
 
         return $f;
     }

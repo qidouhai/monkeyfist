@@ -25,7 +25,7 @@
                             <ui-select-choices group-by="groupFN" repeat="item in (items | filter: $select.search) track by item.id" refresh="search($select.search)" refresh-delay="0">
                                 <div ng-if="item.type == 'user'" ng-click="displayProfile(item.id)">                                            
                                     <div style="display: inline-block;">
-                                        <img src="/img/default-profile.png" height="32" />
+                                        <img src="{{ item.thumbnail }}" style="height:32px;width:32px;" />
                                     </div>
                                     <div style="display: inline-block; margin-left: 15px;">
                                         <a style="font-size: large; color: #800000;" href="/profile/{{ item.id}}" ng-bind-html="item.username | highlight: $select.search"></a>
@@ -70,7 +70,7 @@
                         <th>Options</th>
                     </tr>
                     <tr ng-repeat="request in social.requests">
-                        <td><a href="/profile/{{ request.user.id}}"><img class="img-responsive" src="/img/default-profile.png" width="45" /></a></td>
+                        <td><a href="/profile/{{ request.user.id}}"><img class="img-responsive" src="{{ request.user.thumbnail }}" style="height:45px;width:45px;" /></a></td>
                         <td style="vertical-align: middle;" class="text-left"><a href="/profile/{{ request.user.id}}">{{ request.user.username}}</a></td>
                         <td style="vertical-align: middle;"><span>{{ request.created}}</span></td>
                         <td style="vertical-align: middle;" class="text-right">
@@ -79,7 +79,7 @@
                         </td>
                     </tr>
                     <tr ng-repeat="request in social.myrequests">
-                        <td><a href="/profile/{{ requests.target_user.id}}"><img class="img-responsive" src="/img/default-profile.png" width="45" /></a></td>
+                        <td><a href="/profile/{{ requests.target_user.id}}"><img class="img-responsive" src="{{ request.target_user.thumbnail }}" style="height:45px;width:45px;" /></a></td>
                         <td style="vertical-align: middle;" class="text-left"><a href="/profile/{{ request.target_user.id}}">{{ request.target_user.username}}</a></td>
                         <td style="vertical-align: middle;"><span>{{ request.created}}</span></td>
                         <td style="vertical-align: middle;" class="text-right">
@@ -87,7 +87,7 @@
                         </td>
                     </tr>
                     <tr ng-repeat="friend in social.friends">
-                        <td><a href="/profile/{{ friend.user.id}}"><img class="img-responsive" src="/img/default-profile.png" width="45"></a></td>
+                        <td><a href="/profile/{{ friend.user.id}}"><img class="img-responsive" src="{{ friend.user.thumbnail }}" style="height:45px;width:45px;"></a></td>
                         <td style="vertical-align: middle;" class="text-left"><a href="/profile/{{ friend.user.id}}">{{ friend.user.username}}</a></td>
                         <td style="vertical-align: middle;"><span>{{ friend.created}}</span></td>
                         <td style="vertical-align: middle;" class="text-right">

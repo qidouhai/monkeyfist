@@ -64,6 +64,20 @@ class SettingsController extends Controller {
         return ["error" => $validator->fails(), "message" => $message, "user" => $user];
     }
     
+    protected function setImage(Request $request) {
+        $validator = Validator::make($request->all(), ['thumbnailPath' => 'required', 'imagePath' => 'required']);
+        
+        $user = Auth::user();
+        if(!$validator->fails()) {   
+            $user->picture = $request->imagePath;
+            $user->thumbnail = $request->thumbnailPath;
+            $user->save();
+        }
+        
+        $message = $validator->fails() ? $validator->errors()->first() : 'Your profile picture has been set!';
+        return ["error" => $validator->fails(), "message" => $message, "user" => $user];
+    }
+    
     protected function getNotificationSettings() {
         return Auth::user()->notificationSettings()->first();
     }

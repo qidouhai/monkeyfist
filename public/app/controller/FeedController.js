@@ -27,7 +27,7 @@ app.controller("FeedController", function ($scope, $routeParams, $location, feed
         },
         'eventHandlers': {
             'success': function (file, response) {
-                let imageLink = '<img src="' + response.filename + '" class="img-responsive">';
+                let imageLink = '<img src="' + response.image + '" class="img-responsive">';
                 insertImageFactory.dropzone.removeFile(file);
                 insertImageFactory.insert(imageLink);
             }
@@ -38,6 +38,7 @@ app.controller("FeedController", function ($scope, $routeParams, $location, feed
         feedService.getFeeds($scope.feeds.length, querySize).query(function (response) {
             $scope.feeds.push.apply($scope.feeds, response);
             $scope.moreFeeds = response.length === querySize;
+            console.log($scope.feeds);
         });
     };
 
@@ -79,7 +80,9 @@ app.controller("FeedController", function ($scope, $routeParams, $location, feed
     $scope.like = function (feedId) {
         feedService.like(feedId).save(function (response) {
             let feed = searchFeed(feedId);
-            feed.likes = feed.likes === null ? {count: 1} : feed.likes.count + 1;
+            if(feed.likes === null)
+                feed.likes = {count: 0};
+            feed.likes.count++;
             feed.votes[0] = {feed_id: feedId, id: $scope.user.id, like: 1};
         });
     };
@@ -87,7 +90,9 @@ app.controller("FeedController", function ($scope, $routeParams, $location, feed
     $scope.dislike = function (feedId) {
         feedService.dislike(feedId).save(function (response) {
             let feed = searchFeed(feedId);
-            feed.dislikes = feed.dislikes === null ? {count: 1} : feed.dislikes.count + 1;
+            if(feed.dislikes === null)
+                feed.dislikes = {count: 0};
+            feed.dislikes.count++;
             feed.votes[0] = {feed_id: feedId, id: $scope.user.id, like: 0};
         });
     };
@@ -96,6 +101,7 @@ app.controller("FeedController", function ($scope, $routeParams, $location, feed
         feedService.unlike(feedId).save(function (response) {
             let feed = searchFeed(feedId);
             feed.likes.count--;
+            console.log(feed.likes);
             feed.votes = [];
         });
     };
