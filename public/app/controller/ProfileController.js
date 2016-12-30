@@ -130,7 +130,6 @@ app.controller("ProfileController", function ($scope, $rootScope, $routeParams, 
             // do nothing
         } else {
             settingService.setEmail({'email': email}).save(function (response) {
-                console.log(response);
                 if (response.error)
                     $scope.settings.account.email.error = true;
                 else
@@ -175,15 +174,6 @@ app.controller("ProfileController", function ($scope, $rootScope, $routeParams, 
         });
     };
 
-    $scope.getSettingNotifications = function () {
-        settingService.getNotifications().get(function (response) {
-            $('#input_notifyMessage').prop('checked', response.message).change();
-            $('#input_notifyFriendRequest').prop('checked', response.friend_request).change();
-            $('#input_notifyComment').prop('checked', response.comment).change();
-            $('#input_notifyFeed').prop('checked', response.feed).change();
-        });
-    };
-
     $scope.submitSettingNotifications = function () {
         $scope.resetSettingStates();
         let requestBody = {
@@ -197,6 +187,7 @@ app.controller("ProfileController", function ($scope, $rootScope, $routeParams, 
                 $scope.settings.notification.error = true;
             else
                 $scope.settings.notification.success = true;
+            $rootScope.preferences.notifications = response.settings;
             $scope.settings.notification.message = response.message;
         });
     };
@@ -292,7 +283,10 @@ app.controller("ProfileController", function ($scope, $rootScope, $routeParams, 
 
     if (Number($routeParams.id) === Number($scope.user.id)) {
         $scope.resetSettingStates();
-        $scope.getSettingNotifications();
         $scope.getSettingPrivacy();
+        $('#input_notifyMessage').prop('checked', $scope.preferences.notifications.message).change();
+        $('#input_notifyFriendRequest').prop('checked', $scope.preferences.notifications.friend_request).change();
+        $('#input_notifyComment').prop('checked', $scope.preferences.notifications.comment).change();
+        $('#input_notifyFeed').prop('checked', $scope.preferences.notifications.feed).change();
     }
 });

@@ -192,6 +192,7 @@ body a:visited {
   overflow-y: auto;
   padding: 0px 20px 10px 20px;
   font-size: 1.3em;
+  background-color: white;
 }
 .message_container_head a:link {
   text-decoration: none;

@@ -1,4 +1,4 @@
-angular.module('internal').factory('socketService', function ($rootScope, msgService) {
+angular.module('internal').factory('socketService', function ($rootScope, msgService, $location) {
     let socket = io('http://localhost:3000');
     
     $rootScope.notifications = {
@@ -13,11 +13,21 @@ angular.module('internal').factory('socketService', function ($rootScope, msgSer
     });
     
     socket.on('messenger-channel:' + $rootScope.user.id, function(data) {
-        if($.inArray(data.conversation_id, $rootScope.notifications.messenger.conversations) === -1 && (data.user_id !== $rootScope.user.id))
-            $rootScope.notifications.messenger.conversations.push(data.conversation_id);
+        if(data.author.id !== $rootScope.user.id) {
+            if($.inArray(data.conversation_id, $rootScope.notifications.messenger.conversations) === -1)
+                $rootScope.notifications.messenger.conversations.push(data.conversation_id);
+            notifyMessage(data);
+        }
         lastMessage = data;
         $rootScope.$apply();
     });
+    
+    function notifyMessage(data) {
+        if($rootScope.preferences.notifications.message && !$location.url().includes('messenger')) {
+            Notification.requestPermission();
+            new Notification(data.author.username, {body: data.body, icon: data.author.thumbnail});
+        }
+    }
 
     return {
         getMessage: function() {

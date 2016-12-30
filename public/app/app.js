@@ -64,14 +64,21 @@ app.config(function ($routeProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
 });
 
-let checkLogin = function ($q, $http, $rootScope) {
+let checkLogin = function ($q, $http, $rootScope, settingService) {
     let deferred = $q.defer();
 
     $http.get('/user').then(function (user) {
         if (user.data.id) {
             $rootScope.user = user.data;
             $rootScope.csrf = $('meta[name="csrf-token"]')[0].content;
-            deferred.resolve();
+            if($rootScope.preferences === undefined) {
+                settingService.getNotifications().get(function (response) {
+                    $rootScope.preferences = {notifications: response};
+                    deferred.resolve();
+                });
+            }else {
+                deferred.resolve();
+            }
         } else {
             window.href = "login";
             deferred.resolve();

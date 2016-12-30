@@ -38,7 +38,6 @@ app.controller("FeedController", function ($scope, $routeParams, $location, feed
         feedService.getFeeds($scope.feeds.length, querySize).query(function (response) {
             $scope.feeds.push.apply($scope.feeds, response);
             $scope.moreFeeds = response.length === querySize;
-            console.log($scope.feeds);
         });
     };
 

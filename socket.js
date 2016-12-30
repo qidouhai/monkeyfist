@@ -8,10 +8,9 @@ redis.subscribe('messenger-channel', function(err, count) {
 redis.on('message', function(channel, message) {
     console.log('Broadcasting on channel: ' + channel + ': ' + message);
     message = JSON.parse(message);
-
-    message.data.message.user_id = getUserIdOfAuthor(message);
+    
+    message.data.message.author = getMessageAuthor(message);
     for(var i = 0; i < message.data.participants.length; i++) {
-        console.log("Broadcasting to user: " + message.data.participants[i].user_id);
     	io.emit(channel + ':' + message.data.participants[i].user_id, message.data.message);
     }
 
@@ -22,13 +21,13 @@ http.listen(3000, function(){
 });
 
 // add the user_id of the message author to the message
-function getUserIdOfAuthor(message) {
-    let author = message.data.message.participant;
+function getMessageAuthor(message) {
+    let author = message.data.message.participant; // participant id
     
     for(let i = 0; i < message.data.participants.length; i++) {
         if(message.data.participants[i].id === author) {
-            return message.data.participants[i].user_id;
+            return message.data.participants[i].user;
         }
     }
-    return -1;
+    return null;
 }

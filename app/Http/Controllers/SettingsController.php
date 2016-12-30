@@ -84,11 +84,10 @@ class SettingsController extends Controller {
     
     protected function setNotificationSettings(Request $request) {
         $notificationSettings = Auth::user()->notificationSettings()->first();
-        
-        $notificationSettings->message = $request->notifyMessage;
-        $notificationSettings->friend_request = $request->notifyFriendRequest;
-        $notificationSettings->comment = $request->notifyComment;
-        $notificationSettings->feed = $request->notifiyFeed;
+        $notificationSettings->message = $request->notifyMessage == 'true' ? 1 : 0;
+        $notificationSettings->friend_request = $request->notifyFriendRequest == 'true' ? 1 : 0;
+        $notificationSettings->comment = $request->notifyComment == 'true' ? 1 : 0;
+        $notificationSettings->feed = $request->notifiyFeed == 'true' ? 1 : 0;
         
         if($notificationSettings->save()) {
             return ["error" => false, "message" => "Your settings have been applied.", "settings" => $notificationSettings];
