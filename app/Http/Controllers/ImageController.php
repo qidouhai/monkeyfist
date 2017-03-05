@@ -28,14 +28,14 @@ class ImageController extends Controller {
         }
 
         $extension = File::extension(Input::file('file')->getClientOriginalName());
-        $directory = public_path() . '\uploads\\' . Auth::user()->id . '\\';
+        $directory = public_path() . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . Auth::user()->id . DIRECTORY_SEPARATOR;
         $filename = sha1(time() . time());
 
         $upload_state = Input::file('file')->move($directory, $filename.".{$extension}");
         $this->convertImage($directory,$filename, $extension, false);
 
         if ($upload_state) {
-            return Response::json(["status" => 'success', "image" => '/uploads/' . Auth::user()->id . '/' . $filename .'.'. $extension], 200);
+            return Response::json(["status" => 'success', "image" => DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . Auth::user()->id . DIRECTORY_SEPARATOR . $filename .'.'. $extension], 200);
         } else {
             return Response::json('error', 400);
         }
