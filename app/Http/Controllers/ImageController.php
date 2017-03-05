@@ -62,7 +62,7 @@ class ImageController extends Controller {
         $this->convertImage($directory,$filename,$extension);
 
         if ($upload_state) {
-            return Response::json(["status" => 'success', "image" => '/uploads/' . Auth::user()->id . '/profile/' . $filename .'.'. $extension,"thumbnail" => '/uploads/' . Auth::user()->id . '/profile/' . $filename .'_thumbnail.png'], 200);
+            return Response::json(["status" => 'success', "image" => DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . Auth::user()->id . DIRECTORY_SEPARATOR . 'profile' . DIRECTORY_SEPARATOR . $filename .'.'. $extension,"thumbnail" => DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . Auth::user()->id . DIRECTORY_SEPARATOR . 'profile' . DIRECTORY_SEPARATOR . $filename .'_thumbnail.png'], 200);
         } else {
             return Response::json('error', 400);
         }
