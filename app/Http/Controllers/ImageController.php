@@ -55,7 +55,7 @@ class ImageController extends Controller {
         }
 
         $extension = File::extension(Input::file('file')->getClientOriginalName());
-        $directory = public_path() . '\uploads\\' . Auth::user()->id . '\\profile\\';
+        $directory = public_path() . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR . Auth::user()->id . DIRECTORY_SEPARATOR . 'profile' . DIRECTORY_SEPARATOR;
         $filename = sha1(time() . time());
 
         $upload_state = Input::file('file')->move($directory, $filename.".{$extension}");
