@@ -1,0 +1,46 @@
+body {
+  font-family: $font-rubik;
+}
+
+.navbar-brand {
+  font-size: 35px;
+}
+
+#logout-form {
+  button {
+    padding: 14px 15px;
+    border: none;
+  }
+}
+
+.content {
+  margin-top: 90px;
+
+  .feed-panel {
+
+
+    .feed-links {
+      ul {
+        list-style-type:none;
+        padding-left:0px;
+        li {
+          display:inline-block;
+        }
+      }
+    }
+
+    .feed-footer {
+      ul {
+        list-style-type:none;
+        li {
+          display:inline-block;
+        }
+      }
+    }
+  }
+
+  #feedloader {
+    text-align: center;
+    font-size: 1.5em;
+  }
+}
