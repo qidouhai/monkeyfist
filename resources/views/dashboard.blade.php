@@ -62,7 +62,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><span>{{ feed.created_at }}</span></td>
+                            <td><span class="feed-date" title="{{ feed.created_at }}">{{ feed.created_at | formatTime }}</span></td>
                         </tr>
                     </table>
                 </div>
@@ -84,9 +84,9 @@
                 <div class="panel-footer feed-footer">
                     <!-- Overview of likes, disliked and comment -->
                     <ul>
-                        <li><a href="#"><i class="fa fa-thumbs-up" aria-hidden="true"></i>&nbsp</a></li>
-                        <li><a href="#"><i class="fa fa-thumbs-down" aria-hidden="true"></i></a></li>
-                        <li><a href="#"><i class="fa fa-comment" aria-hidden="true"></i></a></li>
+                        <li><a href="#"><i class="fa fa-thumbs-up" aria-hidden="true"></i>&nbsp0</a></li>
+                        <li><a href="#"><i class="fa fa-thumbs-down" aria-hidden="true"></i>&nbsp0</a></li>
+                        <li><a href="#"><i class="fa fa-comment" aria-hidden="true"></i>&nbsp{{ feed.comments.length }}</a></li>
                     </ul>
 
                     <!--Comment List-->
@@ -103,8 +103,8 @@
                                 </span>
                                 <span class="comment-text" style="word-wrap:break-word;" ng-bind-html="comment.content | mediaEmbed: false">
                                 </span>
-                                <span class="comment-date" title="">
-                                    <br/>{{ comment.created_at }}
+                                <span class="comment-date" title="{{ comment.created_at }}">
+                                    <br/>{{ comment.created_at | formatTime }}
                                 </span>
                             </div>
                         </div>

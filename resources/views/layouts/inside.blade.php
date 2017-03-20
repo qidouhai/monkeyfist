@@ -76,10 +76,14 @@
 
 <script src="{{ URL::asset('js/main.js') }}"></script>
 
+{{-- Angular Services --}}
 <script src="{{ URL::asset('js/services/feedService.js') }}"></script>
 
+{{-- Angular Filters --}}
 <script src="{{ URL::asset('js/filters/mediaEmbed.js') }}"></script>
+<script src="{{ URL::asset('js/filters/util.js') }}"></script>
 
+{{-- Angular Controller --}}
 <script src="{{ URL::asset('js/controllers/FeedController.js') }}"></script>
 
 </body>

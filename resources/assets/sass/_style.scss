@@ -18,6 +18,18 @@ body {
 
   .feed-panel {
 
+    .feed-header {
+      .feed-date {
+        color: $comment-date;
+      }
+    }
+
+    .panel-body {
+      .feed-content {
+        white-space: pre-wrap;
+      }
+    }
+
 
     .feed-links {
       ul {
@@ -34,6 +46,14 @@ body {
         list-style-type:none;
         li {
           display:inline-block;
+        }
+      }
+
+      .comment-wrapper {
+        line-height:145%;
+
+        .comment-date {
+          color: $comment-date;
         }
       }
     }
