@@ -47,7 +47,6 @@ angular.module('internal').filter('mediaEmbed', ['$sce', function ($sce) {
             '<3': ':heart:',
             ':o': ':open_mouth:',
             ':O': ':open_mouth:',
-            ':s': ':confused:',
             ':S': ':confused:'
         };
 

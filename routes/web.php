@@ -26,5 +26,16 @@ Route::get('/dashboard', function() {
 
 
 Route::get('/api/feeds/skip/{skip}/take/{take}', 'FeedController@getFeeds')->middleware('auth');
+
+
+Route::get('/api/user', function() {
+	return Auth::user();
+})->middleware('auth');
+
 Route::post('/api/feeds', 'FeedController@store')->middleware('auth');
+Route::post('/api/feeds/{id}/like', 'LikeController@addLike')->middleware('auth');
+Route::post('/api/feeds/{id}/unlike', 'LikeController@removeLike')->middleware('auth');
+Route::post('/api/feeds/{id}/dislike', 'LikeController@addDislike')->middleware('auth');
+Route::post('/api/feeds/{id}/undislike', 'LikeController@removeDislike')->middleware('auth');
+
 Route::post('/api/feeds/{feedId}/comment', 'FeedController@storeComment')->middleware('auth');

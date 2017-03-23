@@ -7,48 +7,57 @@ use App\FeedComment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class FeedController extends Controller
-{
+class FeedController extends Controller {
 
-    protected function getFeeds($skip, $take)
-    {
-        return Feed::with([
-            'user' => function ($query) {
-                $query->select('id', 'username');
-            },
-            'comments.user' => function ($query) {
-                $query->get();
-            }
-        ])->orderBy('id', 'desc')->skip($skip)->take($take)->get();
-    }
+	protected function getFeeds( $skip, $take ) {
+		return Feed::with( [
+			'user'          => function ( $query ) {
+				$query->select( 'id', 'username' );
+			},
+			'comments.user' => function ( $query ) {
+				$query->get();
+			},
+			'likes'         => function ( $query ) {
+				$query->get();
+			},
+			'dislikes'      => function ( $query ) {
+				$query->get();
+			},
+			'votes'         => function ( $query ) {
+				$query->where( 'user_id', Auth::user()->id )->get();
+		    }
+		] )->orderBy( 'id', 'desc' )->skip( $skip )->take( $take )->get();
+	}
 
-    public function store(Request $request) {
-        $feed = new Feed;
+	public function store( Request $request ) {
+		$feed = new Feed;
 
-        $feed->user_id = Auth::user()->id;
-        $feed->content = $request->content;
+		$feed->user_id = Auth::user()->id;
+		$feed->content = $request->content;
 
-        if($feed->save()) {
-            $feed->user = $feed->user;
-            $feed->comments = $feed->comments;
-            return $feed;
-        }
-    }
+		if ( $feed->save() ) {
+			$feed->user     = $feed->user;
+			$feed->comments = $feed->comments;
 
-    public function storeComment(Request $request) {
-        $comment = new FeedComment;
+			return $feed;
+		}
+	}
 
-        $comment->user_id = Auth::user()->id;
-        $comment->feed_id = $request->feed_id;
-        $comment->content = $request->content;
+	public function storeComment( Request $request ) {
+		$comment = new FeedComment;
 
-        if($comment->save()) {
-            $comment->user = $comment->user;
-            return $comment;
-        }
-    }
+		$comment->user_id = Auth::user()->id;
+		$comment->feed_id = $request->feed_id;
+		$comment->content = $request->content;
 
-    public function delete($id) {
-        return Feed::where([['id', $id],['user_id', Auth::user()->id]])->delete();
-    }
+		if ( $comment->save() ) {
+			$comment->user = $comment->user;
+
+			return $comment;
+		}
+	}
+
+	public function delete( $id ) {
+		return Feed::where( [ [ 'id', $id ], [ 'user_id', Auth::user()->id ] ] )->delete();
+	}
 }
