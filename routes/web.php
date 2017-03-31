@@ -20,22 +20,29 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
-Route::get('/dashboard', function() {
-    return view('dashboard', ['user' => Auth::user()]);
-})->middleware('auth');
+
+Route::group(['middleware' => 'auth'], function () {
+
+	Route::get('/dashboard', function() {
+		return view('dashboard', ['user' => Auth::user()]);
+	});
+	Route::get('/profile', function() {
+		return view('profile', ['user' => Auth::user()]);
+	});
 
 
-Route::get('/api/feeds/skip/{skip}/take/{take}', 'FeedController@getFeeds')->middleware('auth');
+	Route::get('/api/user', function() {
+		return Auth::user();
+	});
 
+	Route::get('/api/feeds/skip/{skip}/take/{take}', 'FeedController@getFeeds');
 
-Route::get('/api/user', function() {
-	return Auth::user();
-})->middleware('auth');
+	Route::post('/api/feeds', 'FeedController@store');
+	Route::post('/api/feeds/{id}/like', 'LikeController@addLike');
+	Route::post('/api/feeds/{id}/unlike', 'LikeController@removeLike');
+	Route::post('/api/feeds/{id}/dislike', 'LikeController@addDislike');
+	Route::post('/api/feeds/{id}/undislike', 'LikeController@removeDislike');
 
-Route::post('/api/feeds', 'FeedController@store')->middleware('auth');
-Route::post('/api/feeds/{id}/like', 'LikeController@addLike')->middleware('auth');
-Route::post('/api/feeds/{id}/unlike', 'LikeController@removeLike')->middleware('auth');
-Route::post('/api/feeds/{id}/dislike', 'LikeController@addDislike')->middleware('auth');
-Route::post('/api/feeds/{id}/undislike', 'LikeController@removeDislike')->middleware('auth');
+	Route::post('/api/feeds/{feedId}/comment', 'FeedController@storeComment');
 
-Route::post('/api/feeds/{feedId}/comment', 'FeedController@storeComment')->middleware('auth');
+});

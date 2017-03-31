@@ -13,3 +13,14 @@ const { mix } = require('laravel-mix');
 
 mix.js('resources/assets/js/app.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css');
+
+mix.js([
+    'public/bower_components/angular/angular.js',
+    'public/bower_components/angular-resource/angular-resource.js',
+    'public/bower_components/angular-sanitize/angular-sanitize.js',
+    'public/js/main.js',
+    'public/js/services/feedService.js',
+    'public/js/filters/mediaEmbed.js',
+    'public/js/filters/util.js',
+    'public/js/controllers/FeedController.js'
+], 'public/js/dashboard.js');
