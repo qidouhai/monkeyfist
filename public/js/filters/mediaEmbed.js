@@ -75,6 +75,8 @@ angular.module('internal').filter('mediaEmbed', ['$sce', function ($sce) {
             if (!protocolRegex.test(text)) {
                 url = 'http://' + text;
             }
+            if((/\.(gif|jpg|jpeg|tiff|png)$/i).test(text))
+                return '<img src="' + url + '" class="img-responsive center-block" >';
             return '<a href="' + url + '" target="_blank">' + text + '</a>';
         });
         return strReplaced;

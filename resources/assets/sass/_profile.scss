@@ -6,4 +6,12 @@
         height: 200px;
         width: 200px;
     }
+
+    .profile_link a {
+        color: grey;
+        font-size: 1.1em;
+         &:hover {
+             color: grey;
+         }
+    }
 }

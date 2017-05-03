@@ -41,8 +41,8 @@
                     </div>
                 </form>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">{{ $user->username }}</a></li>
-                    <li><a href="#">Dashboard</a></li>
+                    <li><a href="/profile">{{ $user->username }}</a></li>
+                    <li><a href="/dashboard">Dashboard</a></li>
                     <li><a href="#"><i class="fa fa-users" aria-hidden="true"></i></a></li>
                     <li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i></a></li>
                     <li>
@@ -69,22 +69,23 @@
 
 <!-- Scripts -->
 <script src="{{ URL::asset('js/app.js') }}"></script>
-<script src="{{ URL::asset('bower_components/moment/moment.js') }}"></script>
-<script src="{{ URL::asset('bower_components/angular/angular.js') }}"></script>
-<script src="{{ URL::asset('bower_components/angular-resource/angular-resource.js') }}"></script>
-<script src="{{ URL::asset('bower_components/angular-sanitize/angular-sanitize.js') }}"></script>
+<script src="{{ URL::asset('js/dashboard.js') }}"></script>
+{{--<script src="{{ URL::asset('bower_components/moment/moment.js') }}"></script>--}}
+{{--<script src="{{ URL::asset('bower_components/angular/angular.js') }}"></script>--}}
+{{--<script src="{{ URL::asset('bower_components/angular-resource/angular-resource.js') }}"></script>--}}
+{{--<script src="{{ URL::asset('bower_components/angular-sanitize/angular-sanitize.js') }}"></script>--}}
 
-<script src="{{ URL::asset('js/main.js') }}"></script>
+{{--<script src="{{ URL::asset('js/main.js') }}"></script>--}}
 
 {{-- Angular Services --}}
-<script src="{{ URL::asset('js/services/feedService.js') }}"></script>
+{{--<script src="{{ URL::asset('js/services/feedService.js') }}"></script>--}}
 
 {{-- Angular Filters --}}
-<script src="{{ URL::asset('js/filters/mediaEmbed.js') }}"></script>
-<script src="{{ URL::asset('js/filters/util.js') }}"></script>
+{{--<script src="{{ URL::asset('js/filters/mediaEmbed.js') }}"></script>--}}
+{{--<script src="{{ URL::asset('js/filters/util.js') }}"></script>--}}
 
 {{-- Angular Controller --}}
-<script src="{{ URL::asset('js/controllers/FeedController.js') }}"></script>
+{{--<script src="{{ URL::asset('js/controllers/FeedController.js') }}"></script>--}}
 
 </body>
 </html>
