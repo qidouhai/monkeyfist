@@ -7,11 +7,12 @@
         width: 200px;
     }
 
-    .profile_link a {
-        color: grey;
-        font-size: 1.1em;
-         &:hover {
-             color: grey;
-         }
+    .friends_status {
+        margin: 15px 0px;
+        display:block;
+    }
+    .profile_button {
+        margin: 15px 0px;
+        width: 200px;
     }
 }

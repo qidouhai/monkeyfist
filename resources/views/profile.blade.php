@@ -4,27 +4,27 @@
 
     <div class="container-fluid">
 
-        {{-- User metadata --}}
         <div class="row profile_top">
-            <div class="col-xs-offset-3 col-xs-6">
-                <img src="" class="img-responsive img-thumbnail center-block">
+            <div class="col-xs-12">
+                <img src="/images/uploads/sample_profile.jpg" class="img-responsive img-circle center-block">
             </div>
-            <div class="col-xs-offset-3 col-xs-6">
+            <div class="col-xs-12">
                 <h1 class="text-center">{{ $user->username }}</h1>
             </div>
             <div class="col-xs-offset-3 col-xs-6 text-center">
                 <span><i class="fa fa-birthday-cake" aria-hidden="true"></i>&nbsp;15.02.1992</span>
             </div>
-            <div class="col-xs-offset-4 col-xs-4 text-center" style="margin-top:25px;">
-                <div class="col-xs-4 text-center profile_link">
-                    <a href="#"><span><i class="fa fa-envelope" aria-hidden="true"></i></span></a>
-                </div>
-                <div class="col-xs-4 text-center profile_link">
-                    <a href="#"><span><i class="fa fa-user-plus" aria-hidden="true"></i></span></a>
-                </div>
-                <div class="col-xs-4 text-center profile_link">
-                    <a href="#"><span><i class="fa fa-users" aria-hidden="true"></i></span></a>
-                </div>
+            <div class="col-xs-6 text-center">
+                <span class="friends_status">You are not friends!</span>
+            </div>
+            <div class="col-xs-6 text-center">
+                <span class="friends_status">{{ $user->prename }} has 322 friends.</span>
+            </div>
+            <div class="col-xs-6 text-center">
+                <button class="btn btn-default profile_button">Send a Friend Request</button>
+            </div>
+            <div class="col-xs-6 text-center">
+                <button class="btn btn-default profile_button">Write {{ $user->prename }} a Message</button>
             </div>
         </div>
 
